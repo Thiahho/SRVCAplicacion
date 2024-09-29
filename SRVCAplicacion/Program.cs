@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Services;
+using SRVCAplicacion.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseSqlServer(connectionString);
 });
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Acceso/Login";    
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
 
 var app = builder.Build();
 
@@ -27,10 +35,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Acceso}/{action=Login}/{id?}");
 
 app.Run();

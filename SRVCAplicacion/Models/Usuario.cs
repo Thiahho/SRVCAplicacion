@@ -6,17 +6,17 @@ namespace SRVCAplicacion.Models
     [Table("usu")]
     public class Usuario 
     {
-        [Column("id")]
-        public int Id { get; set; } = 0;
-        [Column("email"),MaxLength(50)]
-        public string Email { get; set; } = "";
-        [Column("usu"),MaxLength(50)]
-        public string usuario { get; set; } = "";
-        [Column("pass"), MaxLength(50)]
-        public string Password { get; set; } = "";
+        //[Column("id")]
+        public int id { get; set; } = 0;
+        //[Column("email"), MaxLength(50)]
+        public string? email { get; set; } = "";
+        //[Column("usu"), MaxLength(50)]
+        public string? usu { get; set; } = "";
+        //[Column("pass"), MaxLength(50)]
+        public string? pass { get; set; } = "";
         [NotMapped] 
         public string CofirmarPass{ get; set; } = "";
-        [Column("tipo"), MaxLength(5)]
-        public int Tipo { get; set; } = 0;
+        //[Column("tipo")]
+        //public int Tipo { get; set; } 
     }
 }

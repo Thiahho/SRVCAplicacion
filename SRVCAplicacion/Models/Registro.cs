@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
@@ -17,5 +19,6 @@ namespace SRVCAplicacion.Models
         public DateTime? HoraDeSalida { get; set; }
         [MaxLength(150)]
         public string Motivo { get; set; } = "";
+        [Column("Registro"),Key]public int registro { get; set; } = 0;
     }
 }

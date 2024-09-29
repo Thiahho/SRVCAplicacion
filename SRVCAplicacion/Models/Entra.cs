@@ -4,11 +4,11 @@ namespace SRVCAplicacion.Models
 {
     public class Entra
     {
-        protected int Id { get; set; } = 0;
-        protected DateTime TiempoIn { get; set; }
-        protected int IdMotivo { get; set; } = 0;
+        public int Id { get; set; } = 0;
+        public DateTime TiempoIn { get; set; }
+        public int IdMotivo { get; set; } = 0;
         [MaxLength(50)]
-        protected string Dni { get; set; } = "";
-        protected int IdDonde { get; set; } = 0;
+        public string Dni { get; set; } = "";
+        public int IdDonde { get; set; } = 0;
     }
 }

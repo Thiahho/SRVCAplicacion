@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
     public class Donde
     {
-        protected int Id { get; set; }
+        [Key][Column("id")]
+        public int Id { get; set; }
         [MaxLength(80)]
-        protected string Descripcion { get; set; } = "";
+        public string Descripcion { get; set; } = "";
 
     }
 }
