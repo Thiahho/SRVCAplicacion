@@ -1,7 +1,7 @@
-﻿@model SRVCAplicacion.Models.Usuario;
+﻿@model SRVCAplicacion.Models.Login;
 @{
 
-    // Layout = null;
+     Layout = null;
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -41,12 +41,12 @@
                 <div class="card-body">
                     <form asp-action="Login" asp-controller="Acceso" method="post">
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-form-label" asp-for="usu">Usuario</label>
-                            <input asp-for="usu" class="form-control mb-1" />
+                            <label for="staticEmail" class="col-form-label" asp-for="usuario">Usuario</label>
+                            <input asp-for="usuario" class="form-control mb-1" />
                         </div>
                         <div class="mb-3 row">
-                            <label for="staticEmail" class="col-form-label" asp-for="pass">Contraseña</label>
-                            <input asp-for="pass" type="password" class="form-control mb-3" />
+                            <label for="staticEmail" class="col-form-label" asp-for="contraseña">Contraseña</label>
+                            <input asp-for="contraseña" type="password" class="form-control mb-3" />
                         </div>
                         @*   <div>
                         <label asp-for="Tipo"></label>
@@ -59,7 +59,7 @@
                                 @ViewData["Mensaje"]
                             </div>
                         }
-                        @* Iniciar Sesion <a asp-controller="Login" asp-action="Login">Click</a> *@
+                        Iniciar Sesion <a asp-controller="Acceso" asp-action="Registro">Click</a>
                     </form>
 
 
