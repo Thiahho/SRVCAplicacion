@@ -20,5 +20,17 @@ namespace SRVCAplicacion.Models
         [MaxLength(150)]
         public string Motivo { get; set; } = "";
         [Column("Registro"),Key]public int registro { get; set; } = 0;
+
+        public Registro(string identificacion, string nombre, string apellido, string departamento, DateTime horaDeIngreso, DateTime horaDeSalida, string motivo)
+        {
+            Identificacion = identificacion;
+            Nombre = nombre;
+            Apellido = apellido;
+            Departamento = departamento;
+            HoraDeIngreso = horaDeIngreso;
+            HoraDeSalida = horaDeSalida;
+            Motivo = motivo;
+        }
+
     }
 }

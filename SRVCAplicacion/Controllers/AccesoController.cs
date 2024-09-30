@@ -11,9 +11,11 @@ namespace SRVCAplicacion.Controllers
     public class AccesoController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;
-        public AccesoController(ApplicationDbContext dbContext)
+        private readonly IWebHostEnvironment webHost;
+        public AccesoController(ApplicationDbContext dbContext, IWebHostEnvironment environment)
         {
             _appDbContext = dbContext;
+            webHost = environment;
         }
         [HttpGet]
 
@@ -101,35 +103,9 @@ namespace SRVCAplicacion.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        //public async Task<IActionResult> Login(Login log  in)
-        //{
-        //    Usuario? usuario = await _appDbContext.Usuario
-        //        .Where(u => u.usu == login.usuario && u.pass == login.contraseña)
-        //        .FirstOrDefaultAsync();
+        
 
-        //    if(usuario == null)
-        //    {
-        //        ViewData["mensaje"] = "No se encontro el usuario.-f";
-        //        return View();
-        //    }
-        //    List<Claim>claims = new List<Claim>();
-        //    {
-        //        new Claim(ClaimTypes.Name, usuario.usu);
-        //    };
-
-        //    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-        //    AuthenticationProperties properties = new AuthenticationProperties()
-        //    {
-        //        AllowRefresh = true,
-        //    };
-
-        //    await HttpContext.SignInAsync(
-        //        CookieAuthenticationDefaults.AuthenticationScheme,
-        //        new ClaimsPrincipal(claimsIdentity),
-        //        properties
-        //        );
-        //    return RedirectToAction("Index", "Home");
-        //}
+       
 
     }
 }
