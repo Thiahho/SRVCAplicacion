@@ -1,16 +1,5 @@
 ﻿@using System.Security.Claims;
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colmena Seguridad</title>
-    <link rel="stylesheet" href="~/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="~/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="~/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="~/css/bootstrap-grid.rtl.min.css">
-</head>
-<body>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -22,34 +11,6 @@
             @User.Claims.Where(u=>u.Type==ClaimTypes.Name).Select(c=>c.Value).SingleOrDefault()
         </h1>
     }
- @*    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
-
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="logo.png" alt="Logo Colmena Seguridad">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#ingresos"><i class="icon"></i> INGRESOS</a></li>
-                    <li><a href="#historia"><i class="icon"></i> Historia</a></li>
-                    <li><a href="#editar"><i class="icon"></i> Editar</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main class="content">
-            <header>
-                <div class="menu-toggle">
-                    <i class="menu-icon"></i>
-                </div>
-            </header>
-            <section class="main-content">
-                <!-- Aquí iría el contenido principal -->
-            </section>
-        </main>
-    </div>
-</body>
-</html>

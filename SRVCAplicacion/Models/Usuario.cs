@@ -16,12 +16,6 @@ namespace SRVCAplicacion.Models
         public string? pass { get; set; } = "";
         [NotMapped] 
         public string CofirmarPass{ get; set; } = "";
-        [MaxLength(100)]
-        
-        public string ImgPath{ get; set; } = "";
-
-        [NotMapped]
-        public IFormFile Img{ get; set; }
         //[Column("tipo")]
         //public int Tipo { get; set; } 
     }
