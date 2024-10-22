@@ -12,9 +12,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SRVCAplicacion.styles.css" asp-append-version="true" />
+    <link href="~/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
 </head>
 
-    <body>
+<body class="bg-gradient-primary">
 
 
      @*    <div class="row">
@@ -31,54 +38,86 @@
             </div>
         </div>
         </div> *@
+    <div class="container">
 
-    <div class="row mt-5 justify-content-center">
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-header">
-                    Registro
-                </div>
-                <div class="card-body">
-                    <form asp-action="Registro" asp-controller="Acceso" method="post">
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-form-label" asp-for="email">Correo Electronico</label>
-                            <input asp-for="email" class="form-control mb-1" />
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-form-label" asp-for="usu">Usuario</label>
-                            <input asp-for="usu" class="form-control mb-1" />
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-form-label" asp-for="pass">Contraseña</label>
-                            <input asp-for="pass" type="password" class="form-control mb-3" />
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-form-label" asp-for="CofirmarPass">Confirmar Contraseña</label>
-                            <input asp-for="CofirmarPass" class="form-control mb-1" type="password" />
-                        </div>
-
-                        @*   <div>
-                        <label asp-for="Tipo"></label>
-                        <input asp-for="Tipo" type="number" />
-                        </div> *@
-                        <button type="submit">Registrar</button>
-                        @if (ViewData["Mensaje"] != null)
-                        {
-                            <div class="alert alert-danger" role="alert">
-                                @ViewData["Mensaje"]
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                        }
-                        Iniciar Sesion <a asp-controller="Acceso" asp-action="Login">Click</a>
-                    </form>
+                            <form asp-action="Registro" asp-controller="Acceso" method="post" id="formRegistro">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" asp-for="usuario" class="form-control form-control-user" id="usuario"
+                                               placeholder="Usuario">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="email" asp-for="email" class="form-control form-control-user" id="email"
+                                               placeholder="Correo electronico" />
+                                    </div>
+                                </div>
+                              @*   <div class="form-group">
+                                    <input type="email" asp-for="email"  class="form-control form-control-user" id="exampleInputEmail"
+                                           placeholder="Email Address">
+                                </div> *@
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" asp-for="contraseña" class="form-control form-control-user"
+                                               id="contraseña" placeholder="Password">
 
-
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" asp-for="CofirmarPass"  class="form-control form-control-user"
+                                               id="confirmarContraseña" placeholder="Repeat Password">
+                                    </div>
+                                </div>
+                                <button type="submit">Registrar</button>
+                                @if (ViewData["Mensaje"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["Mensaje"]
+                                    </div>
+                                }
+                                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                    Register Account
+                                </a>
+                                
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
+
+   
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-ver   sion="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/generar.js" asp-append-version="true"></script>
+
+    <script src="~/jquery/jquery.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/js/sb-admin-2.min.js"></script>
+
     </body>
 </html>

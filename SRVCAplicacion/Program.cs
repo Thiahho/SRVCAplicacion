@@ -4,13 +4,22 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.WebHost.UseKestrel(options =>
+//{
+//    options.ListenAnyIP((500));
+//    options.ListenAnyIP(5001,listenOPtions =>
+//    {
+//        listenOPtions.UseHttps();
+//    });
+//});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlServer(connectionString);
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

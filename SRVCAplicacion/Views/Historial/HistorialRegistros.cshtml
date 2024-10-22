@@ -1,0 +1,64 @@
+﻿﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SRVCAplicacion</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SRVCAplicacion.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    @{
+        ViewData["Tittle"] = "Historial de Registros";
+    }
+    <div class="container">
+        <h1>DEPARTAMENTO</h1>
+        <form class="search-form" id="buscar-registros">
+           <div class="form-group">
+               <label for="condicion">Condicion</label>
+               <input type="text" id="condicion" placeholder="Condicion" />
+
+           </div>
+           <div class="form-group">
+                <label for="desde">Desde</label>
+                <input type="date" id="hora_ingreso" placeholder="Fecha Desde" />
+            </div> 
+            <div class="form-group">
+                <label for="hasta">Hasta</label>
+                <input type="date" id="hora_salida" placeholder="Fecha Hasta" />
+            
+            </div>
+            <button type="button" id="buscar">Buscar</button>   
+        </form>
+
+        <p>Seleccionando el botón "Buscar" visualizarán todos los que están disponibles.</p>
+
+       <table class="table table-dark table-striped-columns" id="resultados">
+        <thead>
+            <tr>
+             <th>IDENTIFICACION</th>
+                <th>NOMBRE ENCARGADO</th>
+                <th>DEPARTAMENTO</th>
+                <th>NOMBRE VISITANTE</th>
+                <th>MOTIVO</th>
+                <th>MOTIVO PERSONALIZADO</th>
+                <th>HORA ENTRADA</th>
+                <th>HORA SALIDA</th>
+            </tr>
+        </thead>
+        <tbody id="tbody-resultados">
+            <!-- Los registros se insertarán aquí -->
+              
+                               
+        </tbody>
+    </table>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js" asp-src-exclude="true"></script>
+<script src="~/bootstrap/dist/js/bootstrap.bundle.min.js" asp-src-exclude="true"></script>
+    <script src="~/js/busqueda.js"></script>
+</body>
+</html>

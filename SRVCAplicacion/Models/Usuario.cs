@@ -3,20 +3,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
-    [Table("usu")]
+    [Table("usuarios")]
     public class Usuario 
     {
         //[Column("id")]
-        public int id { get; set; } = 0;
+        [Key]
+        public int id_usuario { get; set; } = 0;
+        public int id_punto_control { get; set; } = 0;
         //[Column("email"), MaxLength(50)]
+        public string? usuario { get; set; } = "";
         public string? email { get; set; } = "";
+        public string? telefono { get; set; } = "";
         //[Column("usu"), MaxLength(50)]
-        public string? usu { get; set; } = "";
+        public string? dni { get; set; } = "";
         //[Column("pass"), MaxLength(50)]
-        public string? pass { get; set; } = "";
+        public string? contraseña { get; set; } = "";
         [NotMapped] 
         public string CofirmarPass{ get; set; } = "";
         //[Column("tipo")]
         //public int Tipo { get; set; } 
+        public int Estado { get; set; }
     }
+
+    
 }

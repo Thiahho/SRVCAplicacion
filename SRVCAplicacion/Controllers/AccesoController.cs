@@ -30,7 +30,7 @@ namespace SRVCAplicacion.Controllers
                 ViewData["mensaje"] = "los datos no son validos.";
                 return View(usuario);
             }
-            if (usuario.pass != usuario.CofirmarPass)
+            if (usuario.contraseña!= usuario.CofirmarPass)
             {
                 ViewData["mensaje"] = "las contraseñas no coinciden.";
                 return View();
@@ -46,15 +46,15 @@ namespace SRVCAplicacion.Controllers
             Usuario user = new Usuario()
             {
                 email = usuario.email,
-                usu = usuario.usu,
-                pass = usuario.pass,
+                usuario = usuario.usuario,
+                contraseña = usuario.contraseña,
                 //tipo = usuario.tipo,
             };
 
             await _appDbContext.Usuario.AddAsync(user);
             await _appDbContext.SaveChangesAsync();
 
-            if (user.id != 0) return RedirectToAction("Login", "Acceso");
+            if (user.id_usuario != 0) return RedirectToAction("Login", "Acceso");
 
             ViewData["mensaje"] = "no se pudo crear el usuario.-f";
 
@@ -71,35 +71,49 @@ namespace SRVCAplicacion.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
-            Usuario? usuario = await _appDbContext.Usuario
-                .Where(u => u.usu == login.usuario && u.pass == login.contraseña)
+            try
+            {
+                Usuario? usu = await _appDbContext.Usuario
+                .Where(u => u.usuario == login.usuario && u.contraseña == login.contraseña)
                 .FirstOrDefaultAsync();
 
-            if (usuario == null)
+                if (usu == null)
+                {
+                    ViewData["mensaje"] = "No se encontró el usuario.-f";
+                    return View();
+                }
+                if(usu.Estado != 1)
+                {
+                    ViewData["mensaje"] = "El usuario esta Offline.";
+                    return View();
+                }
+
+                // Corrige cómo se añade el Claim
+                List<Claim> claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, usu.usuario) // Asegúrate de que 'usuario.usu' tenga el valor correcto
+                };
+
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                AuthenticationProperties properties = new AuthenticationProperties()
+                {
+                    AllowRefresh = true,
+                };
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    properties
+                );
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
             {
-                ViewData["mensaje"] = "No se encontró el usuario.-f";
+                ViewData["mensaje"] = $"Ocurrió un error: {ex.Message}";
                 return View();
             }
-
-            // Corrige cómo se añade el Claim
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, usuario.usu) // Asegúrate de que 'usuario.usu' tenga el valor correcto
-            };
-
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            AuthenticationProperties properties = new AuthenticationProperties()
-            {
-                AllowRefresh = true,
-            };
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                properties
-            );
-
-            return RedirectToAction("Index", "Home");
+            
         }
         //public async Task<IActionResult> Login(Login log  in)
         //{
