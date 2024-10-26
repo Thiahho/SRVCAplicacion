@@ -19,7 +19,7 @@ namespace SRVCAplicacion.Data
                     mySqlOptions => mySqlOptions.EnableRetryOnFailure());
             }
         }
-        public DbSet<Donde> Donde { get; set; }
+        public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Entra> Entra { get; set; }
         public DbSet<Motivo> Motivo { get; set; }
         public DbSet<registro_visitas> registro_Visitas { get; set; }
@@ -32,12 +32,12 @@ namespace SRVCAplicacion.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Donde>(entity =>
+            modelBuilder.Entity<Departamento>(entity =>
             {
-                entity.HasKey(d => d.Id);
+                entity.HasKey(d => d.id_dp);
             });
             modelBuilder.Entity<Usuario>().Property(u=>u.Estado).HasConversion<int>();
-            modelBuilder.Entity<registro_visitas>().HasKey(r => r.id_usuario);
+            modelBuilder.Entity<registro_visitas>().HasKey(r => r.id_registro_visitas);
             modelBuilder.Entity<Motivo>().HasKey(r => r.id_motivo);
 
         }
