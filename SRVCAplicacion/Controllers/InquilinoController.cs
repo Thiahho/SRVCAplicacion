@@ -6,19 +6,21 @@ using SRVCAplicacion.Models;
 namespace SRVCAplicacion.Controllers
 {
     [Route("api/controller")]
+    [ApiController]
     public class InquilinoController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public IActionResult GenerarRegistros()
-        {
-            return View();
-        }
 
         public InquilinoController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [HttpGet("Inquilinos")]
+        public IActionResult Inquilinos()
+        {
+            return View();
+        }
         [HttpGet("identificacion")]
         public async Task<ActionResult> GetIdentificacion()
         {
@@ -33,20 +35,33 @@ namespace SRVCAplicacion.Controllers
             }
         }
         //por dni y nombre filtro
-        [HttpGet]
+        [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<IEnumerable<visitante_inquilino>>> GetVisitantesInquilino()
         {
             return await _context.visitante_Inquilino.ToListAsync();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<visitante_inquilino>> PostVisitanteInquilino(visitante_inquilino visitante)
+        [HttpPost("CrearInquilino")]
+        public async Task<IActionResult> PostVisitanteInquilino(visitante_inquilino visitante)
         {
-            _context.visitante_Inquilino.Add(visitante);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                await _context.visitante_Inquilino.AddAsync(visitante);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion}, visitante);
+                return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion }, visitante);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
 
         [HttpPut("{identificacion}")]

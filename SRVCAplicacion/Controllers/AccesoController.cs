@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication; 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 namespace SRVCAplicacion.Controllers
 {
+    //[Route("api/controller")]
     public class AccesoController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;
@@ -15,32 +17,31 @@ namespace SRVCAplicacion.Controllers
         {
             _appDbContext = dbContext;
         }
-        [HttpGet]
 
         public IActionResult Registro()
         {
             if (User.Identity!.IsAuthenticated) return RedirectToAction("Index", "Home");
             return View();
         }
-        [HttpPost]
+        [HttpPost("crear")]
         public async Task<IActionResult> Registro(Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
-                ViewData["mensaje"] = "los datos no son validos.";
+                ModelState.AddModelError(string.Empty, "Los datos no son válidos.");
                 return View(usuario);
             }
             if (usuario.contraseña!= usuario.CofirmarPass)
             {
-                ViewData["mensaje"] = "las contraseñas no coinciden.";
-                return View();
+                ModelState.AddModelError(string.Empty, "Las contraseñas no coinciden.");
+                return View(usuario);
 
             }
             var emailexiste = await _appDbContext.Usuario.FirstOrDefaultAsync(u => u.email == usuario.email);
             if (emailexiste != null)
             {
-                ViewData["mensaje"] = "el email ya existe.";
-                return View();
+                ModelState.AddModelError(string.Empty, "El email ya existe.");
+                return View(usuario);
             }
 
             Usuario user = new Usuario()
@@ -48,7 +49,6 @@ namespace SRVCAplicacion.Controllers
                 email = usuario.email,
                 usuario = usuario.usuario,
                 contraseña = usuario.contraseña,
-                //tipo = usuario.tipo,
             };
 
             await _appDbContext.Usuario.AddAsync(user);
@@ -87,17 +87,17 @@ namespace SRVCAplicacion.Controllers
                     ViewData["mensaje"] = "El usuario esta Offline.";
                     return View();
                 }
-
-                // Corrige cómo se añade el Claim
                 List<Claim> claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, usu.usuario) // Asegúrate de que 'usuario.usu' tenga el valor correcto
+                    new Claim(ClaimTypes.Name, usu.usuario),
+                    new Claim("usuario", usu.usuario) 
                 };
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 AuthenticationProperties properties = new AuthenticationProperties()
                 {
-                    AllowRefresh = true,
+                    IsPersistent = true,
+                    ExpiresUtc= DateTimeOffset.UtcNow.AddHours(1),
                 };
 
                 await HttpContext.SignInAsync(

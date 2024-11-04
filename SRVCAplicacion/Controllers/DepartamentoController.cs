@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
+using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
+    [Route("api/controller")]
+    [ApiController]
     public class DepartamentoController : Controller
     {
         private readonly ApplicationDbContext appDbContext;
@@ -14,6 +17,8 @@ namespace SRVCAplicacion.Controllers
         {
             appDbContext = context;
         }
+
+        [HttpGet("Departamentos")]
         public IActionResult Index()
         {
             return View();
@@ -22,16 +27,41 @@ namespace SRVCAplicacion.Controllers
         [HttpGet("obtener")]
         public async Task<IActionResult> ObtenerDepas()
         {
-            // Asumiendo que tienes un modelo "Motivo" con propiedades ID y Nombre
-            var dp= await appDbContext.Donde
+            try
+            {
+                var dp = await appDbContext.Donde
                             .Select(m => new SelectListItem
                             {
-                                Value = m.Id.ToString(),  // El valor del dropdown
-                                Text = m.Descripcion           // El texto que se verá
+                                Value = m.Id.ToString(),
+                                Text = m.Descripcion
                             })
                             .ToListAsync();
 
-            return Json(dp); // Devuelve los motivos como JSON
+                return Ok(dp);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("crear")]
+        public async Task<IActionResult> PostDepartamentos([FromBody] Donde donde)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                await appDbContext.Donde.AddAsync(donde);
+                await appDbContext.SaveChangesAsync();
+                return CreatedAtAction(nameof(ObtenerDepas), new { id = donde.Id }, donde);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

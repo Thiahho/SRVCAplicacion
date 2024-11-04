@@ -27,6 +27,7 @@ namespace SRVCAplicacion.Data
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<visitante_inquilino> visitante_Inquilino{ get; set; }
         public DbSet<log_aud> log_Aud{ get; set; }
+        public DbSet<Puntos_de_controles> Puntos_de_controles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,9 +37,10 @@ namespace SRVCAplicacion.Data
             {
                 entity.HasKey(d => d.Id);
             });
-            modelBuilder.Entity<Usuario>().Property(u=>u.Estado).HasConversion<int>();
+            modelBuilder.Entity<Usuario>().HasOne<Puntos_de_controles>().WithMany().HasForeignKey(u=>u.id_punto_control);
             modelBuilder.Entity<registro_visitas>().HasKey(r => r.id_usuario);
             modelBuilder.Entity<Motivo>().HasKey(r => r.id_motivo);
+            modelBuilder.Entity<Puntos_de_controles>();
 
         }
     }

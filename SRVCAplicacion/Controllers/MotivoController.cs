@@ -6,6 +6,7 @@ using SRVCAplicacion.Data;
 namespace SRVCAplicacion.Controllers
 {
     [Route("api/controller")]
+    [ApiController]
     public class MotivoController : Controller
     {
      
@@ -15,6 +16,7 @@ namespace SRVCAplicacion.Controllers
         {
             appDbContext = context;
         }
+        [HttpGet("Motivos")]
         public IActionResult Index()
         {
             return View();
