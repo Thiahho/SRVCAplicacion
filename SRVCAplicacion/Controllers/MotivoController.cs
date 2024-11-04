@@ -2,32 +2,37 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/[controller]")]
-    public class MotivoController : ControllerBase
+    [Route("api/controller")]
+    [ApiController]
+    public class MotivoController : Controller
     {
      
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext appDbContext;
 
         public MotivoController(ApplicationDbContext context)
         {
-            _context = context;
+            appDbContext = context;
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        [HttpGet("Motivos")]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         [HttpGet("obtener")]
         public async Task<IActionResult> ObtenerMotivos()
         {
             try
             {
-                var motivos = await _context.Motivo
-                          .Select(m => m.nombre_motivo)
+                var motivos = await appDbContext.Motivo
+                          .Select(m => new SelectListItem
+                          {
+                              Value = m.id_motivo.ToString(),  // El valor del dropdown
+                              Text = m.nombre_motivo// El texto que se verá
+                          })
                           .ToListAsync();
 
                 return Ok(motivos);
@@ -37,36 +42,6 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("actualizar/{id}")]
-        public async Task<IActionResult> PutDepartamento(int id, [FromBody] Motivo motivo)
-        {
-            var existe = await _context.Motivo.FindAsync(id);
-            if (existe == null)
-            {
-                return NotFound();
-            }
-            existe.nombre_motivo = motivo.nombre_motivo;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!motivoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
-        }
 
-        private bool motivoExists(int id)
-        {
-            return _context.Motivo.Any(e => e.id_motivo== id);
-        }
     }
 }

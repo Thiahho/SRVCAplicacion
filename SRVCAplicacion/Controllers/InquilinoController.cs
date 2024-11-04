@@ -5,23 +5,24 @@ using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/controller")]
     [ApiController]
-    public class InquilinoController : ControllerBase
+    public class InquilinoController : Controller
     {
         private readonly ApplicationDbContext _context;
-        //public IActionResult GenerarRegistros()
-        //{
-        //    return View();
-        //}
 
         public InquilinoController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [HttpGet("Inquilinos")]
+        public IActionResult Inquilinos()
+        {
+            return View();
+        }
         [HttpGet("identificacion")]
-        public async Task<ActionResult<IEnumerable<string>>> GetIdentificacion()
+        public async Task<ActionResult> GetIdentificacion()
         {
             try
             {
@@ -34,50 +35,44 @@ namespace SRVCAplicacion.Controllers
             }
         }
         //por dni y nombre filtro
-        [HttpGet("obtenerTodos")]
+        [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<IEnumerable<visitante_inquilino>>> GetVisitantesInquilino()
         {
             return await _context.visitante_Inquilino.ToListAsync();
         }
 
-        [HttpPost("crear")]
-        public async Task<ActionResult<visitante_inquilino>> PostVisitanteInquilino(visitante_inquilino visitante)
+        [HttpPost("CrearInquilino")]
+        public async Task<IActionResult> PostVisitanteInquilino(visitante_inquilino visitante)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            try
+            {
+                await _context.visitante_Inquilino.AddAsync(visitante);
+                await _context.SaveChangesAsync();
 
-            _context.visitante_Inquilino.Add(visitante);
-            await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion }, visitante);
 
-            return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion}, visitante);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
-        [HttpPut("actualizar/{id}")]
-        public async Task<IActionResult> PutVisitanteInquilino(int id, visitante_inquilino visitante)
-        {
-            //if (id != visitante.identificacion)
-            //{
-            //    return BadRequest();
-            //}
-            var existe = await _context.visitante_Inquilino.FindAsync(id);
 
-            if (existe == null)
+        [HttpPut("{identificacion}")]
+        public async Task<IActionResult> PutVisitanteInquilino(string id, visitante_inquilino visitante)
+        {
+            if (id != visitante.identificacion)
             {
-                return NotFound();
+                return BadRequest();
             }
-            existe.nombre = visitante.nombre;
-            existe.apellido=visitante.apellido;
-            existe.identificacion = visitante.identificacion;
-            existe.activo=visitante.activo;
-            existe.telefono=visitante.telefono;
-            existe.imgpath=visitante.imgpath;
-            existe.estado=visitante.estado;
-            //existe.id_visitante_inquilino=visitante.id_visitante_inquilino;
-            existe.id_punto_control=visitante.id_punto_control;
-            //_context.Entry(visitante).State = EntityState.Modified;
+
+            _context.Entry(visitante).State = EntityState.Modified;
 
             try
             {
@@ -97,9 +92,9 @@ namespace SRVCAplicacion.Controllers
 
             return NoContent();
         }
-        private bool VisitanteInquilinoExists(int id)
+        private bool VisitanteInquilinoExists(string id)
         {
-            return _context.visitante_Inquilino.Any(e => e.id_visitante_inquilino== id);
+            return _context.visitante_Inquilino.Any(e => e.identificacion == id);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace SRVCAplicacion.Data
                     mySqlOptions => mySqlOptions.EnableRetryOnFailure());
             }
         }
-        public DbSet<Departamento> Departamento { get; set; }
+        public DbSet<Donde> Donde { get; set; }
         public DbSet<Entra> Entra { get; set; }
         public DbSet<Motivo> Motivo { get; set; }
         public DbSet<registro_visitas> registro_Visitas { get; set; }
@@ -27,18 +27,20 @@ namespace SRVCAplicacion.Data
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<visitante_inquilino> visitante_Inquilino{ get; set; }
         public DbSet<log_aud> log_Aud{ get; set; }
+        public DbSet<Puntos_de_controles> Puntos_de_controles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Departamento>(entity =>
+            modelBuilder.Entity<Donde>(entity =>
             {
-                entity.HasKey(d => d.id_dp);
+                entity.HasKey(d => d.Id);
             });
-            modelBuilder.Entity<Usuario>().Property(u=>u.Estado).HasConversion<int>();
-            modelBuilder.Entity<registro_visitas>().HasKey(r => r.id_registro_visitas);
+            modelBuilder.Entity<Usuario>().HasOne<Puntos_de_controles>().WithMany().HasForeignKey(u=>u.id_punto_control);
+            modelBuilder.Entity<registro_visitas>().HasKey(r => r.id_usuario);
             modelBuilder.Entity<Motivo>().HasKey(r => r.id_motivo);
+            modelBuilder.Entity<Puntos_de_controles>();
 
         }
     }

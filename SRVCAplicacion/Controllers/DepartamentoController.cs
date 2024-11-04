@@ -1,35 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using SRVCAplicacion.Data;
 using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/[controller]")]
-    public class DepartamentoController : ControllerBase
+    [Route("api/controller")]
+    [ApiController]
+    public class DepartamentoController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext appDbContext;
 
 
         public DepartamentoController(ApplicationDbContext context)
         {
-            _context = context;
+            appDbContext = context;
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+
+        [HttpGet("Departamentos")]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         [HttpGet("obtener")]
         public async Task<IActionResult> ObtenerDepas()
         {
             try
             {
-                var dp = await _context.Departamento
-                          .Select(m => m.departamento)
-                          .ToListAsync();
+                var dp = await appDbContext.Donde
+                            .Select(m => new SelectListItem
+                            {
+                                Value = m.Id.ToString(),
+                                Text = m.Descripcion
+                            })
+                            .ToListAsync();
 
                 return Ok(dp);
             }
@@ -40,49 +46,24 @@ namespace SRVCAplicacion.Controllers
         }
 
         [HttpPost("crear")]
-        public async Task<ActionResult<Departamento>> PostDepartamento([FromBody]Departamento dp)
+        public async Task<IActionResult> PostDepartamentos([FromBody] Donde donde)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            _context.Departamento.Add(dp);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(ObtenerDepas), new { id = dp.id_dp}, dp);
-        }
-
-        [HttpPut("actualizar/{id}")]
-        public async Task<IActionResult> PutDepartamento(int id, [FromBody]Departamento dp)
-        {
-            var existe = await _context.Departamento.FindAsync(id);
-            if(existe == null)
-            {
-                return NotFound();
-            }
-            existe.departamento = dp.departamento;
             try
             {
-                await _context.SaveChangesAsync();
+                await appDbContext.Donde.AddAsync(donde);
+                await appDbContext.SaveChangesAsync();
+                return CreatedAtAction(nameof(ObtenerDepas), new { id = donde.Id }, donde);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!dpExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest(ex.Message);
             }
-            return NoContent();
         }
 
-        private bool dpExists(int id)
-        {
-            return _context.Departamento.Any(e => e.id_dp== id);
-        }
+
     }
 }
