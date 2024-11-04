@@ -29,11 +29,11 @@ namespace SRVCAplicacion.Controllers
         {
             try
             {
-                var dp = await appDbContext.Donde
+                var dp = await appDbContext.Departamento
                             .Select(m => new SelectListItem
                             {
-                                Value = m.Id.ToString(),
-                                Text = m.Descripcion
+                                Value = m.id_dp.ToString(),
+                                Text = m.departamento
                             })
                             .ToListAsync();
 
@@ -46,7 +46,7 @@ namespace SRVCAplicacion.Controllers
         }
 
         [HttpPost("crear")]
-        public async Task<IActionResult> PostDepartamentos([FromBody] Donde donde)
+        public async Task<IActionResult> PostDepartamentos([FromBody] Departamento depa)
         {
             if (!ModelState.IsValid)
             {
@@ -54,9 +54,9 @@ namespace SRVCAplicacion.Controllers
             }
             try
             {
-                await appDbContext.Donde.AddAsync(donde);
+                await appDbContext.Departamento.AddAsync(depa);
                 await appDbContext.SaveChangesAsync();
-                return CreatedAtAction(nameof(ObtenerDepas), new { id = donde.Id }, donde);
+                return CreatedAtAction(nameof(ObtenerDepas), new { id = depa.id_dp }, depa);
             }
             catch (Exception ex)
             {
