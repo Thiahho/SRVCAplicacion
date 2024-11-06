@@ -59,7 +59,7 @@ namespace SRVCAplicacion.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut("Actualizar/{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
             if (id != usuario.id_usuario)
