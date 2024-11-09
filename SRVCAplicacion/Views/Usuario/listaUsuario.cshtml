@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>INDEX</title>
+    <title>ListaUsuarios</title>
 
     <!-- Custom fonts for this template-->
     <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
         <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("listaUsuario", "Usuario")">
                 <div class="sidebar-brand-icon rotate-n-15">
                 </div>
                 <div class="sidebar-brand-text mx-3">
@@ -69,7 +69,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opciones</h6>
                         <a class="collapse-item" href="@Url.Action("agregarUsuario", "Usuario")">Agregar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("editar", "Usuario")">Editar Usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("editarUsuario", "Usuario")">Editar Usuarios</a>
                         <a class="collapse-item" href="@Url.Action("listaUsuario", "Usuario")">Lista Usuario</a>
                     </div>
                 </div>
@@ -205,132 +205,81 @@
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Hora
-                                            </div>
-                                            <div class="container-clock">
-                                                <h1 id="time">00:00:00</h1>
+                        <div class="container-fluid">
 
-                                            </div>
-                                            <script src="~/jsc/reloj.js"></script>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                            <!-- Page Heading -->
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1 class="h3 mb-0 text-gray-800">Lista De Usuarios</h1>
+                            </div>
+
+
+                            <!-- INICIO Formulario para agregar usuarios -->
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+                                        
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <table id="usuariosTable" class="display" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Nombre</th>
+                                                        <th>DNI</th>
+                                                        <th>Ubicación</th>
+                                                        <th>Sector</th>
+                                                        <th>Estado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>435</td>
+                                                        <td>Carlos</td>
+                                                        <td>30568963</td>
+                                                        <td>Flores</td>
+                                                        <td>2</td>
+                                                        <td>
+
+                                                            <i class="fas fa-circle" style="color: red;"></i>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td>10</td>
+                                                        <td>Juanchot</td>
+                                                        <td>310238784</td>
+                                                        <td>Quilmes</td>
+                                                        <td>3</td>
+                                                        <td>
+
+                                                            <i class="fas fa-circle" style="color: red;"></i>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Miguel</td>
+                                                        <td>43874281</td>
+                                                        <td>Lanus</td>
+                                                        <td>31</td>
+                                                        <td>
+
+                                                            <i class="fas fa-circle" style="color: green;"></i>
+                                                        </td>
+
+                                                    </tr>
+                                                    <!-- Los datos se llenarán aquí con JavaScript -->
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total de Instituciones
-                                            </div>
-                                            <div id="totalInstituciones" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-building fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-                        <!-- Content Row -->
-                        <!-- Area Chart -->
-                        <div class="col-xl-12 col-lg-12">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Puntos de control</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <table id="example" class="display" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Ubicacion</th>
-                                                    <th>Sector</th>
-                                                    <th>N° Guardia</th>
-                                                    <th>dni</th>
-                                                    <th>Ingreso</th>
-                                                    <th>Salida</th>
-                                                    <th>Activo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tigre</td>
-                                                    <td>Sector 3</td>
-                                                    <td>2450</td>
-                                                    <td>33456566</td>
-                                                    <td>2024/10/24</td>
-                                                    <td>2024/10/25</td>
-                                                    <td>
-
-                                                        <i class="fas fa-circle" style="color: red;"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tigre</td>
-                                                    <td>Sector 4</td>
-                                                    <td>3241</td>
-                                                    <td>4217767</td>
-                                                    <td>2024/10/24</td>
-                                                    <td>2024/10/25</td>
-                                                    <td>
-
-                                                        <i class="fas fa-circle text-warning"></i>
-                                                    </td>
-                                                </tr>
-
-
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Ubicacion</th>
-                                                    <th>Sector</th>
-                                                    <th>N° Guardia</th>
-                                                    <th>dni</th>
-                                                    <th>Ingreso</th>
-                                                    <th>Salida</th>
-                                                    <th>Activo</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
                         <a class="scroll-to-top rounded" href="#page-top">
@@ -351,7 +300,7 @@
                                     <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                        <a class="btn btn-primary" href="@Url.Action("Login", "Acceso")">Logout</a>
+                                        <a class="btn btn-primary" href="@Url.Action("Salir", "Home")">Logout</a>
                                     </div>
                                 </div>
                             </div>

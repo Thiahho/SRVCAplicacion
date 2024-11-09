@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>INDEX</title>
+    <title>Agregar Usuario</title>
 
     <!-- Custom fonts for this template-->
     <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
@@ -69,7 +69,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opciones</h6>
                         <a class="collapse-item" href="@Url.Action("agregarUsuario", "Usuario")">Agregar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("editar", "Usuario")">Editar Usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("editarUsuario", "Usuario")">Editar Usuarios</a>
                         <a class="collapse-item" href="@Url.Action("listaUsuario", "Usuario")">Lista Usuario</a>
                     </div>
                 </div>
@@ -205,50 +205,7 @@
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Hora
-                                            </div>
-                                            <div class="container-clock">
-                                                <h1 id="time">00:00:00</h1>
-
-                                            </div>
-                                            <script src="~/jsc/reloj.js"></script>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total de Instituciones
-                                            </div>
-                                            <div id="totalInstituciones" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-building fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
+                        
 
                         <!-- Content Row -->
                         <!-- Area Chart -->
@@ -256,79 +213,81 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Puntos de control</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                    <h6 class="m-0 font-weight-bold text-primary">Agregar Usuario</h6>
+                                    
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <table id="example" class="display" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Ubicacion</th>
-                                                    <th>Sector</th>
-                                                    <th>N° Guardia</th>
-                                                    <th>dni</th>
-                                                    <th>Ingreso</th>
-                                                    <th>Salida</th>
-                                                    <th>Activo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tigre</td>
-                                                    <td>Sector 3</td>
-                                                    <td>2450</td>
-                                                    <td>33456566</td>
-                                                    <td>2024/10/24</td>
-                                                    <td>2024/10/25</td>
-                                                    <td>
+                                <div class="container-fluid">
 
-                                                        <i class="fas fa-circle" style="color: red;"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tigre</td>
-                                                    <td>Sector 4</td>
-                                                    <td>3241</td>
-                                                    <td>4217767</td>
-                                                    <td>2024/10/24</td>
-                                                    <td>2024/10/25</td>
-                                                    <td>
-
-                                                        <i class="fas fa-circle text-warning"></i>
-                                                    </td>
-                                                </tr>
-
-
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Ubicacion</th>
-                                                    <th>Sector</th>
-                                                    <th>N° Guardia</th>
-                                                    <th>dni</th>
-                                                    <th>Ingreso</th>
-                                                    <th>Salida</th>
-                                                    <th>Activo</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                     
+                    </div>
+                    <form class="row g-3 needs-validation" novalidate action="guardar_usuario.php" method="POST">
+                        <div class="col-md-6">
+                            <label for="inputName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="inputName" name="inputName" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un nombre válido.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputSurname" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="inputSurname" name="inputSurname" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un apellido válido.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputDNI" class="form-label">DNI</label>
+                            <input type="text" class="form-control" id="inputDNI" name="inputDNI" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un DNI válido.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputNumeroGuardia" class="form-label">Número de Guardia</label>
+                            <input type="text" class="form-control" id="inputNumeroGuardia" name="inputNumeroGuardia" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un número de guardia válido.
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputUbicacion" class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" id="inputUbicacion" name="inputUbicacion" placeholder="Edificio donde va a trabajar" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa una ubicación válida.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputSector" class="form-label">Sector</label>
+                            <input type="text" class="form-control" id="inputSector" name="inputSector" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un sector válido.
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="gridCheck" required>
+                                <label class="form-check-label" for="gridCheck">
+                                    Terminos
+                                </label>
+                                <div class="invalid-feedback">
+                                    Debes aceptar los términos.
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                        </div>
+                    </form>
+                    
+                    
+                    
+                    <div class="alert alert-danger mt-3 d-none" role="alert" id="formAlert">
+                        Por favor, revisa los campos marcados en rojo antes de enviar el formulario.
+                    </div>
+                </div>
                             </div>
                         </div>
 
