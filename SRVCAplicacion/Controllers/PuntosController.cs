@@ -19,7 +19,7 @@ namespace SRVCAplicacion.Controllers
         }
 
         [HttpGet("Puntos")]
-        public IActionResult Index()
+        public IActionResult PuntosActivos()
         {
             return View();
         }
