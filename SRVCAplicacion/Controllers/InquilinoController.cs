@@ -17,7 +17,7 @@ namespace SRVCAplicacion.Controllers
         }
 
         [HttpGet("Inquilinos")]
-        public IActionResult Inquilinos()
+        public IActionResult Visitas()//Inquilinos
         {
             return View();
         }
