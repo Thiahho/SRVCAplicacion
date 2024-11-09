@@ -31,11 +31,9 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
-                <div class="sidebar-brand-icon">
-                    <i class="fa-solid fa-yin-yang"></i>
+                <div class="sidebar-brand-icon rotate-n-15">
                 </div>
                 <div class="sidebar-brand-text mx-3">
-                    Maggioni
                     <sup></sup>
                 </div>
             </a>
@@ -70,9 +68,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opciones</h6>
-                        <a class="collapse-item" href="@Url.Action("agregarUsuario", "Usuario")">Agregar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("editarUsuario", "Usuario")">Editar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("listaUsuario", "Usuario")">Lista Usuario</a>
+                        <a class="collapse-item" href="@Url.Action("Index", "Usuario")">Agregar Usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("EditarUsuario", "Usuario")">Editar usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("obtener", "Usuario")">listauser</a>
                     </div>
                 </div>
             </li>
@@ -85,8 +83,8 @@
                 <div id="collapseaASDAS" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opciones</h6>
-                        <a class="collapse-item" href="@Url.Action("PuntosActivos", "Puntos")">Puntos Activos </a>
-                        <a class="collapse-item" href="@Url.Action("EditarPuntos", "Puntos")">Editar Puntos</a>
+                        <a class="collapse-item" href="@Url.Action("PuntosActivos", "Vistas")"> Puntos Activos </a>
+                        <a class="collapse-item" href="@Url.Action("EditarPuntos", "Vistas")">Editar Puntos</a>
                     </div>
                 </div>
             </li>
@@ -103,7 +101,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Visitas", "Inquilino")">
+                <a class="nav-link" href="../Views/Visitas/Visitas.cshtml">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Visitas</span>
                 </a>
@@ -111,7 +109,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("HistorialRegistros", "Busqueda")">
+                <a class="nav-link" href="../Views/Historial/HistorialRegistros.cshtml">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Registros de visitas</span>
                 </a>
@@ -352,13 +350,11 @@
                                     </div>
                                     <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
                                     <div class="modal-footer">
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                            <form asp-action="Salir" asp-controller="Home" method="post" style="display: inline;">
-                                                @Html.AntiForgeryToken() <!-- Asegúrate de incluir el token antifalsificación -->
-                                                <button type="submit" class="btn btn-primary">Cerrar sesión</button>
-                                            </form>
-                                        </div>
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                       <form asp-action="Salir" asp-controller="Home" method="post" style="display: inline;">
+                                            @Html.AntiForgeryToken() <!-- Asegúrate de incluir el token antifalsificación -->
+                                            <button type="submit" class="btn btn-primary">Cerrar sesión</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
