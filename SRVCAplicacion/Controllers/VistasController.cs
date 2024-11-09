@@ -49,12 +49,12 @@ namespace SRVCAplicacion.Controllers
         }
         //--------------inquinilo------------
 
-        //[HttpGet("Inquilinos")]
-        //public IActionResult Visitas()//Inquilinos
-        //{
-        //    return View("~/Views/Inquilino/agregarUsuario.cshtml");
+        [HttpGet("Inquilinos")]
+        public IActionResult Visitas()//Inquilinos
+        {
+           return View("~/Views/Visitas/Visitas.cshtml");
 
-        //}
+        }
 
         //-----------------------------BUSQUEDA-----------
         [HttpGet("Busqueda")]
