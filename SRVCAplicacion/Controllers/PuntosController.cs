@@ -23,6 +23,12 @@ namespace SRVCAplicacion.Controllers
         {
             return View();
         }
+
+        [HttpGet("EditarPuntos")]
+        public IActionResult EditarPuntos()
+        {
+            return View();
+        }
         [HttpGet("ObtenerPuntos")]
         public async Task<ActionResult<IEnumerable<Puntos_de_controles>>> GetPuntos()
         {
