@@ -18,8 +18,8 @@ namespace SRVCAplicacion.Controllers
             _appDbContext = appDb;            
         }
 
-        [HttpGet("Puntos")]
-        public IActionResult Index()
+        //[HttpGet("PuntosActivos")]
+        public IActionResult PuntosActivos()
         {
             return View();
         }
@@ -84,6 +84,11 @@ namespace SRVCAplicacion.Controllers
         private bool PuntoExiste(int id)
         {
             return _appDbContext.Puntos_de_controles.Any(e => e.id_punto_control == id);
+        }
+
+        public IActionResult EditarPuntos()
+        {
+            return View();
         }
 
     }

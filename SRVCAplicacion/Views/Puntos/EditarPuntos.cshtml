@@ -38,7 +38,7 @@
         <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../Views/Home/Index.cshtml">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
                 <div class="sidebar-brand-icon rotate-n-15">
                 </div>
                 <div class="sidebar-brand-text mx-3">
@@ -53,7 +53,7 @@
             -->
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../Views/Home/Index.cshtml">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Panel</span>
                 </a>
@@ -392,7 +392,7 @@
                     <script src="~/jsc/demo/chart-area-demo.js"></script>
                     <script src="~/jsc/demo/chart-pie-demo.js"></script>
 
-                    <script>
+@*                     <script>
                         const username = localStorage.getItem('username');
 
                         // Check if a username was stored
@@ -404,7 +404,7 @@
                             alert("Por favor, inicie sesión.");
                             window.location.href = "login.html"; // Redirigir a la página de inicio de sesión si no hay usuario
                         }
-                    </script>
+                    </script> *@
 </body>
 
 </html>

@@ -17,7 +17,7 @@ namespace SRVCAplicacion.Controllers
         {
             _appDbContext = appdb;
         }
-        [HttpGet("Usuarios")]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View();
@@ -90,6 +90,11 @@ namespace SRVCAplicacion.Controllers
         private bool UsuarioExiste(int id)
         {
             return _appDbContext.Usuario.Any(e => e.id_usuario== id);
+
+        }
+        public IActionResult EditarUsuario()
+        {
+            return View();
         }
     }
     //asasdasdasdasasdasda
