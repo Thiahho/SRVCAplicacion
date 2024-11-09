@@ -18,17 +18,17 @@ namespace SRVCAplicacion.Controllers
             _appDbContext = appDb;            
         }
 
-        [HttpGet("PuntosActivos")]
-        public IActionResult PuntosActivos()
-        {
-            return View();
-        }
+        //[HttpGet("PuntosActivos")]
+        //public IActionResult PuntosActivos()
+        //{
+        //    return View();
+        //}
 
-        [HttpGet("EditarPuntos")]
-        public IActionResult EditarPuntos()
-        {
-            return View();
-        }
+        //[HttpGet("EditarPuntos")]
+        //public IActionResult EditarPuntos()
+        //{
+        //    return View();
+        //}
 
         [HttpGet("ObtenerPuntos")]
         public async Task<ActionResult<IEnumerable<Puntos_de_controles>>> GetPuntos()

@@ -17,7 +17,7 @@ namespace SRVCAplicacion.Controllers
         {
             _logger = logger;
         }
-        [HttpGet("Index")]
+      [HttpGet("Index")]
       public IActionResult Index()
       {
             return View();
