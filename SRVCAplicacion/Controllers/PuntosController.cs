@@ -18,7 +18,7 @@ namespace SRVCAplicacion.Controllers
             _appDbContext = appDb;            
         }
 
-        //[HttpGet("Puntos")]
+        [HttpGet("Puntos")]
         public IActionResult Index()
         {
             return View();
