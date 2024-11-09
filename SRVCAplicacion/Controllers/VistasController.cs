@@ -26,6 +26,12 @@ namespace SRVCAplicacion.Controllers
             {
               return View("~/Views/Puntos/EditarPuntos.cshtml");
             }
+            
+            [HttpGet("AgregarUsuario")]
+            public IActionResult AgregarUsuario()
+            {
+                return View("~/Views/Usuario/AgregarUsuario.cshtml");
+            }
 
     }
 
