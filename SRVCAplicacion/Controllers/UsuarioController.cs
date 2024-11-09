@@ -17,23 +17,23 @@ namespace SRVCAplicacion.Controllers
         {
             _appDbContext = appdb;
         }
-        [HttpGet("Usuarios")]
-        public IActionResult listaUsuario()//Index
-        {
-            return View(listaUsuario);
-        }
-        //prueba
+        //[HttpGet("Usuarios")]
+        //public IActionResult listaUsuario()//Index
+        //{
+        //    return View();
+        //}
+        ////prueba
 
-        [HttpGet("editarUsuario")]
-        public IActionResult editarUsuario()
-        {
-          return View(editarUsuario);
-        }
+        //[HttpGet("editarUsuario")]
+        //public IActionResult editarUsuario()
+        //{
+        //  return View();
+        //}
         
-        public IActionResult agregarUsuario()
-        {
-            return View(agregarUsuario);
-        }
+        //public IActionResult agregarUsuario()
+        //{
+        //    return View();
+        //}
 
         //finprueba
 

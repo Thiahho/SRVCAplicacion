@@ -16,11 +16,11 @@ namespace SRVCAplicacion.Controllers
         {
             _appDbContext = applicationDbContext;
         }
-        [HttpGet("Busqueda")]
-        public IActionResult GenerarRegistros()
-        {
-            return View();
-        }
+        //[HttpGet("Busqueda")]
+        //public IActionResult GenerarRegistros()
+        //{
+        //    return View();
+        //}
         [HttpPost]
         public async Task<ActionResult> CrearRegistro([FromBody] registro_visitas nuevoRegistro)
         {

@@ -16,11 +16,11 @@ namespace SRVCAplicacion.Controllers
             _context = context;
         }
 
-        [HttpGet("Inquilinos")]
-        public IActionResult Visitas()//Inquilinos
-        {
-            return View();
-        }
+        //[HttpGet("Inquilinos")]
+        //public IActionResult Visitas()//Inquilinos
+        //{
+        //    return View();
+        //}
         [HttpGet("identificacion")]
         public async Task<ActionResult> GetIdentificacion()
         {
