@@ -11,75 +11,75 @@
 </head>
 <body>
     @* <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SRVCAplicacion</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Salir">Cerrar Sesion</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header> *@
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container-fluid">
-       @*  <main role="main" class="pb-3">
-        </main> *@
-        
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-        aria-controls="offcanvasExample">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SRVCAplicacion</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+    <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Salir">Cerrar Sesion</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </nav>
+    </header> *@
+    @*<div class="container-fluid">
+    @*  <main role="main" class="pb-3">
+    </main>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Busqueda" asp-action="GenerarRegistros">Ingresos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Historial" asp-action="HistorialRegistros">Historial</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Editar</a>
-                        </li>
-                        <li class="nav-item">
-                            <form asp-controller="Home" asp-action="Salir" method="post" style="display:inline;">
-                                <button type="submit" class="nav-link btn btn-link" style="border:none; background:none; padding:0;">Cerrar Sesión</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-               @*  <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div> *@
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+    aria-controls="offcanvasExample">
+    <span class="navbar-toggler-icon"></span>
+    </button>
 
-            </div>
-        </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+    <div>
+    <ul class="navbar-nav">
+    <li class="nav-item">
+    <a class="nav-link active" asp-controller="Busqueda" asp-action="GenerarRegistros">Ingresos</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" asp-controller="Historial" asp-action="HistorialRegistros">Historial</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Editar</a>
+    </li>
+    <li class="nav-item">
+    <form asp-controller="Home" asp-action="Salir" method="post" style="display:inline;">
+    <button type="submit" class="nav-link btn btn-link" style="border:none; background:none; padding:0;">Cerrar Sesión</button>
+    </form>
+    </li>
+    </ul>
+    </div> *@
+    @*  <div class="dropdown mt-3">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+    Dropdown button
+    </button>
+    <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    </ul>
+    </div> *@
+
+    </div>
+    </div>
     </div>
     @RenderBody()
 

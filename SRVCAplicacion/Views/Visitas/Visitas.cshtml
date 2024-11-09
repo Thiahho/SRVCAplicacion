@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Visitas</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/css/datatables.min.css" rel="stylesheet">
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
+                <div class="sidebar-brand-icon rotate-n-15">
+                </div>
+                <div class="sidebar-brand-text mx-3">
+                    <sup></sup>
+                    <img src="~/img/srvc logo-PNG.png">
+                </div>
+            </a>
+
+            <!-- Divider
+            <hr class="sidebar-divider my-0">
+            <img src="~/img/srvc logo-PNG.png">
+            -->
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Panel</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Usuarios</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones</h6>
+                        <a class="collapse-item" href="@Url.Action("agregarUsuario", "Usuario")">Agregar Usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("editar", "Usuario")">Editar Usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("listaUsuario", "Usuario")">Lista Usuario</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseaASDAS"
+                   aria-expanded="true" aria-controls="collapseaASDAS">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Puntos de Control</span>
+                </a>
+                <div id="collapseaASDAS" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones</h6>
+                        <a class="collapse-item" href="@Url.Action("PuntosActivos", "Puntos")">Puntos Activos </a>
+                        <a class="collapse-item" href="@Url.Action("EditarPuntos", "Puntos")">Editar Puntos</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Funciones
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="../Views/Visitas/Visitas.cshtml">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Visitas</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="../Views/Historial/HistorialRegistros.cshtml">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Registros de visitas</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <!-- Dropdown - Alerts -->
+                        <!-- Nav Item - Messages -->
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="welcomeMessage"></span>
+                                <img class="img-profile rounded-circle"
+                                     src="~/img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">visitas</h1>
+
+
+
+                    </div>
+
+
+                    <!-- INICIO Formulario para agregar usuarios -->
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
+                                <div class="ml-auto">
+                                    <!-- Agrega esta clase para empujar los botones a la derecha -->
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">Ingreso</button>
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit2">Nuevo registro</button>
+                                </div>
+
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <table id="tablaInstituciones" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>DNI</th>
+                                                <th>Departamento</th>
+                                                <th>Motivo</th>
+                                                <th>Fecha</th>
+                                                <th>Activo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Carlos</td>
+                                                <td>43560889</td>
+                                                <td>5H</td>
+                                                <td>limpieza</td>
+                                                <td>2024/10/25</td>
+                                                <td>
+                                                    <i class="fas fa-circle" style="color: green;"></i>
+                                                </td>
+                                            </tr>
+                                            <!-- Los datos se llenarán mediante JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN Formulario para agregar usuarios -->
+
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Ingreso</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="inputUbicacion">DNI</label>
+                                            <input type="text" class="form-control" id="inputUbicacion" placeholder="Ubicación">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputUbicacion">Motivo</label>
+
+
+                                            <select name="cars" id="cars">
+                                                <option value="volvo">Visitas</option>
+                                                <option value="saab">CASA</option>
+                                                <option value="mercedes">PIZZA</option>
+                                                <option value="audi">Audi</option>
+                                            </select>
+                                            <div class="form-group">
+                                                <label for="motivo">Motivo:</label>
+                                                <textarea id="motivo" name="motivo" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputSector">donde</label>
+                                            <input type="text" class="form-control" id="inputSector" placeholder="Sector">
+                                        </div>
+                                        <!-- Agregar más campos según sea necesario -->
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="edit2" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Ingreso</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formInstitucion" action="guardar_institucion.php" method="POST">
+                                        <div class="form-group">
+                                            <label for="inputDNI">DNI</label>
+                                            <input type="text" class="form-control" id="inputDNI" name="dni" placeholder="DNI" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputNombre">Nombre</label>
+                                            <input type="text" class="form-control" id="inputNombre" name="nombre" placeholder="Nombre" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputApellido">Apellido</label>
+                                            <input type="text" class="form-control" id="inputApellido" name="apellido" placeholder="Apellido" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputParentesco">Motivo</label>
+                                            <input type="text" class="form-control" id="inputMotivo" name="motivo" placeholder="Motivo" required>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" id="guardarCambios">Guardar Cambios</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Scroll to Top Button-->
+                    <a class="scroll-to-top rounded" href="#page-top">
+                        <i class="fas fa-angle-up"></i>
+                    </a>
+
+                    <!-- Logout Modal-->
+                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-primary" href="login.html">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bootstrap core JavaScript-->
+                    <script src="~/jquery/jquery.min.js"></script>
+                    <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <script src="~/jsc/datatables.min.js"></script>
+                    <script src="js/vista.js"></script>
+                    <!-- Core plugin JavaScript-->
+                    <script src="~/jquery-easing/jquery.easing.min.js"></script>
+
+                    <!-- Custom scripts for all pages-->
+                    <script src="~/jsc/sb-admin-2.min.js"></script>
+
+
+                    <!-- Page level plugins -->
+                    <script src="~/chart.js/Chart.min.js"></script>
+
+                    <!-- Page level custom scripts -->
+                    <script src="~/jsc/demo/chart-area-demo.js"></script>
+                    <script src="~/jsc/demo/chart-pie-demo.js"></script>
+
+</body>
+<script>
+    $('#guardarCambios').click(function() {
+        var formData = $('#formInstitucion').serialize(); // Recoger los datos del formulario
+
+        $.ajax({
+            url: 'guardar_institucion.php',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                var result = JSON.parse(response);
+                alert(result.message); // Mostrar un mensaje de éxito o error
+
+                // Reiniciar el formulario
+                $('#formInstitucion')[0].reset();
+
+                // Cerrar el modal
+                $('#edit2').modal('hide');
+            },
+            error: function() {
+                alert('Error al guardar la institución.');
+            }
+        });
+    });
+    $(document).ready(function() {
+        // Cargar los datos en el DataTable
+        $('#tablaInstituciones').DataTable({
+            ajax: {
+                url: 'obtener_instituciones.php', // URL del archivo PHP
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'dni' },
+                { data: 'nombre' },
+                { data: 'apellido' },
+                { data: 'parentesco' },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return `<button class="btn btn-danger" onclick="eliminarInstitucion(${row.id})">Eliminar</button>`;
+                    }
+                }
+            ]
+        });
+    });
+
+    // Función para eliminar institución
+    function eliminarInstitucion(id) {
+        if (confirm("¿Estás seguro de que deseas eliminar esta institución?")) {
+            $.ajax({
+                url: 'eliminar_institucion.php', // Archivo para manejar la eliminación
+                type: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    alert('Institución eliminada correctamente.');
+                    $('#tablaInstituciones').DataTable().ajax.reload(); // Recargar la tabla
+                },
+                error: function() {
+                    alert('Error al eliminar la institución.');
+                }
+            });
+        }
+    }
+</script>
+</html>

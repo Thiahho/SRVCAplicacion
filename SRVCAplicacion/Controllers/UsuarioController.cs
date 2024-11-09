@@ -18,10 +18,24 @@ namespace SRVCAplicacion.Controllers
             _appDbContext = appdb;
         }
         [HttpGet("Usuarios")]
-        public IActionResult Index()
+        public IActionResult listaUsuario()//Index
         {
-            return View();
+            return View(listaUsuario);
         }
+        //prueba
+
+        [HttpGet("editarUsuario")]
+        public IActionResult editarUsuario()
+        {
+          return View(editarUsuario);
+        }
+        
+        public IActionResult agregarUsuario()
+        {
+            return View(agregarUsuario);
+        }
+
+        //finprueba
 
         [HttpGet("obtener")]
         public async Task<ActionResult<IEnumerable<Usuario>>> ObtenerUsuarios()
@@ -92,4 +106,5 @@ namespace SRVCAplicacion.Controllers
             return _appDbContext.Usuario.Any(e => e.id_usuario== id);
         }
     }
+    //asasdasdasdasasdasda
 }

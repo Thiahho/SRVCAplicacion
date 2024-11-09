@@ -7,7 +7,7 @@ using SRVCAplicacion.Models;
 namespace SRVCAplicacion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class PuntosController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;
@@ -18,11 +18,18 @@ namespace SRVCAplicacion.Controllers
             _appDbContext = appDb;            
         }
 
-        //[HttpGet("Puntos")]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //[HttpGet("PuntosActivos")]
+        //public IActionResult PuntosActivos()
+        //{
+        //    return View();
+        //}
+
+        //[HttpGet("EditarPuntos")]
+        //public IActionResult EditarPuntos()
+        //{
+        //    return View();
+        //}
+
         [HttpGet("ObtenerPuntos")]
         public async Task<ActionResult<IEnumerable<Puntos_de_controles>>> GetPuntos()
         {
@@ -85,6 +92,7 @@ namespace SRVCAplicacion.Controllers
         {
             return _appDbContext.Puntos_de_controles.Any(e => e.id_punto_control == id);
         }
+
 
     }
 }
