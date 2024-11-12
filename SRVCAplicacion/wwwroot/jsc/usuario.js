@@ -1,42 +1,6 @@
 ﻿//Funcion para mostrar usuarios(admin)
-async function mostrarUsuarioss() {
-
-    //En el Front poner <body onload="mostrarUsuarios()"> para que se llame automaticamente cuando carga la pag
-    //En el Front crear un boton para llamar a la funcion
-    try {
-        const response = await fetch('https://localhost:7285/api/Usuario/Obtener');
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const usuarios = await response.json();
-        const tabla = document.getElementById('usuariosTable');
-
-        // Limpia la tabla antes de insertar los datos
-        tabla.innerHTML = '';
-
-        usuarios.forEach(usuario => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${usuario.id_usuario}</td>
-                <td>${usuario.usuario}</td>
-                <td>${usuario.contraseña}</td>
-                <td>${usuario.email}</td>
-                <td>${usuario.telefono}</td>
-                <td>${usuario.dni}</td>
-                <td>${usuario.estado}</td>
-                <td>${usuario.id_punto_control}</td>
-            `;
-            tabla.appendChild(fila);
-        });
-    } catch (error) {
-        console.error('Error al mostrar usuarios:', error);
-    }
-}
-//asdas
-
 async function mostrarUsuarios() {
+    
     try {
         const response = await fetch('https://localhost:7285/api/Usuario/Obtener');
         console.log('Respuesta del servidor:', response);
@@ -49,7 +13,7 @@ async function mostrarUsuarios() {
         console.log('Usuarios recibidos:', usuarios);
 
         const tabla = document.getElementById('usuarioTable');
-        tabla.innerHTML = '';  // Limpia la tabla
+       // tabla.innerHTML = ''; Limpia la tabla
 
         usuarios.forEach(usuario => {
             const fila = document.createElement('tr');
@@ -166,4 +130,4 @@ async function crearNuevoUsuario() {
         console.error('Error al intentar crear el usuario', error);
     }
 }
-
+*/
