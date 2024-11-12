@@ -1,0 +1,131 @@
+﻿@{
+    Layout = "_Layout"; // Usando el layout definido
+}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agregar Usuario</title>
+
+    <!-- Custom fonts for this template-->
+    <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link href="~/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="~/css/datatables.min.css" rel="stylesheet">
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+
+    <!-- End of Topbar -->
+    <!-- Begin Page Content -->
+    <div class="container">
+        <!-- Earnings (Monthly) Card Example -->
+        <!-- Content Row -->
+        <!-- Area Chart -->
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Agregar Punto</h6>
+
+                </div>
+                <!-- Card Body -->
+                @* <div class="container-fluid"> *@
+
+
+
+                <form class="row g-3 needs-validation" novalidate action="" method="POST">
+                    <div class="col-md-6">
+                        <label for="inputName" class="form-label">Token</label>
+                        <input type="text" class="form-control" id="inputName" name="inputName" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un nombre válido.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputSurname" class="form-label">Nombre del punto</label>
+                        <input type="text" class="form-control" id="inputSurname" name="inputSurname" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un apellido válido.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputDNI" class="form-label">Estado</label>
+                        <input type="text" class="form-control" id="inputDNI" name="inputDNI" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un DNI válido.
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </form>
+
+
+
+                <div class="alert alert-danger mt-3 d-none" role="alert" id="formAlert">
+                    Por favor, revisa los campos marcados en rojo antes de enviar el formulario.
+                </div>
+
+
+            </div>
+        </div>
+        @*
+        <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Listo para partir?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+        </div>
+        <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
+        <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-primary" href="@Url.Action("Login", "Acceso")">Logout</a>
+        </div>
+        </div>
+        </div>
+        </div> *@
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/jquery/jquery.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/jsc/index.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/jsc/sb-admin-2.min.js"></script>
+
+
+    <script src="~/jsc/datatables.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/jsc/demo/chart-area-demo.js"></script>
+    <script src="~/jsc/demo/chart-pie-demo.js"></script>
+
+</body>
+
+</html>
