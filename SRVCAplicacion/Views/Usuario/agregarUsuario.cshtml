@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     Layout = "_Layout"; // Usando el layout definido
 }
 <!DOCTYPE html>
@@ -26,139 +26,159 @@
 
 <body id="page-top">
 
-  
-                <!-- End of Topbar -->
-                <!-- Begin Page Content -->
-            <div class="container">
-                  <!-- Earnings (Monthly) Card Example -->
-                        
 
-                        <!-- Content Row -->
-                        <!-- Area Chart -->
-                        <div class="col-xl-12 col-lg-12">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Agregar Usuario</h6>
-                                    
-                                </div>
-                                <!-- Card Body -->
-                                @* <div class="container-fluid"> *@
-                             
-                   
-                         
-                            <form class="row g-3 needs-validation" novalidate action="" method="POST">
-                                <div class="col-md-6">
-                                    <label for="inputName" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="inputName" name="inputName" required>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa un nombre válido.
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputSurname" class="form-label">Apellido</label>
-                                    <input type="text" class="form-control" id="inputSurname" name="inputSurname" required>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa un apellido válido.
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputDNI" class="form-label">DNI</label>
-                                    <input type="text" class="form-control" id="inputDNI" name="inputDNI" required>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa un DNI válido.
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputNumeroGuardia" class="form-label">Número de Guardia</label>
-                                    <input type="text" class="form-control" id="inputNumeroGuardia" name="inputNumeroGuardia" required>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa un número de guardia válido.
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputUbicacion" class="form-label">Ubicación</label>
-                                    <input type="text" class="form-control" id="inputUbicacion" name="inputUbicacion" placeholder="Edificio donde va a trabajar" required>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa una ubicación válida.
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputSector" class="form-label">Sector</label>
-                                    <input type="text" class="form-control" id="inputSector" name="inputSector" required>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa un sector válido.
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck" name="gridCheck" required>
-                                        <label class="form-check-label" for="gridCheck">
-                                            Terminos
-                                        </label>
-                                        <div class="invalid-feedback">
-                                            Debes aceptar los términos.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                                </div>
-                            </form>
-                    
-                    
-                    
-                                <div class="alert alert-danger mt-3 d-none" role="alert" id="formAlert">
-                                    Por favor, revisa los campos marcados en rojo antes de enviar el formulario.
-                                </div>
-                         
-                       
+    <!-- End of Topbar -->
+    <!-- Begin Page Content -->
+    <div class="container">
+        <!-- Earnings (Monthly) Card Example -->
+        <!-- Content Row -->
+        <!-- Area Chart -->
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Agregar Usuario</h6>
+
+                </div>
+                <!-- Card Body -->
+                @* <div class="container-fluid"> *@
+
+
+
+                <form class="row g-3 needs-validation" id="formUsuario" method="POST">
+                    <div class="col-md-6">
+                        <label for="inputName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un nombre válido.
                         </div>
-                      </div>
-@* 
-                        <a class="scroll-to-top rounded" href="#page-top">
-                            <i class="fas fa-angle-up"></i>
-                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputSurname" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un apellido válido.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputDNI" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="identificacion" name="identificacion" required>
 
-                        <!-- Logout Modal-->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">¿Listo para partir?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                        <a class="btn btn-primary" href="@Url.Action("Login", "Acceso")">Logout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> *@
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un DNI válido.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputNumeroGuardia" class="form-label">Número de Guardia</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un número de guardia válido.
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputUbicacion" class="form-label">Estado</label>
+                        <input type="number" class="form-control" id="estado" name="estado" placeholder="Estado" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa estado.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="puntoControl" class="form-label">Punto de Control</label>
+                        <input type="number" class="form-control" id="id_punto_control" name="id_punto_control" placeholder="Punto de Control" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un sector válido.
+                        </div>
+                    </div>
+                    @*                                 <div class="col-12">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" name="gridCheck" required>
+                    <label class="form-check-label" for="gridCheck">
+                    Terminos
+                    </label>
+                    <div class="invalid-feedback">
+                    Debes aceptar los términos.
+                    </div>
+                    </div>
+                    </div>
+                    *@<div class="col-12">
+                        <button type="button" id="btnConfirmar" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </form>
+
+
+
+                <div class="alert alert-danger mt-3 d-none" role="alert" id="formAlert">
+                    Por favor, revisa los campos marcados en rojo antes de enviar el formulario.
+                </div>
+
+
             </div>
+        </div>
+
+        @*  <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+        </a> *@
+
+        <!-- Logout Modal-->
+        @*     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Listo para partir?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+        </div>
+        <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
+        <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-primary" href="@Url.Action("Login", "Acceso")">Logout</a>
+        </div>
+        </div>
+        </div>
+        </div> *@
+    </div>
                         <!-- Bootstrap core JavaScript-->
-                        <script src="~/jquery/jquery.min.js"></script>
-                        <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+                      @*   <script src=@Url.Action("~/jquery/jquery.min.js")></script>
+                        <script src=@Url.Action("~/bootstrap/js/bootstrap.bundle.min.js")></script>
 
                         <!-- Core plugin JavaScript-->
-                        <script src="~/jquery-easing/jquery.easing.min.js"></script>
-                        <script src="~/jsc/index.js"></script>
+                        <script src=@Url.Action("~/jquery-easing/jquery.easing.min.js")></script>
+                        <script src=@Url.Action("~/jsc/index.js")></script>
                         <!-- Custom scripts for all pages-->
-                        <script src="~/jsc/sb-admin-2.min.js"></script>
+                        <script src=@Url.Action("~/jsc/sb-admin-2.min.js")></script>
 
 
-                        <script src="~/jsc/datatables.min.js"></script>
+                        <script src=@Url.Action("~/jsc/datatables.min.js")></script>
 
                         <!-- Page level plugins -->
-                        <script src="~/chart.js/Chart.min.js"></script>
+                        <script src=@Url.Action("~/chart.js/Chart.min.js")></script>
 
                         <!-- Page level custom scripts -->
-                        <script src="~/jsc/demo/chart-area-demo.js"></script>
-                        <script src="~/jsc/demo/chart-pie-demo.js"></script>
+                        <script src=@Url.Action("~/jsc/demo/chart-area-demo.js")></script>
+                        <script src=@Url.Action("~/jsc/demo/chart-pie-demo.js")></script>
+                        <script src=@Url.Action("~/jsc/agregarUsuario.js")></script> *@
+
+      <script src="~/jquery/jquery.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.bundle.min"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/jsc/index.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/jsc/sb-admin-2.min.js"></script>
+
+
+    <script src="~/jsc/datatables.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/jsc/demo/chart-area-demo.js"></script>
+    <script src="~/jsc/demo/chart-pie-demo.js"></script>
+    <script src="~/jsc/agregarUsuario.js"></script>
 
 </body>
 
