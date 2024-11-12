@@ -14,6 +14,39 @@ var builder = WebApplication.CreateBuilder(args);
 //});
 
 // Add services to the container.
+
+//****************CORS
+
+//var builderC = WebApplication.CreateBuilder(args);
+
+//Configura CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirTodo", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+//Agregar servicios de controladores
+builder.Services.AddControllers();
+
+//var appC = builderC.Build();
+
+//Aplicar la politica de CORS
+//appC.UseCors("PermitirTodo");
+
+//appC.UseAuthorization();
+
+//appC.MapControllers();
+
+//appC.Run();
+
+//*************FIN CORS
+
+
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -21,21 +54,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-
-});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Acceso/Login";
+        options.LoginPath = "/Acceso/Login";    
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
@@ -61,4 +84,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Acceso}/{action=Login}/{id?}");
 
+//cors
+app.UseCors("PermitirTodo");
+app.MapControllers();
+//fin cors
 app.Run();
+
+
