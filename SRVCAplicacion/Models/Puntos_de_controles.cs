@@ -12,6 +12,6 @@ namespace SRVCAplicacion.Models
         public string token { get; set; }
         public string nombre_punto_control{  get; set; }
         public int estado {  get; set; }
-        public string id{  get; set; }
+
     }
 }

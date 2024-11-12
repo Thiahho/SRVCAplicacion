@@ -57,16 +57,16 @@
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="chart-area">
-                                    <table id="example" class="display" style="width:100%">
+                                    <table id="puntosTable" class="display" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Numero Pedido</th>
-                                                <th>Ubicacion</th>
-                                                <th>Fecha de Alta</th>
-                                                <th>Activo</th>
+                                                <th>ID</th>
+                                                <th>Token</th>
+                                                <th>Nombre</th>
+                                                <th>Estado</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        @* <tbody>
                                             <tr>
                                                 <td>3</td>
                                                 <td>Nuñes</td>
@@ -74,7 +74,7 @@
                                                 <td><i class="fas fa-circle" style="color: green"></i></td>
 
                                             </tr>
-                                        </tbody>
+                                        </tbody> *@
 
                                     </table>
                                 </div>
@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
 
                     <!-- Scroll to Top Button-->
                     <a class="scroll-to-top rounded" href="#page-top">
@@ -198,7 +198,15 @@
                     <!-- Page level custom scripts -->
                     <script src="~/jsc/demo/chart-area-demo.js"></script>
                     <script src="~/jsc/demo/chart-pie-demo.js"></script>
-                   @*  <script>
+                     <!-- <script src="~/jsc/usuario.js"></script>-->
+
+                     <script>
+                       document.addEventListener('DOMContentLoaded', function() {
+                       mostrarPuntos();
+                            });
+                     </script>
+                     
+    @*  <script>
                         const username = localStorage.getItem('username');
 
                         // Check if a username was stored
