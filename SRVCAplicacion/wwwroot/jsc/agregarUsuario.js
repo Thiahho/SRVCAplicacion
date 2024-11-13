@@ -45,6 +45,7 @@
             //const result = JSON.parse(responseText); // Intenta parsear como JSON solo si la respuesta es válida
             alert("Usuario creado exitosamente.");
             document.getElementById('formUsuario').reset(); // Limpiar formulario
+            window.location.href = "api/Home/Index";
         } else {
             // Si no es 200 OK, muestra el error
             alert("Error: " + (result.message || " Error desconocido"));
