@@ -22,8 +22,9 @@
     <!-- Custom styles for this template-->
     <link href="~/css/datatables.min.css" rel="stylesheet">
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
-</head>
+    <script src="~/jsc/usuario.js"></script>
 
+</head>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -229,19 +230,22 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="chart-area">
-                                            <table id="usuariosTable" class="display" style="width:100%">
+                                            <table id="usuarioTable" class="display" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Nombre</th>
+                                                        <th>Usuario</th>
+                                                        <th>Contraseña</th>
+                                                        <th>Email</th>
+                                                        <th>Telefono</th>
                                                         <th>DNI</th>
-                                                        <th>Ubicación</th>
-                                                        <th>Sector</th>
                                                         <th>Estado</th>
+                                                        <th>Id punto de control</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    
+                                                    <!--<tr>
                                                         <td>435</td>
                                                         <td>Carlos</td>
                                                         <td>30568963</td>
@@ -276,7 +280,7 @@
                                                             <i class="fas fa-circle" style="color: green;"></i>
                                                         </td>
 
-                                                    </tr>
+                                                    </tr> -->
                                                     <!-- Los datos se llenarán aquí con JavaScript -->
                                                 </tbody>
                                             </table>
@@ -330,6 +334,15 @@
                         <!-- Page level custom scripts -->
                         <script src="~/jsc/demo/chart-area-demo.js"></script>
                         <script src="~/jsc/demo/chart-pie-demo.js"></script>
+
+                        <!-- <script src="~/jsc/usuario.js"></script>-->
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                mostrarUsuarios();
+                            });
+                        </script>
+                        
 
 </body>
 
