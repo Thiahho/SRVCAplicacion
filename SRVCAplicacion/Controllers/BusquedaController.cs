@@ -6,7 +6,7 @@ using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     public class BusquedaController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;

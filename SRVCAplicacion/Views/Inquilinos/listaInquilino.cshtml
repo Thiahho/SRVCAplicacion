@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ListaUsuarios</title>
+    <title>Lista Inquilinos</title>
 
     <!-- Custom fonts for this template-->
     <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
@@ -22,8 +22,10 @@
     <!-- Custom styles for this template-->
     <link href="~/css/datatables.min.css" rel="stylesheet">
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="~/jsc/usuario.js"></script>
-
+    <script src="~/jsc/Inquilino.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <body id="page-top">
 
@@ -34,7 +36,7 @@
       @*   <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("listaUsuario", "Usuario")">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("listaInquilino", "Inquilino")">
                 <div class="sidebar-brand-icon">
                     <i class="fa-solid fa-yin-yang"></i>
                 </div>
@@ -69,14 +71,14 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Usuarios</span>
+                    <span>Inquilinos</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Opciones</h6>
-                        <a class="collapse-item" href="@Url.Action("agregarUsuario", "Usuario")">Agregar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("editarUsuario", "Usuario")">Editar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("listaUsuario", "Usuario")">Lista Usuario</a>
+                        <a class="collapse-item" href="@Url.Action("agregarInquilino", "Inquilino")">Agregar Inquilinos</a>
+                        <a class="collapse-item" href="@Url.Action("editarInquilino", "Inquilino")">Editar Inquilinos</a>
+                        <a class="collapse-item" href="@Url.Action("listaInquilino", "Inquilino")">Lista Inquilino</a>
                     </div>
                 </div>
             </li>
@@ -215,32 +217,33 @@
 
                             <!-- Page Heading -->
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 class="h3 mb-0 text-gray-800">Lista De Usuarios</h1>
+                                <h1 class="h3 mb-0 text-gray-800">Lista De Inquilinos</h1>
                             </div>
 
 
-                            <!-- INIC   IO Formulario para agregar usuarios -->
-                            <div class="col-xl-12 col-lg-12">
+                            <!-- INIC   IO Formulario para agregar Inquilinos -->
+                            <div class="col-xl-12 col-lg-12" style="height:200px;">
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Inquilinos</h6>
                                         
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="chart-area">
-                                            <table id="usuarioTable" class="display" style="width:100%">
+                                            <table id="InquilinoTable" class="display" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Usuario</th>
-                                                        <th>Contraseña</th>
-                                                        <th>Email</th>
-                                                        <th>Telefono</th>
+                                                        <th>Nombre</th>
+                                                        <th>Apellido</th>
                                                         <th>DNI</th>
+                                                        <th>Activo</th>
+                                                        <th>Telefono</th>
                                                         <th>Estado</th>
                                                         <th>Id punto de control</th>
+                                                        @* <th>Accion</th> *@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -296,7 +299,7 @@
                         </a>
 
                         <!-- Logout Modal-->
-                     @*    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                       @*  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -335,15 +338,28 @@
                         <script src="~/jsc/demo/chart-area-demo.js"></script>
                         <script src="~/jsc/demo/chart-pie-demo.js"></script>
 
-                        <!-- <script src="~/jsc/usuario.js"></script>-->
+                         <script src="~/jsc/inqulino.js"></script>
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
-                                mostrarUsuarios();
+                            mostrarInquilino();
                             });
                         </script>
-                        
+                  
+
 
 </body>
 
 </html>
+
+<style>
+    .chart-area {
+        overflow-x: auto; /* Permite desplazamiento horizontal si la tabla es más ancha */
+        max-height: 100%; /* Ajusta la altura máxima al contenedor */
+    }
+
+    #InquilinoTable {
+        width: 100%;
+        table-layout: auto; /* Asegura que las columnas se ajusten al contenido */
+    }
+</style>
