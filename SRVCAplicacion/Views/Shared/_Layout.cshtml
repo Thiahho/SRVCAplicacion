@@ -186,8 +186,21 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("AgregarUsuario", "Vistas")">Agregar Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("EditarUsuario", "Vistas")">Editar usuarios</a>
+                        <a class="collapse-item" href="@Url.Action("EditarUsuario", "Vistas")">Editar Usuarios</a>
                         <a class="collapse-item" href="@Url.Action("listaUsuario", "Vistas")">Lista de Usuarios</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Inquilinos</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("agregarInquilino", "Vistas")">Agregar Inquilinos</a>
+                        <a class="collapse-item" href="@Url.Action("editarInquilino", "Vistas")">Editar Inquilinos</a>
+                        <a class="collapse-item" href="@Url.Action("listaInquilino", "Vistas")">Lista de Inquilinos</a>
                     </div>
                 </div>
             </li>
@@ -200,6 +213,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("PuntosActivos", "Vistas")">Puntos Activos</a>
                         <a class="collapse-item" href="@Url.Action("EditarPuntos", "Vistas")">Editar Punto</a>
+                        <a class="collapse-item" href="@Url.Action("listaPuntos", "Vistas")">Lista de Puntos</a>
+
                     </div>
                 </div>
             </li>

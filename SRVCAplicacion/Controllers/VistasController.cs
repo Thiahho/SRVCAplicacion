@@ -13,6 +13,12 @@ namespace SRVCAplicacion.Controllers
                 _context = context;
         }
         //--------------PUNTOS------------
+        [HttpGet("listaPuntos")]
+        public IActionResult listaPuntos()
+        {
+            return View("~/Views/Puntos/listaPuntos.cshtml");
+
+        }
         [HttpGet("PuntosActivos")]
         public IActionResult PuntosActivos()
         {
@@ -49,13 +55,22 @@ namespace SRVCAplicacion.Controllers
         }
         //--------------inquinilo------------
 
-        [HttpGet("Inquilinos")]
-        public IActionResult Visitas()//Inquilinos
+        [HttpGet("listaInquilino")]
+        public IActionResult listaInquilino()
         {
-           return View("~/Views/Visitas/Visitas.cshtml");
+           return View("~/Views/Inquilinos/listaInquilino.cshtml");
 
         }
-
+        [HttpGet("editarInquilino")]
+        public IActionResult editarInquilino()
+        {
+            return View("~/Views/Inquilinos/editarInquilino.cshtml");
+        }
+        [HttpGet("agregarInquilino")]
+        public IActionResult agregarInquilino()
+        {
+            return View("~/Views/Inquilinos/agregarInquilino.cshtml");
+        }
         //-----------------------------BUSQUEDA-----------
         [HttpGet("Busqueda")]
         public IActionResult GenerarRegistros()

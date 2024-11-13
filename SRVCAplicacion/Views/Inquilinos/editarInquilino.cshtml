@@ -1,0 +1,242 @@
+﻿@{
+    Layout = "_Layout"; // Usando el layout definido
+}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lista Inquilinos</title>
+
+    <!-- Custom fonts for this template-->
+    <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link href="~/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="~/css/datatables.min.css" rel="stylesheet">
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+   
+
+        <div class="container">
+
+            <!-- Page Heading -->
+                    <!-- Content Row -->
+            <div class="row">
+
+                <!-- Earnings (Monthly) Card Example -->
+                <!-- Content Row -->
+                <!-- Area Chart -->
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Editar Inquilino</h6>
+
+                        </div>
+                        <!-- Card Body -->
+                       
+                    </div>
+                </div>
+            </div>
+                <!-- Begin Page Content -->
+
+                <div class="col-xl-12 col-lg-12">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                         
+                                <div class="ml-auto"> <!-- Agrega esta clase para empujar los botones a la derecha -->
+                                 
+                                </div>
+                               
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <table id="example" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Ubicacion</th>
+                                                <th>Sector</th>
+                                                <th>N° Guardia</th>
+                                                <th>dni</th>
+                                                <th>Ingreso</th>
+                                                <th>Salida</th>
+                                                <th>Activo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tigre</td>
+                                                <td>Sector 3</td>
+                                                <td>2450</td>
+                                                <td>40112374</td>
+                                                <td>2024/04/25</td>
+                                                <td>2024/04/26</td>
+                                                <td><i class="fas fa-circle" style="color: red;"></i></td>
+                                               
+                                                <td>
+                                                    
+                                                    
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
+                                                        <i class="fa-solid fa-pen-to-square"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nuñes</td>
+                                                <td>Sector 10</td>
+                                                <td>03/01</td>
+                                                <td>20584765</td>
+                                                <td>2018/12/09</td>
+                                                <td>~~~~/~~/~~</td>
+                                                <td><i class="fas fa-circle" style="color: green;"></i></td>
+                                               
+                                                <td>
+                                                    
+                                                    
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
+                                                        <i class="fa-solid fa-pen-to-square"></i></button>
+                                                </td>
+                                            </tr>
+                                          
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN Formulario para agregar Inquilinos -->
+
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Que desea hacer?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form>
+                                        <h1>Seleccione una opcion</h1>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#darBaja" data-dismiss="modal">Dar de baja</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#darAlta" data-dismiss="modal">Dar de alta</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade" id="darBaja" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Seguro que desea dar de baja este Inquilino?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form>
+                                        <h1>Confirmar</h1>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" data-dismiss="modal">Atras</button>
+                                    <button type="button" class="btn btn-primary">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="darAlta" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Seguro que desea dar de alta este Inquilino?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form>
+                                        <h1>Confirmar</h1>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" data-dismiss="modal">Atras</button>
+                                    <button type="button" class="btn btn-primary">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                            <a class="scroll-to-top rounded" href="#page-top">
+                                <i class="fas fa-angle-up"></i>
+                            </a>
+
+                            <!-- Logout Modal-->
+                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">¿Listo para partir?</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                            <a class="btn btn-primary" href="@Url.Action("Salir", "Home")">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        </div>
+                            <!-- Bootstrap core JavaScript-->
+                            <script src="~/jquery/jquery.min.js"></script>
+                            <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                            <!-- Core plugin JavaScript-->
+                            <script src="~/jquery-easing/jquery.easing.min.js"></script>
+                            <script src="~/jsc/index.js"></script>
+                            <!-- Custom scripts for all pages-->
+                            <script src="~/jsc/sb-admin-2.min.js"></script>
+
+
+                            <script src="~/jsc/datatables.min.js"></script>
+
+                            <!-- Page level plugins -->
+                            <script src="~/chart.js/Chart.min.js"></script>
+
+                            <!-- Page level custom scripts -->
+                            <script src="~/jsc/demo/chart-area-demo.js"></script>
+                            <script src="~/jsc/demo/chart-pie-demo.js"></script>
+
+</body>
+
+</html>

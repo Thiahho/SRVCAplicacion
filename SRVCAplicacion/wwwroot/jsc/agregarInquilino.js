@@ -5,11 +5,6 @@
     const identificacion = document.getElementById('identificacion').value.trim();
     const activo = parseInt(document.getElementById('activo').value);
     const telefono = document.getElementById('telefono').value.trim();
-    //let imgPath = document.getElementById('imgPath').value.trim();
-    
-    //if (imgPath == "") {
-    //    imgPath = null;
-    //}
     const estado = parseInt(document.getElementById('estado').value);
     const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
 
@@ -25,11 +20,11 @@
         identificacion,
         activo,
         telefono,
-       /* imgPath,*/
         estado,
         id_punto_control
     };
     console.log("Datos antes de enviar:", formData);
+
     try {
         // Enviar la solicitud al backend
         const response = await fetch('https://localhost:7285/api/Inquilino/CrearInquilino', {
@@ -38,20 +33,17 @@
             body: JSON.stringify(formData)
         });
 
-        // Verifica si la respuesta es OK y obtiene el JSON solo si lo es
-        const result= await response.json(); // Obtén la respuesta como texto
+        // Obtener la respuesta como JSON
+        const result = await response.json();
 
-        if (response.ok) {
-            //const result = JSON.parse(responseText); // Intenta parsear como JSON solo si la respuesta es válida
-            alert("Usuario creado exitosamente.");
-            document.getElementById('formUsuario').reset(); // Limpiar formulario
-            window.location.href = "api/Home/Index";
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${result.error || "Error desconocido"}`);
         } else {
-            // Si no es 200 OK, muestra el error
-            alert("Error: " + (result.message || " Error desconocido"));
+            alert("Visitante creado exitosamente.");
+            document.getElementById('formInquilino').reset(); // Limpiar formulario
+            window.location.href = "/listaInquilino";
         }
     } catch (error) {
-        console.error('Error al enviar el formulario:', error);
-        alert("Error al enviar el formulario. Por favor, inténtalo de nuevo.");
-    }
+        console.log(error);  // Para inspeccionar el error completo
+        alert(`Error al enviar el formulario: ${error.message}`);  }
 }

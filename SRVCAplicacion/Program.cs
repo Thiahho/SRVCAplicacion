@@ -104,6 +104,7 @@ if (!app.Environment.IsDevelopment())
     // En producci�n, se maneja el error de manera global y se configura HSTS
     app.UseHsts();
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
