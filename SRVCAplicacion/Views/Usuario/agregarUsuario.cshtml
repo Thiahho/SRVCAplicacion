@@ -68,6 +68,13 @@
                             Por favor, ingresa un DNI válido.
                         </div>
                     </div>
+                    <div class="col-12">
+                        <label for="inputUbicacion" class="form-label">Activo</label>
+                        <input type="number" class="form-control" id="activo" name="activo" placeholder="Activo" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa estado.
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <label for="inputNumeroGuardia" class="form-label">Número de Guardia</label>
                         <input type="text" class="form-control" id="telefono" name="telefono" required>
@@ -179,7 +186,17 @@
     <script src="~/jsc/demo/chart-area-demo.js"></script>
     <script src="~/jsc/demo/chart-pie-demo.js"></script>
     <script src="~/jsc/agregarUsuario.js"></script>
-
+    @* <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            mostrarUsuarios();
+        });
+    </script>
+ *@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btnConfirmar').addEventListener('click', agregarForm);
+        });
+    </script>
 </body>
 
 </html>

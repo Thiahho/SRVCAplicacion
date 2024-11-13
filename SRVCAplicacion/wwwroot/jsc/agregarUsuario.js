@@ -1,93 +1,56 @@
-﻿
-//async function agregarForm() {
-//    const formData = {
-//        nombre: document.getElementById('nombre').value,
-//        apellido: document.getElementById('apellido').value,
-//        identificacion: document.getElementById('identificacion').value,
-//        telefono: document.getElementById('telefono').value,
-//        estado: parseInt(document.getElementById('estado').value),
-//        id_punto_control: parseInt(document.getElementById('id_punto_control').value)
-//    };
-
-//    try {
-//        const response = await fetch('https://localhost:7285/api/Inquilino/CrearInquilino', {
-//            method = 'POST',
-//            headers: {
-//                'Content-type': 'application/json'
-//            },
-//            body: JSON.stringify(formData)
-//        });
-
-//        const result = await response.json();
-//        if (response.ok) {
-//            alert("Usuario creado exitosamente.");
-//            document.getElementById('formUsuario').reset();
-//        }
-//        else {
-//            alert("Error" + result.message);
-//        }
-
-//    }
-//    catch (error) {
-//        console.error('Error al enviar el formulario', error);
-//        alert("Error al enviar el formulario.");
-//    }
-//}
-
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('btnConfirmar').addEventListener('click', agregarForm);
-});
-
-async function agregarForm() {
-    // Desactivar el botón para evitar múltiples clics
-    document.getElementById('btnConfirmar').disabled = false;
-
-    const nombre = document.getElementById('nombre').value;
-    const apellido = document.getElementById('apellido').value;
-    const identificacion = document.getElementById('identificacion').value;
-    const telefono = document.getElementById('telefono').value;
+﻿async function agregarForm() {
+    // Obtener los valores del formulario
+    const nombre = document.getElementById('nombre').value.trim();
+    const apellido = document.getElementById('apellido').value.trim();
+    const identificacion = document.getElementById('identificacion').value.trim();
+    const activo = parseInt(document.getElementById('activo').value);
+    const telefono = document.getElementById('telefono').value.trim();
+    //let imgPath = document.getElementById('imgPath').value.trim();
+    
+    //if (imgPath == "") {
+    //    imgPath = null;
+    //}
     const estado = parseInt(document.getElementById('estado').value);
     const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
 
-    // Validar campos (Ejemplo: nombre y apellido no pueden estar vacíos)
-    if (!nombre || !apellido || !identificacion || !telefono || isNaN(estado) || !id_punto_control) {
-        alert("Todos los campos son obligatorios.");
-        document.getElementById('btnConfirmar').disabled = false; // Rehabilitar el botón
+    // Validar campos
+    if (!nombre || !apellido || !identificacion || !telefono || isNaN(estado) || isNaN(activo) || isNaN(id_punto_control)) {
+        alert("Todos los campos son obligatorios y deben ser válidos.");
         return;
     }
 
     const formData = {
-        nombre: nombre,
-        apellido: apellido,
-        identificacion: identificacion,
-        telefono: telefono,
-        estado: estado,
-        id_punto_control: id_punto_control
+        nombre,
+        apellido,
+        identificacion,
+        activo,
+        telefono,
+       /* imgPath,*/
+        estado,
+        id_punto_control
     };
-
+    console.log("Datos antes de enviar:", formData);
     try {
+        // Enviar la solicitud al backend
         const response = await fetch('https://localhost:7285/api/Inquilino/CrearInquilino', {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
+            headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(formData)
         });
 
-        const result = await response.json();
+        // Verifica si la respuesta es OK y obtiene el JSON solo si lo es
+        const result= await response.json(); // Obtén la respuesta como texto
 
         if (response.ok) {
+            //const result = JSON.parse(responseText); // Intenta parsear como JSON solo si la respuesta es válida
             alert("Usuario creado exitosamente.");
-            document.getElementById('formUsuario').reset();  // Limpiar formulario
+            document.getElementById('formUsuario').reset(); // Limpiar formulario
         } else {
-            // Si hay un error en el backend, mostrarlo
-            alert("Error: " + result.message || "Error desconocido");
+            // Si no es 200 OK, muestra el error
+            alert("Error: " + (result.message || " Error desconocido"));
         }
     } catch (error) {
-        console.error('Error al enviar el formulario', error);
-        alert("Error al enviar el formulario.");
-    } finally {
-        // Rehabilitar el botón después de que se haya completado la acción
-        document.getElementById('btnConfirmar').disabled = false;
+        console.error('Error al enviar el formulario:', error);
+        alert("Error al enviar el formulario. Por favor, inténtalo de nuevo.");
     }
 }

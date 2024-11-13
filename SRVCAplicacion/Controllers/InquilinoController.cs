@@ -5,7 +5,7 @@ using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class InquilinoController : Controller
     {
@@ -46,20 +46,21 @@ namespace SRVCAplicacion.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Modelo inválido", details = ModelState });
             }
+
             try
             {
                 await _context.visitante_Inquilino.AddAsync(visitante);
                 await _context.SaveChangesAsync();
-
-                return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion }, visitante);
-
+                return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion }, new { message = "Usuario creado exitosamente", data = visitante });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var innerExceptionMessage = ex.InnerException?.Message ?? "No inner exception";
+                return BadRequest(new { message = "Ocurrió un error inesperado.", error = ex.Message, innerException = innerExceptionMessage });
             }
+
         }
 
 
