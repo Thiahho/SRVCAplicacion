@@ -62,12 +62,22 @@ namespace SRVCAplicacion.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet()]
         public IActionResult Login()
         {
             if (User.Identity!.IsAuthenticated) return RedirectToAction("Index", "Home");
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            // Eliminar la sesión activa
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            // Redirigir al login
+            return RedirectToAction("Login", "Acceso");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
@@ -106,7 +116,7 @@ namespace SRVCAplicacion.Controllers
                     properties
                 );
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Acceso");
             }
             catch (Exception ex)
             {
