@@ -42,23 +42,31 @@ async function mostrarParaEditar() {
     tableBody.innerHTML = '';
     users.forEach(usuario => {
         const row = document.createElement('tr');
+        //row.setAttribute('data-id', usuario.id_usuario);
         row.innerHTML = `
-                <td>${usuario.id}</td>
-                <td><input type="text" value="${usuario.usuario}" data-id="${usuario.id}" data-field="usuario"/>
-                <td><input type="text" value="${usuario.contraseña}" data-id="${usuario.id}" data-field="contraseña"/>
-                <td><input type="text" value="${usuario.email}" data-id="${usuario.id}" data-field="email"/>
-                <td><input type="text" value="${usuario.telefono}" data-id="${usuario.id}" data-field="telefono"/>
-                <td><input type="text" value="${usuario.dni}" data-id="${usuario.id}" data-field="dni"/>
-                <td><input type="text" value="${usuario.estado}" data-id="${usuario.id}" data-field="estado"/>
-                <td><button onclick="editUsuario(${usuario.id})">Guardar Cambios</button></td>
+                <td>${usuario.id_usuario}</td>
+                <td><input type="text" value="${usuario.usuario}" data-id="${usuario.id_usuario}" data-field="usuario"/></td>
+                <td><input type="text" value="${usuario.contraseña}" data-id="${usuario.id_usuario}" data-field="contraseña"/></td>
+                <td><input type="text" value="${usuario.email}" data-id="${usuario.id_usuario}" data-field="email"/></td>
+                <td><input type="text" value="${usuario.telefono}" data-id="${usuario.id_usuario}" data-field="telefono"/></td>
+                <td><input type="text" value="${usuario.dni}" data-id="${usuario.id_usuario}" data-field="dni"/></td>
+                <td><input type="text" value="${usuario.estado}" data-id="${usuario.id_usuario}" data-field="estado"/></td>
+                <td><button onclick="editUsuario(${usuario.id_usuario})">Guardar Cambios</button></td>
             `;
         tableBody.appendChild(row);
     });
 }
 
 //aceptarCambios
+/*
+
 async function editUsuario(id) {
-    const row = document.querySelector(`tr^[data-id="${id}"]`);
+    const row = document.querySelector(`tr[data-id="${id}"]`);
+    console.log(row); // Verifica si row es null
+    if (!row) {
+        alert(`No se encontró la fila con el id: ${id}`);
+        return;
+    }
     const usuario = row.querySelector('input[data-field="usuario"]').value;
     const contraseña = row.querySelector('input[data-field="contraseña"]').value;
     const email = row.querySelector('input[data-field="email"]').value;
@@ -67,11 +75,11 @@ async function editUsuario(id) {
     const estado = row.querySelector('input[data-field="estado"]').value;
 
     const response = await fetch(`https://localhost:7285/api/usuario/Actualizar/${id}`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, usuario, contraseña, email, telefono, dni, estado })
+        body: JSON.stringify({ usuario, contraseña, email, telefono, dni, estado })
     });
     if (response.ok) {
         alert("El usuario se actualizo correctamente.");
@@ -80,10 +88,41 @@ async function editUsuario(id) {
         alert("Error al intentar aplicar los cambios.");
     }
 } 
-
+*/
 
 //asdasd
 
+async function editUsuario(id) {
+    // Obtiene todos los inputs del usuario específico basándose en el `id`
+    const inputs = document.querySelectorAll(`input[data-id="${id}"]`);
+    const usuarioData = {};
+
+    // Recorre los inputs para construir el objeto `usuarioData` con los valores
+    inputs.forEach(input => {
+        const field = input.getAttribute('data-field');
+        usuarioData[field] = input.value;
+    });
+    usuarioData["estado"] = parseInt(usuarioData["estado"], 10);
+    console.log('Datos enviados:', usuarioData);
+
+    try {
+        const response = await fetch(`https://localhost:7285/api/Usuario/Actualizar/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuarioData)
+        });
+
+        if (response.ok) {
+            alert('Usuario actualizado con éxito');
+        } else {
+            alert('Error al actualizar el usuarios');
+        }
+    } catch (error) {
+        console.error('Error al editar el usuario:', error);
+    }
+}
 
 
 //Funcion para cargar los datos del usuario elegido(admin)
