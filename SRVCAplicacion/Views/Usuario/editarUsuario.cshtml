@@ -66,54 +66,37 @@
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="chart-area">
-                                    <table id="example" class="display" style="width:100%">
+                                    <table id="usuarioTableEdit" class="display" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Ubicacion</th>
-                                                <th>Sector</th>
-                                                <th>N° Guardia</th>
-                                                <th>dni</th>
-                                                <th>Ingreso</th>
-                                                <th>Salida</th>
-                                                <th>Activo</th>
-                                                <th>Editar</th>
+                                               <th>ID</th>
+                                               <th>Usuario</th>
+                                               <th>Contraseña</th>
+                                               <th>Email</th>
+                                               <th>Telefono</th>
+                                               <th>DNI</th>
+                                               <th>Estado</th>
+                                               <th>Id punto de control</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Tigre</td>
-                                                <td>Sector 3</td>
-                                                <td>2450</td>
-                                                <td>40112374</td>
-                                                <td>2024/04/25</td>
-                                                <td>2024/04/26</td>
+                                             <!--<tr>
+                                                <td>
+                                                    
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
+                                                        <i class="fa-solid fa-pen-to-square"></i></button>
+                                                </td>
                                                 <td><i class="fas fa-circle" style="color: red;"></i></td>
-                                               
+                                            </tr>
+                                             <tr>
                                                 <td>
                                                     
                                                     
                                                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
                                                         <i class="fa-solid fa-pen-to-square"></i></button>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nuñes</td>
-                                                <td>Sector 10</td>
-                                                <td>03/01</td>
-                                                <td>20584765</td>
-                                                <td>2018/12/09</td>
-                                                <td>~~~~/~~/~~</td>
                                                 <td><i class="fas fa-circle" style="color: green;"></i></td>
-                                               
-                                                <td>
-                                                    
-                                                    
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
-                                                        <i class="fa-solid fa-pen-to-square"></i></button>
-                                                </td>
-                                            </tr>
-                                          
-                                            
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -236,6 +219,13 @@
                             <!-- Page level custom scripts -->
                             <script src="~/jsc/demo/chart-area-demo.js"></script>
                             <script src="~/jsc/demo/chart-pie-demo.js"></script>
+                            <script src="~/jsc/usuario.js"></script>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    mostrarParaEditar();
+                                    //editUsuario();
+                                });
+                            </script>
 
 </body>
 

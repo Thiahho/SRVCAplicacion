@@ -3,6 +3,7 @@ using SRVCAplicacion.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ var builder = WebApplication.CreateBuilder(args);
 //var builderC = WebApplication.CreateBuilder(args);
 
 //Configura CORS
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTodo", policy =>
@@ -32,7 +35,11 @@ builder.Services.AddCors(options =>
     });
 });
 //Agregar servicios de controladores
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
 
 //var appC = builderC.Build();
 
@@ -68,6 +75,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 // Agregar servicios de logging
 builder.Services.AddLogging();
+
 
 var app = builder.Build();
 
