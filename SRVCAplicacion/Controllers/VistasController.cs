@@ -82,7 +82,13 @@ namespace SRVCAplicacion.Controllers
         {
             return View("~/Views/Busqueda/GenerarRegistro.cshtml");
         }
+        }
+         //--------------REGISTROS------------
+
+        [HttpGet("HistorialRegistros")]
+        public IActionResult HistorialRegistros()
+        {
+        return View("~/Views/Historial/HistorialRegistros.cshtml");
+
     }
-
-
 }
