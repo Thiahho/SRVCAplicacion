@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Text.Json;
+using SRVCAplicacion.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
+//Service de LogAud
+builder.Services.AddScoped<ILogAudService, LogAudService>();
 // Agregar servicios de logging
 builder.Services.AddLogging();
 
