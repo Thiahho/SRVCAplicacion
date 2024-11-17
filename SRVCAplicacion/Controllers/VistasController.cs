@@ -72,10 +72,10 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Inquilinos/agregarInquilino.cshtml");
         }
         //-----------------------------BUSQUEDA-----------
-        [HttpGet("Busqueda")]
+        [HttpGet("GenerarRegistros")]
         public IActionResult GenerarRegistros()
         {
-            return View("~/Views/Busqueda/GenerarRegistro.cshtml");
+            return View("~/Views/Historial/GenerarRegistro.cshtml");
         }
 
 
