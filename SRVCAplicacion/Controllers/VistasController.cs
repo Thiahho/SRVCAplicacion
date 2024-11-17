@@ -31,14 +31,9 @@ namespace SRVCAplicacion.Controllers
         {
             return View("~/Views/Puntos/EditarPuntos.cshtml");
         }
-        [HttpGet("AgregarPuntos")]
-        public IActionResult AgregarPuntos()
-        {
-            return View("~/Views/Puntos/AgregarPuntos.cshtml");
-        }
-            //--------------USUARIO------------
+        //--------------USUARIO------------
 
-            [HttpGet("listaUsuario")]
+        [HttpGet("listaUsuario")]
         public IActionResult listaUsuario()
         {
             return View("~/Views/Usuario/listaUsuario.cshtml");
@@ -77,18 +72,22 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Inquilinos/agregarInquilino.cshtml");
         }
         //-----------------------------BUSQUEDA-----------
-        [HttpGet("Busqueda")]
+        [HttpGet("GenerarRegistros")]
         public IActionResult GenerarRegistros()
         {
-            return View("~/Views/Busqueda/GenerarRegistro.cshtml");
+            return View("~/Views/Historial/GenerarRegistro.cshtml");
         }
-        }
-         //--------------REGISTROS------------
+
+
+        //--------------REGISTROS------------
 
         [HttpGet("HistorialRegistros")]
         public IActionResult HistorialRegistros()
         {
-        return View("~/Views/Historial/HistorialRegistros.cshtml");
+            return View("~/Views/Historial/HistorialRegistros.cshtml");
 
+        }
+    
     }
+
 }

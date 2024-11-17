@@ -4,8 +4,6 @@
 //using Microsoft.Win32.SafeHandles;
 //using CredentialManagement;
 
-//public static class CredentialManager
-//{
 //    // Guardar la credencial en el Administrador de Credenciales de Windows
 //    public static void SaveCredential(string target, string username, string password)
 //    {
@@ -45,3 +43,32 @@
 //        Console.WriteLine($"Clave: {credential.Password}");
 //    }
 //}
+
+using CredentialManagement;
+
+public class Credenciales
+{
+    public void GuardarContrasena(string contra)
+    {
+        var cred = new Credential
+        {
+            Target = "SRCVCCC", 
+            Password = contra,
+            PersistanceType = PersistanceType.LocalComputer // Almacenamiento local
+        };
+        cred.Save(); // Guardar la credencial
+    }
+
+    public string ObtenerPass()
+    {
+        var cred = new Credential { Target = "SRCVCCC" };
+        if (cred.Load()) 
+        {
+            return cred.Password; // Retornar la contraseña
+        }
+        else
+        {
+            throw new Exception("No se ha encontrado la credencial."); 
+        }
+    }
+}

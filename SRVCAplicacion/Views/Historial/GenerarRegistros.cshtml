@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Historial Registros</title>
+    <title>Agregar Registros</title>
 
     <!-- Custom fonts for this template-->
     <script src="https://kit.fontawesome.com/c84f14ebb2.js" crossorigin="anonymous"></script>
@@ -24,51 +24,43 @@
 
 <body>
     @{
-        ViewData["Tittle"] = "Historial de Registros";
+        ViewData["Tittle"] = "Ingresar Registros";
     }
+
     <div class="container">
-        <h1>DEPARTAMENTO</h1>
-        <form class="search-form" id="buscar-registros">
-           <div class="form-group">
-               <label for="condicion">Condicion</label>
-               <input type="text" id="condicion" placeholder="Condicion" />
+        <div class="header">
+            <label for="identificacion">IDENTIFICACION</label>
+            <select id="identificacion" placeholder="Seleccione identificación">
+                <option value="" selected disabled>Seleccione identificación</option>
+            </select>
+        </div>
 
-           </div>
-           <div class="form-group">
-                <label for="desde">Desde</label>
-                <input type="date" id="hora_ingreso" placeholder="Fecha Desde" />
-            </div> 
-            <div class="form-group">
-                <label for="hasta">Hasta</label>
-                <input type="date" id="hora_salida" placeholder="Fecha Hasta" />
-            
+        <div class="main">
+            <div class="left-panel">
+                <textarea id="info_area" rows="12" cols="30" placeholder="Información del visitante..."></textarea>
             </div>
-            <button type="button" id="buscar">Buscar</button>   
-        </form>
+        </div>
 
-        <p>Seleccionando el botón "Buscar" visualizarán todos los que están disponibles.</p>
+        <div class="form-group">
+            <label for="motivo">Motivo*</label>
+            <select id="motivo" placeholder="Seleccione Motivo">
+                <option value="" selected disabled>Seleccione motivo</option>
+                <!-- Aquí se cargarán los motivos dinámicamente -->
+            </select>
+        </div>
 
-       <table class="table table-dark table-striped-columns" id="resultados">
-        <thead>
-            <tr>
-             <th>IDENTIFICACION</th>
-                <th>NOMBRE ENCARGADO</th>
-                <th>DEPARTAMENTO</th>
-                <th>NOMBRE VISITANTE</th>
-                <th>MOTIVO</th>
-                <th>MOTIVO PERSONALIZADO</th>
-                <th>HORA ENTRADA</th>
-                <th>HORA SALIDA</th>
-            </tr>
-        </thead>
-        <tbody id="tbody-resultados">
-            <!-- Los registros se insertarán aquí -->
-              
-                               
-        </tbody>
-    </table>
-</div>
+        <div class="form-group">
+            <label for="depto_visita">Departamento*</label>
+            <select id="depto_visita" placeholder="Seleccione Departamento">
+                <option value="" selected disabled>Seleccione Departamento</option>
+                <!-- Aquí se cargarán los departamentos dinámicamente -->
+            </select>
+        </div>
 
+        <div class="footer">
+            <button id="guardar">Guardar</button>
+        </div>
+    </div>
     <script src="~/jquery/jquery.min.js"></script>
     <script src="~/bootstrap/js/bootstrap.bundle.min"></script>
 
@@ -87,6 +79,8 @@
     <!-- Page level custom scripts -->
     <script src="~/jsc/demo/chart-area-demo.js"></script>
     <script src="~/jsc/demo/chart-pie-demo.js"></script>
-    <script src="~/js/busqueda.js"></script>
+    <script src="~/jsc/identifacion.js"></script>
+
+    
 </body>
 </html>
