@@ -38,12 +38,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
                                     </div>
-                                    <form asp-action="Login" asp-controller="Acceso" method="post" id="formLogin" class="user">
+                                    <form method="post" id="formLogin" class="user">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="usuario" aria-describedby="usuario" placeholder="Usuario" asp-for="usuario">
+                                            <input type="text" class="form-control form-control-user" id="usuario" aria-describedby="usuario" placeholder="Usuario">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="contraseña" placeholder="Password" asp-for="contraseña">
+                                            <input type="password" class="form-control form-control-user" id="contraseña" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -80,8 +80,8 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/login.js" asp-append-version="true"></script>
+    <script src="~/jsc/site.js" asp-append-version="true"></script>
+    <script src="~/jsc/login.js" asp-append-version="true"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/jquery/jquery.min.js"></script>
@@ -91,7 +91,7 @@
     <script src="~/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="~/js/sb-admin-2.min.js"></script>
+    <script src="~/jsc/sb-admin-2.min.js"></script>
 
 </body>
 </html>

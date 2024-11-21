@@ -18,8 +18,22 @@ namespace SRVCAplicacion.Controllers
         {
             _appDbContext = appdb;
         }
-        
 
+
+        [HttpGet("{idUsuario}/punto-control")]
+        public IActionResult GetPuntoControl(int idUsuario)
+        {
+            try
+            {
+                var usuario = _appDbContext.Usuario.Select(u => u.id_punto_control).ToListAsync();
+                return Ok(usuario);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);  
+            }
+
+        }
 
         [HttpGet("obtener")]
         public async Task<ActionResult<IEnumerable<Usuario>>> ObtenerUsuarios()

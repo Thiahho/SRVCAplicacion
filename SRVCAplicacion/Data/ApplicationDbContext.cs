@@ -9,10 +9,8 @@ namespace SRVCAplicacion.Data
     {
         private readonly ApplicationDbContext _context;
 
-        public ApplicationDbContext(DbContextOptions options, ApplicationDbContext context) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            _context = context;
-
         }
 
         public DbSet<Departamento> Departamento { get; set; }
@@ -26,40 +24,49 @@ namespace SRVCAplicacion.Data
         public DbSet<Puntos_de_controles> Puntos_de_controles { get; set; }
 
 
-        public int GetUserId(int id)
-        {
-            var usuario = _context.Usuario.FirstOrDefaultAsync(us => us.id_usuario == id);
-            return usuario?.
-        }
-        public override async Task<int> SaveChangesAasync(CancellationToken cancellation = default)
-        {
-            var cambios= ChangeTracker.Entries().Where(e=>e.State==EntityState.Modified)
-                .ToList();
 
-            foreach(var cambio in cambios)
-            {
-                var originalValores= cambio.OriginalValues;
-                var cambioValores = cambio.CurrentValues;
+        //public override async Task<int> SaveChangesAasync(CancellationToken cancellation = default)
+        //{
+        //    var cambios = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified)
+        //        .ToList();
 
-                foreach(var propiedad in originalValor.Properties)
-                {
-                    var orgValor= originalValores[propiedad]?.ToString();
-                    var modValor= cambioValores[propiedad]?.ToString();
+        //    foreach (var cambio in cambios)
+        //    {
+        //        var originalValores = cambio.OriginalValues;
+        //        var cambioValores = cambio.CurrentValues;
 
-                    if (orgValor != modValor) 
-                    {
-                        var log = new LogAud
-                        {
-                            id_usuario = GetUserId(),
-                            accion= $"Modificacion en  {cambio.Entity.GetType().Name}",
-                            hora=DateTime.UtcNow,
-                            valor_original=orgValor,
-                            valor_nuevo= modValor,
-                            id_punto_control=
-                    }
-                }
-            }
-        }
+        //        foreach (var propiedad in originalValores.Properties)
+        //        {
+        //            var orgValor = originalValores[propiedad]?.ToString();
+        //            var modValor = cambioValores[propiedad]?.ToString();
+
+        //            if (orgValor != modValor)
+        //            {
+        //                var log = new LogAud
+        //                {
+        //                    id_usuario = GetUserId(),
+        //                    accion = $"Modificacion en  {cambio.Entity.GetType().Name}",
+        //                    hora = DateTime.UtcNow,
+        //                    valor_original = orgValor,
+        //                    valor_nuevo = modValor
+        //                    //id_punto_control=
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        var configuration = new ConfigurationBuilder()
+        //            .AddJsonFile("appsettings.json")
+        //            .Build();
+
+        //        optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+        //    }
+        //}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -70,7 +77,6 @@ namespace SRVCAplicacion.Data
             }
         }
 
-       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
