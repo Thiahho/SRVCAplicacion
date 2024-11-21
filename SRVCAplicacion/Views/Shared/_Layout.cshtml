@@ -179,11 +179,11 @@
             <!-- More Sidebar Items -->
             <!-- Sidebar Item for Usuarios -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Usuarios</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("AgregarUsuario", "Vistas")">Agregar Usuarios</a>
                         <a class="collapse-item" href="@Url.Action("EditarUsuario", "Vistas")">Editar usuarios</a>
@@ -200,6 +200,17 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("PuntosActivos", "Vistas")">Puntos Activos</a>
                         <a class="collapse-item" href="@Url.Action("EditarPuntos", "Vistas")">Editar Punto</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Log</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("Log_aud", "Vistas")">Log Aud</a>
                     </div>
                 </div>
             </li>

@@ -62,6 +62,14 @@ namespace SRVCAplicacion.Controllers
         {
             return View("~/Views/Busqueda/GenerarRegistro.cshtml");
         }
+
+        //-----------------------------LOG-----------
+        [HttpGet("Log_aud")]
+        public IActionResult Log_aud()//CambiosLOG
+        {
+            return View("~/Views/Log_aud/Log_aud.cshtml");
+
+        }
     }
 
 }
