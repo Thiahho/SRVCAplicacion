@@ -70,6 +70,8 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Log_aud/Log_aud.cshtml");
 
         }
+
+        
     }
 
 }

@@ -10,9 +10,9 @@ async function mostrarLog() {
         }
 
         const log_aud = await response.json();
-        console.log('Cambios recibidos:', log_aud);
+        console.log('Log recibidos:', log_aud);
 
-        const tabla = document.getElementById('cambiosTable');
+        const tabla = document.getElementById('logTable');
         // tabla.innerHTML = ''; Limpia la tabla
 
         log_aud.forEach(log => {
