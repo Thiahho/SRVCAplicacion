@@ -7,7 +7,7 @@ using SRVCAplicacion.Models;
 namespace SRVCAplicacion.Controllers
 {
     [ApiController]
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class PuntosController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;

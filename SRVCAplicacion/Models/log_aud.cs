@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
+    [Table("log_aud")]
     public class log_aud
     {
         [Key]
@@ -19,7 +21,7 @@ namespace SRVCAplicacion.Models
 
         [MaxLength(160)]
         public string valor_nuevo { get; set; } = "";  // Valor nuevo después del cambio
-
+        public string tabla { get; set; } = "";  // Valor nuevo después del cambio
         public int id_punto_control { get; set; } = 0;  // ID del punto de control asociado
     }
 

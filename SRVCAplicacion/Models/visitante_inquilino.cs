@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
+    [Table("visitante_inquilino")]
     public class visitante_inquilino
     {
         [Key]
@@ -26,8 +28,8 @@ namespace SRVCAplicacion.Models
         [Required]
         public string telefono { get; set; } = "";  // Teléfono del visitante
 
-        [MaxLength(45)]
-        public string? imgpath { get; set; } = "";  // Ruta de la imagen
+        //[MaxLength(45)]
+        //public string? imgpath { get; set; } = "";  // Ruta de la imagen
 
         [Required]
         public int estado { get; set; }  // Estado de la visita, dentro o fuera (enum)

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SRVCAplicacion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Acceso/Login";    
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ILogAudService, AuditoriaSerice>();
 
 var app = builder.Build();
 
