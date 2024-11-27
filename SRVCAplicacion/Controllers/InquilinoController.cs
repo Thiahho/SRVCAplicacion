@@ -5,7 +5,7 @@ using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class InquilinoController : Controller
     {
