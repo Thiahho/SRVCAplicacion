@@ -45,19 +45,22 @@ async function crearVisitantee() {
 // Función para crear un nuevo visitante axxxx
 async function CrearVisitante() {
     // Desactivar el botón para evitar múltiples clics
-    document.getElementById('btnConfirmar').disabled = false;
+    document.getElementById('crearNuevoVisitante').disabled = false;
 
-    const nombre = document.getElementById('nombre').value;
-    const apellido = document.getElementById('apellido').value;
-    const identificacion = document.getElementById('identificacion').value;
-    const telefono = document.getElementById('telefono').value;
-    const estado = parseInt(document.getElementById('estado').value);
-    const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
+    const nombre = document.getElementById('inputNombreNV').value;
+    const apellido = document.getElementById('inputApellidoNV').value;
+    const identificacion = document.getElementById('inputDNINV').value;
+    const telefono = document.getElementById('inputTelefonoNV').value;
+    const activo = parseInt("1");
+    const estado = parseInt("1");
+    // const estado = parseInt(document.getElementById('estado').value);
+    const id_punto_control = parseInt("1"); 
+    //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
 
     // Validar campos (Ejemplo: nombre y apellido no pueden estar vacíos)
-    if (!nombre || !apellido || !identificacion || !telefono || isNaN(estado) || !id_punto_control) {
+    if (!nombre || !apellido || !identificacion || !telefono ) {
         alert("Todos los campos son obligatorios.");
-        document.getElementById('btnConfirmar').disabled = false; // Rehabilitar el botón
+        document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
         return;
     }
 
@@ -67,6 +70,7 @@ async function CrearVisitante() {
         identificacion: identificacion,
         telefono: telefono,
         estado: estado,
+        activo: activo,
         id_punto_control: id_punto_control
     };
 
@@ -82,8 +86,8 @@ async function CrearVisitante() {
         const result = await response.json();
 
         if (response.ok) {
-            alert("Usuario creado exitosamente.");
-            document.getElementById('formUsuario').reset();  // Limpiar formulario
+            alert("Visitante creado exitosamente.");
+            //document.getElementById('formUsuario').reset();  // Limpiar formulario
         } else {
             // Si hay un error en el backend, mostrarlo
             alert("Error: " + result.message || "Error desconocido");

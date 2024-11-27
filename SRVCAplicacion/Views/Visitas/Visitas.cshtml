@@ -49,7 +49,7 @@
                                 <div class="ml-auto">
                                     <!-- Agrega esta clase para empujar los botones a la derecha -->
                                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">Ingreso</button>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit2">Nuevo registro</button>
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit2">Crear nuevo visitante</button>
                                 </div>
 
                             </div>
@@ -126,7 +126,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editModalLabel">Ingreso</h5>
+                                    <h5 class="modal-title" id="editModalLabel">Ingrese los datos de la nueva visita</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -134,26 +134,26 @@
                                 <div class="modal-body">
                                     <form id="formInstitucion" action="guardar_institucion.php" method="POST">
                                         <div class="form-group">
-                                            <label for="inputDNI">DNI</label>
-                                            <input type="text" class="form-control" id="inputDNI" name="dni" placeholder="DNI" required>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="inputNombre">Nombre</label>
-                                            <input type="text" class="form-control" id="inputNombre" name="nombre" placeholder="Nombre" required>
+                                            <input type="text" class="form-control" id="inputNombreNV" name="nombreNV" placeholder="Nombre" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputApellido">Apellido</label>
-                                            <input type="text" class="form-control" id="inputApellido" name="apellido" placeholder="Apellido" required>
+                                            <input type="text" class="form-control" id="inputApellidoNV" name="apellidoNV" placeholder="Apellido" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputParentesco">Motivo</label>
-                                            <input type="text" class="form-control" id="inputMotivo" name="motivo" placeholder="Motivo" required>
+                                            <label for="inputDNI">DNI</label>
+                                            <input type="text" class="form-control" id="inputDNINV" name="dniNV" placeholder="DNI" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputParentesco">Telefono</label>
+                                            <input type="text" class="form-control" id="inputTelefonoNV" name="telefonoNV" placeholder="Telefono" required>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" id="guardarCambios">Guardar Cambios</button>
+                                    <button type="button" class="btn btn-primary" id="crearNuevoVisitante">Crear Visitante</button>
                                 </div>
                             </div>
                         </div>
