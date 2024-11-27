@@ -44,8 +44,6 @@ async function crearVisitantee() {
 
 // Función para crear un nuevo visitante axxxx
 async function CrearVisitante() {
-    // Desactivar el botón para evitar múltiples clics
-    document.getElementById('crearNuevoVisitante').disabled = false;
 
     const nombre = document.getElementById('inputNombreNV').value;
     const apellido = document.getElementById('inputApellidoNV').value;
@@ -87,7 +85,7 @@ async function CrearVisitante() {
 
         if (response.ok) {
             alert("Visitante creado exitosamente.");
-            //document.getElementById('formUsuario').reset();  // Limpiar formulario
+            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
         } else {
             // Si hay un error en el backend, mostrarlo
             alert("Error: " + result.message || "Error desconocido");
@@ -97,6 +95,12 @@ async function CrearVisitante() {
         alert("Error al enviar el formulario.");
     } finally {
         // Rehabilitar el botón después de que se haya completado la acción
-        document.getElementById('btnConfirmar').disabled = false;
+        //
+        document.getElementById('inputNombreNV').value = '';
+        document.getElementById('inputApellidoNV').value = '';
+        document.getElementById('inputDNINV').value = '';
+        document.getElementById('inputTelefonoNV').value = '';
     }
+
 }
+// fin crear visitante
