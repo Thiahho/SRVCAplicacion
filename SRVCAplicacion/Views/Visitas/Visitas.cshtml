@@ -89,34 +89,41 @@
 
                                     <form>
                                         <div class="form-group">
-                                            <label for="inputUbicacion">DNI</label>
-                                            <input type="text" class="form-control" id="inputUbicacion" placeholder="Ubicación">
+                                            <label for="inputDNIi">DNI</label>
+                                            <input type="text" class="form-control" id="inputDNIingreso" placeholder="777">
+                                            <button type="button" onclick="buscarPorDNI()" id="bBuscarPorDNI">Buscar</button>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputUbicacion">Motivo</label>
-
-
+                                            <label for="inputNombreI">Nombre</label>
+                                            <input type="text" class="form-control" id="inputNombreIngreso" placeholder="nombre Ingreso">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputApellidoI">Apellido</label>
+                                            <input type="text" class="form-control" id="inputApellidoIngreso" placeholder="apellido Ingreso">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputMotivoI">Motivo</label>
                                             <select name="cars" id="cars">
-                                                <option value="volvo">Visitas</option>
-                                                <option value="saab">CASA</option>
-                                                <option value="mercedes">PIZZA</option>
-                                                <option value="audi">Audi</option>
+                                                <option value="visita">Visitas</option>
+                                                <option value="casa">Casa</option>
+                                                <option value="trabajo">Trabajos</option>
+                                                <option value="delivery">Delivery</option>
                                             </select>
                                             <div class="form-group">
-                                                <label for="motivo">Motivo:</label>
+                                                <label for="motivo">Motivo personalizado:</label>
                                                 <textarea id="motivo" name="motivo" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputSector">donde</label>
-                                            <input type="text" class="form-control" id="inputSector" placeholder="Sector">
+                                            <label for="inputSector">A donde se dirige</label>
+                                            <input type="text" class="form-control" id="inputSector" placeholder="sector/depto">
                                         </div>
                                         <!-- Agregar más campos según sea necesario -->
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                                    <button type="button" onclick="guardarRegistro()" class="btn btn-primary" id="botonGuardarRegistro">Guardar Cambios</button>
                                 </div>
                             </div>
                         </div>

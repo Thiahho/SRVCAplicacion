@@ -12,7 +12,7 @@ namespace SRVCAplicacion.Models
         public int id_usuario { get; set; } = 0;  // ID del usuario que registra la visita
 
         [MaxLength(45)]
-        public string nombre_encargado { get; set; } = "";  // Nombre del encargado
+        public string? nombre_encargado { get; set; } = "";  // Nombre del encargado
 
         [MaxLength(45)]
         public string motivo { get; set; } = "";  // Motivo de la visita

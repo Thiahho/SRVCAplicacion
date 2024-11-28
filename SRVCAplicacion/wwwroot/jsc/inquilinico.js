@@ -14,6 +14,7 @@ async function obtenerVisitantes() {
 }
 
 // Función para crear un nuevo visitante
+/*
 async function crearVisitantee() {
     const nuevoVisitante = {
         nombre: "Juan",
@@ -39,6 +40,7 @@ async function crearVisitantee() {
         console.log('Visitante creado:', data);
     }
 }
+*/
 
 // Puedes agregar más funciones aquí...
 
@@ -104,3 +106,67 @@ async function CrearVisitante() {
 
 }
 // fin crear visitante
+
+async function buscarPorDNI() {
+
+}
+
+async function guardarRegistro() {
+    const nombre = document.getElementById('inputNombreNV').value;
+    const apellido = document.getElementById('inputApellidoNV').value;
+    const identificacion = document.getElementById('inputDNINV').value;
+    const telefono = document.getElementById('inputTelefonoNV').value;
+    const activo = parseInt("1");
+    const estado = parseInt("1");
+    // const estado = parseInt(document.getElementById('estado').value);
+    const id_punto_control = parseInt("1");
+    //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
+
+    // Validar campos (Ejemplo: nombre y apellido no pueden estar vacíos)
+    if (!nombre || !apellido || !identificacion || !telefono) {
+        alert("Todos los campos son obligatorios.");
+        document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
+        return;
+    }
+
+    const formData = {
+        nombre: nombre,
+        apellido: apellido,
+        identificacion: identificacion,
+        telefono: telefono,
+        estado: estado,
+        activo: activo,
+        id_punto_control: id_punto_control
+    };
+
+    try {
+        const response = await fetch('api', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Visitante creado exitosamente.");
+            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
+        } else {
+            // Si hay un error en el backend, mostrarlo
+            alert("Error: " + result.message || "Error desconocido");
+        }
+    } catch (error) {
+        console.error('Error al enviar el formulario', error);
+        alert("Error al enviar el formulario.");
+    } finally {
+        // Rehabilitar el botón después de que se haya completado la acción
+        //
+        document.getElementById('inputNombreNV').value = '';
+        document.getElementById('inputApellidoNV').value = '';
+        document.getElementById('inputDNINV').value = '';
+        document.getElementById('inputTelefonoNV').value = '';
+    }
+
+}
