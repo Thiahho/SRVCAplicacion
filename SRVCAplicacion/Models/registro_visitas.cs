@@ -23,7 +23,7 @@ namespace SRVCAplicacion.Models
         [MaxLength(45)]
         public string depto_visita { get; set; } = "";  // Departamento donde se realiza la visita
 
-        public DateTime hora_ingreso { get; set; }  // Hora de ingreso de la visita
+        public DateTime? hora_ingreso { get; set; }  // Hora de ingreso de la visita
 
         public DateTime? hora_salida { get; set; }  // Hora de salida de la visita
 

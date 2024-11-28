@@ -107,44 +107,44 @@ async function CrearVisitante() {
 }
 // fin crear visitante
 
+async function formatearFecha(fecha) {
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes con dos dígitos
+    const day = String(fecha.getDate()).padStart(2, '0'); // Día con dos dígitos
+    const hours = String(fecha.getHours()).padStart(2, '0'); // Hora con dos dígitos
+    const minutes = String(fecha.getMinutes()).padStart(2, '0'); // Minutos con dos dígitos
+    const seconds = String(fecha.getSeconds()).padStart(2, '0'); // Segundos con dos dígitos
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+
 async function buscarPorDNI() {
 
 }
 
 async function guardarRegistro() {
     const identificacion_visita = document.getElementById('inputDNIingreso').value;
-    //const nombre_visitante_inquilino = document.getElementById('inputNombreNV').value + ' ' + document.getElementById('inputApellidoNV').value;
-    //const apellido = document.getElementById('inputApellidoNV').value;
     
     const nombre = document.getElementById('inputNombreIngreso').value.trim();
     const apellido = document.getElementById('inputApellidoIngreso').value.trim();
     const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
 
-    //const motivo = document.getElementById('selectMotivo').value;
-    const selectMotivo = document.getElementById('selectMotivo');
-    const motivoC = selectMotivo;
-    // Se ejecutará cada vez que cambie la selección
-    selectMotivo.addEventListener('change', function () {
-        motivoC = selectMotivo.value;
-        console.log(motivo); // Para verificar el valor seleccionado
-    });
-    const motivo = motivoC;
+    const hora_ingreso = new Date(); // Obtiene la fecha y hora exacta
+    const hora_formateada = formatearFecha(hora_ingreso);
 
+    const motivo = document.getElementById('inputMotivoIngreso').value;
     const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
     const depto_visita = document.getElementById('inputSectorDepto').value;
-    const hora_ingreso = new Date();
     const estado_visita = parseInt("1");
     const id_usuario = parseInt("1");
     const id_visitante_inquilino = parseInt("1");
-    // const estado = parseInt(document.getElementById('estado').value);
     const id_punto_control = parseInt("1");
-    //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
     const nombre_punto_control = document.getElementById('inputNombrePControl').value;
 
-    // Validar campos (Ejemplo: nombre y apellido no pueden estar vacíos)
-    if (!nombre || !apellido || !identificacion_visita /*|| !motivo */|| !motivo_personalizado || !depto_visita || !nombre_punto_control) {
+    if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
         alert("Todos los campos son obligatorios.");
-        document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
+        document.getElementById('crearNuevoVisitante').disabled = false;
         return;
     }
 
@@ -184,13 +184,15 @@ async function guardarRegistro() {
         console.error('Error al enviar el formulario', error);
         alert("Error al enviar el formulario.");
     } finally {
-        // Rehabilitar el botón después de que se haya completado la acción
-        //
+        //Limpia los campos al terminar
+        document.getElementById('inputDNIingreso').value = '';
         document.getElementById('inputNombreIngreso').value = '';
         document.getElementById('inputApellidoIngreso').value = '';
-        document.getElementById('inputDNIingreso').value = '';
+        document.getElementById('inputMotivoIngreso').value = '';
         document.getElementById('motivoPersonalizado').value = '';
+        document.getElementById('inputSectorDepto').value = '';
         document.getElementById('inputNombrePControl').value = '';
+
     }
 
 }
