@@ -122,11 +122,13 @@ async function guardarRegistro() {
 
     //const motivo = document.getElementById('selectMotivo').value;
     const selectMotivo = document.getElementById('selectMotivo');
+    const motivoC = selectMotivo;
     // Se ejecutará cada vez que cambie la selección
     selectMotivo.addEventListener('change', function () {
-        const motivo = selectMotivo.value;
+        motivoC = selectMotivo.value;
         console.log(motivo); // Para verificar el valor seleccionado
     });
+    const motivo = motivoC;
 
     const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
     const depto_visita = document.getElementById('inputSectorDepto').value;
@@ -140,7 +142,7 @@ async function guardarRegistro() {
     const nombre_punto_control = document.getElementById('inputNombrePControl').value;
 
     // Validar campos (Ejemplo: nombre y apellido no pueden estar vacíos)
-    if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
+    if (!nombre || !apellido || !identificacion_visita /*|| !motivo */|| !motivo_personalizado || !depto_visita || !nombre_punto_control) {
         alert("Todos los campos son obligatorios.");
         document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
         return;
