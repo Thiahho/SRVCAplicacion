@@ -25,7 +25,7 @@ namespace SRVCAplicacion.Models
 
         public DateTime hora_ingreso { get; set; }  // Hora de ingreso de la visita
 
-        public DateTime hora_salida { get; set; }  // Hora de salida de la visita
+        public DateTime? hora_salida { get; set; }  // Hora de salida de la visita
 
         public int id_visitante_inquilino { get; set; } = 0;  // ID del visitante o inquilino
 
