@@ -21,7 +21,7 @@ namespace SRVCAplicacion.Controllers
         //{
         //    return View();
         //}
-        [HttpPost]
+        [HttpPost("CrearRegistro")]
         public async Task<ActionResult> CrearRegistro([FromBody] registro_visitas nuevoRegistro)
         {
             try

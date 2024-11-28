@@ -91,7 +91,7 @@
                                         <div class="form-group">
                                             <label for="inputDNIi">DNI</label>
                                             <input type="text" class="form-control" id="inputDNIingreso" placeholder="777">
-                                            <button type="button" onclick="buscarPorDNI()" id="bBuscarPorDNI">Buscar</button>
+                                            <button type="button" id="bBuscarPorDNI">Buscar</button>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputNombreI">Nombre</label>
@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputMotivoI">Motivo</label>
-                                            <select name="cars" id="cars">
+                                            <select name="cars" id="selectMotivo">
                                                 <option value="visita">Visitas</option>
                                                 <option value="casa">Casa</option>
                                                 <option value="trabajo">Trabajos</option>
@@ -111,12 +111,16 @@
                                             </select>
                                             <div class="form-group">
                                                 <label for="motivo">Motivo personalizado:</label>
-                                                <textarea id="motivo" name="motivo" required></textarea>
+                                                <textarea id="motivoPersonalizado" name="motivo" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputSector">A donde se dirige</label>
-                                            <input type="text" class="form-control" id="inputSector" placeholder="sector/depto">
+                                            <input type="text" class="form-control" id="inputSectorDepto" placeholder="sector/depto">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputSector">Nombre punto de control</label>
+                                            <input type="text" class="form-control" id="inputNombrePControl" placeholder="flores 247">
                                         </div>
                                         <!-- Agregar más campos según sea necesario -->
                                     </form>
