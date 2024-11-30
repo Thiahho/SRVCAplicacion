@@ -120,7 +120,7 @@ namespace SRVCAplicacion.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RegistroExiste(dni))
+                if (!RegistroExistes(dni))
                 {
                     return NotFound();
                 }
@@ -132,10 +132,136 @@ namespace SRVCAplicacion.Controllers
 
             return NoContent();
         }
+        private bool RegistroExistes(string dni)
+        {
+            return _appDbContext.registro_Visitas.Any(e => e.identificacion_visita == dni);
+        }
+
+        [HttpPut("ActualizarHorarioSalida/{dni}")]
+        public async Task<IActionResult> ActualizarHorarioSalida(string dni, [FromBody] string nuevoHorarioSalida)
+        {
+            // Intentar convertir el string recibido a un DateTime
+            if (!DateTime.TryParse(nuevoHorarioSalida, out DateTime horarioSalida))
+            {
+                // Devolver un objeto JSON con el mensaje de error
+                return BadRequest(new { mensaje = "El horario de salida no tiene un formato válido." });
+            }
+
+            // Buscar el registro de visita por el identificador (dni)
+            var registro = await _appDbContext.registro_Visitas
+                                              .FirstOrDefaultAsync(r => r.identificacion_visita == dni);
+
+            // Si no se encuentra el registro, retornamos NotFound
+            if (registro == null)
+            {
+                return NotFound();
+            }
+
+            // Actualizar solo el campo 'hora_salida'
+            registro.hora_salida = horarioSalida;
+
+            // Marcar el estado de la entidad como modificado para que se actualice
+            _appDbContext.Entry(registro).State = EntityState.Modified;
+
+            try
+            {
+                // Guardar los cambios en la base de datos
+                await _appDbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Si hay un problema de concurrencia, se verifica si el registro aún existe
+                if (!RegistroExiste(dni))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent(); // Indica que la operación fue exitosa pero no se devuelve contenido
+        }
         private bool RegistroExiste(string dni)
         {
             return _appDbContext.registro_Visitas.Any(e => e.identificacion_visita == dni);
         }
+
+
+
+
+        /* original
+        [HttpPut("Actualizar/{id}")]
+        public async Task<IActionResult> PutUsuario(int id, [FromBody] Usuario usuario)
+        {
+            if (usuario == null)
+            {
+                return BadRequest(new { message = "los datos son null." });
+            }
+            // 1. Validación de modelo
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);  // Si el modelo no es válido, devuelve un 400
+            }
+
+            // 2. Verificar que el usuario exista en la base de datos
+            var usuarioExistente = await _appDbContext.Usuario.FindAsync(id);
+            if (usuarioExistente == null)
+            {
+                return NotFound(new { message = "Usuario no encontrado." });
+            }
+
+            // 3. Actualizar solo los campos del usuario que han sido modificados
+            // Se asegura de que solo se actualicen los campos que no son nulos o vacíos
+            if (!string.IsNullOrEmpty(usuario.usuario))
+            {
+                usuarioExistente.usuario = usuario.usuario;
+            }
+            if (!string.IsNullOrEmpty(usuario.email))
+            {
+                usuarioExistente.email = usuario.email;
+            }
+            if (!string.IsNullOrEmpty(usuario.telefono))
+            {
+                usuarioExistente.telefono = usuario.telefono;
+            }
+            if (!string.IsNullOrEmpty(usuario.dni))
+            {
+                usuarioExistente.dni = usuario.dni;
+            }
+            if (!string.IsNullOrEmpty(usuario.contraseña))
+            {
+                usuarioExistente.contraseña = usuario.contraseña;
+            }
+            if (usuario.Estado != 0)
+            {
+                usuarioExistente.Estado = usuario.Estado;
+            }
+            // 4. Guardar los cambios en la base de datos
+            try
+            {
+                // Cambiar el estado de la entidad a "Modified" para que se actualice en la base de datos
+                _appDbContext.Entry(usuarioExistente).State = EntityState.Modified;
+                await _appDbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return StatusCode(500, new { message = "Ocurrió un error inesperado al actualizar el usuario." });
+            }
+            catch (Exception ex)
+            {
+                // Para manejar otros posibles errores
+                return StatusCode(500, new { message = $"Error: {ex.Message}" });
+            }
+
+            // 5. Devolver una respuesta exitosa
+            return NoContent(); // 204: No Content, indicando que la actualización fue exitosa sin cuerpo de respuesta
+        }
+
+
+
+       */
 
 
     }

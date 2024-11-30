@@ -197,3 +197,31 @@ async function mostrarRegistros() {
         console.error('Error al mostrar los registros:', error);
     }
 }
+
+async function horaSalida() {
+    const fechaSalida = new Date();  // Asumiendo que 'fechaSalida' es la hora que el usuario seleccionó
+    const hora_formateada = formatearFecha(fechaSalida);
+
+    try {
+        const response = await fetch('https://localhost:7285/api/busqueda/actualizarHorarioSalida/40141223', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(hora_formateada) // Enviamos el valor como una cadena ISO
+        });
+
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+            // Si la respuesta no es exitosa, procesamos el error
+            const errorData = await response.json();  // Parsear la respuesta como JSON
+            console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
+        } else {
+            // Si la respuesta es exitosa, procesamos la respuesta (aunque NoContent no tiene cuerpo)
+            console.log('Horario actualizado correctamente');
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
+}
+
