@@ -194,5 +194,37 @@ async function guardarRegistro() {
         document.getElementById('inputNombrePControl').value = '';
 
     }
+}
 
+async function mostrarRegistros() {
+    try {
+        const response = await fetch('https://localhost:7285/api/Busqueda/obtener');
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const registros = await response.json();
+        console.log('Registros recibidos:', registros);
+
+        const tabla = document.getElementById('tablaRegistrosI');
+        // tabla.innerHTML = ''; Limpia la tabla
+
+        registros.forEach(registro => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${registro.id_registro_visitas}</td>
+                <td>${registro.motivo}</td>
+                <td>${registro.depto_visita}</td>
+                <td>${registro.hora_ingreso}</td>
+                <td>${registro.hora_salida}</td>
+                <td>${registro.nombre_visitante_inquilino}</td>
+                <td>${registro.identificacion_visita}</td>
+            `;
+            tabla.querySelector('tbody').appendChild(fila);
+        });
+    } catch (error) {
+        console.error('Error al mostrar los registros:', error);
+    }
 }

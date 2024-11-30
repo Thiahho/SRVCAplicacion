@@ -90,8 +90,20 @@ namespace SRVCAplicacion.Controllers
             }
         }
 
+        [HttpGet("obtener")]
+        public async Task<ActionResult<IEnumerable<registro_visitas>>> ObtenerRegistros()
+        {
+            try
+            {
+                var reg = await _appDbContext.registro_Visitas.ToListAsync();
+                return Ok(reg);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-       
 
     }
 }

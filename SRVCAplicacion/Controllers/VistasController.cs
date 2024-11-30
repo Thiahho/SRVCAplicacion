@@ -47,12 +47,19 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Usuario/agregarUsuario.cshtml");
 
         }
-        //--------------inquinilo------------
+        //--------------inquinilo/Visitas/Registro------------
 
         [HttpGet("Inquilinos")]
         public IActionResult Visitas()//Inquilinos
         {
            return View("~/Views/Visitas/Visitas.cshtml");
+
+        }
+
+        [HttpGet("registroIngresos")]
+        public IActionResult registroIngresos()
+        {
+            return View("~/Views/Visitas/registroIngresos.cshtml");
 
         }
 
