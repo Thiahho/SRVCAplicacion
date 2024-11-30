@@ -6,6 +6,7 @@ using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PuntosController : Controller

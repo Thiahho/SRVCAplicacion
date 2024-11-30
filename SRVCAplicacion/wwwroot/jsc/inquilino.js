@@ -42,3 +42,6 @@ async function mostrarInquilino() {
 }
 
 document.addEventListener('DOMContentLoaded', mostrarInquilino);
+
+
+

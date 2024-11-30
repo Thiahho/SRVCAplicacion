@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SRVCAplicacion.Data;
 using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("api/[controler]")]
+    [Route("api/[controller]")]
     public class LogAudController : Controller
     {
 

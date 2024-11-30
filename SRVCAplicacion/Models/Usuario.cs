@@ -22,6 +22,7 @@ namespace SRVCAplicacion.Models
         public string CofirmarPass{ get; set; } = "";
         //[Column("tipo")]
         //public int Tipo { get; set; } 
+        [Column("estado")]
         public int Estado { get; set; }
     }
 

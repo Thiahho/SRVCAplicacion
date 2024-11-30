@@ -31,39 +31,26 @@
 
     <div class="container">
 
-        <!-- Page Heading -->
-        <!-- Content Row -->
         <div class="row">
               
-            <!-- Earnings (Monthly) Card Example -->
-            <!-- Content Row -->
-            <!-- Area Chart -->
             <div class="col-xl-12 col-lg-12">
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary">Editar Usuario</h6>
 
                     </div>
-                    <!-- Card Body -->
 
                 </div>
             </div>
         </div>
-        <!-- Begin Page Content -->
 
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                @* <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-                    <div class="ml-auto">
-                        <!-- Agrega esta clase para empujar los botones a la derecha -->
-
-                    </div>
-
-                </div>
-                <!-- Card Body -->
+                 
+                </div> *@
                 <div class="card-body">
                     <div class="chart-area">
                         <table id="usuarioTableEdit" class="display" style="width:100%">
@@ -79,101 +66,32 @@
                                     <th>Id punto de control</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!--<tr>
+                             <tbody>
+                            @* <tr>
+                                    <td><input type="text" id="id_usuario" readonly /></td>
+                                    <td><input type="text" id="usuario" /></td>
+                                    <td><input type="password" id="contraseña" /></td>
+                                    <td><input type="email"  id="email" /></td>
+                                    <td><input type="text" id="telefono" /></td>
+                                    <td><input type="text" id="dni" /></td>
+                                    <td><input type="number" id="estado" /></td>
+
+                                    @*     <select id="estado">
+                                            <option value="1" selected>Activo</option>
+                                            <option value="0">Inactivo</option>
+                                        </select> 
+                                    <td><input type="number" id="id_punto" /></td>
                                     <td>
-
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
-                                            <i class="fa-solid fa-pen-to-square"></i></button>
-                                    </td>
-                                    <td><i class="fas fa-circle" style="color: red;"></i></td>
-                                </tr>
-                                 <tr>
-                                    <td>
-
-
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal">
-                                            <i class="fa-solid fa-pen-to-square"></i></button>
-                                    </td>
-                                    <td><i class="fas fa-circle" style="color: green;"></i></td>
-                                </tr>-->
-                            </tbody>
+                                        <button id="btnEditar" onclick="editUsuario(${usuario.id_usuario})" class="btn btn-primary btn-sm">Editar</button>
+                                    </td> 
+                                </tr>*@
+                                </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- FIN Formulario para agregar usuarios -->
-
-       @*  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Que desea hacer?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form>
-                            <h1>Seleccione una opcion</h1>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#darBaja" data-dismiss="modal">Dar de baja</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#darAlta" data-dismiss="modal">Dar de alta</button>
-                    </div>
-                </div>
-            </div>
-        </div> *@
-
-       @*  <div class="modal fade" id="darBaja" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Seguro que desea dar de baja este usuario?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form>
-                            <h1>Confirmar</h1>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" data-dismiss="modal">Atras</button>
-                        <button type="button" class="btn btn-primary">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="darAlta" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Seguro que desea dar de alta este usuario?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form>
-                            <h1>Confirmar</h1>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" data-dismiss="modal">Atras</button>
-                        <button type="button" class="btn btn-primary">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div> *@
+        
 
 
 

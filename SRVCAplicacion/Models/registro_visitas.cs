@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
+    [Table("registro_visitas")]
     public class registro_visitas
     {
         [Key]

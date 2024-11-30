@@ -6,16 +6,24 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication; 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SRVCAplicacion.Controllers
 {
-    //[Route("api/controller")]
+    [Authorize]
+    [Route("api/controller")]
     public class AccesoController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;
-        public AccesoController(ApplicationDbContext dbContext)
+        private readonly IConfiguration _configuration; 
+        
+        public AccesoController(ApplicationDbContext dbContext, IConfiguration configuration)
         {
             _appDbContext = dbContext;
+            _configuration = configuration;
         }
 
         public IActionResult Registro()
@@ -61,59 +69,63 @@ namespace SRVCAplicacion.Controllers
             return View();
         }
 
-
+       
         [HttpGet]
         public IActionResult Login()
         {
             if (User.Identity!.IsAuthenticated) return RedirectToAction("Index", "Home");
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Login(Login login)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] Login login)
         {
             try
             {
-                Usuario? usu = await _appDbContext.Usuario
-                .Where(u => u.usuario == login.usuario && u.contraseña == login.contraseña)
-                .FirstOrDefaultAsync();
+                // Verificar las credenciales del usuario
+                var usu = await _appDbContext.Usuario
+                    .Where(u => u.usuario == login.usuario && u.contraseña == login.contraseña)
+                    .FirstOrDefaultAsync();
 
                 if (usu == null)
                 {
-                    ViewData["mensaje"] = "No se encontró el usuario.-f";
-                    return View();
+                    return Unauthorized(new { mensaje = "No se encontró el usuario." });
                 }
-                if(usu.Estado != 1)
+
+                if (usu.Estado != 1)
                 {
-                    ViewData["mensaje"] = "El usuario esta Offline.";
-                    return View();
+                    return Unauthorized(new { mensaje = "El usuario está Offline." });
                 }
-                List<Claim> claims = new List<Claim>
+
+                // Crear los claims para el JWT
+                var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, usu.usuario),
-                    new Claim("usuario", usu.usuario) 
+                    new Claim("usuario", usu.usuario),
+                    new Claim("email", usu.email)
                 };
 
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                AuthenticationProperties properties = new AuthenticationProperties()
-                {
-                    IsPersistent = true,
-                    ExpiresUtc= DateTimeOffset.UtcNow.AddHours(1),
-                };
+                // Configurar el secreto y la firma del JWT
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    properties
+                // Crear el JWT
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["Jwt:Issuer"],
+                    audience: _configuration["Jwt:Audience"],
+                    claims: claims,
+                    expires: DateTime.Now.AddHours(1),
+                    signingCredentials: credentials
                 );
 
-                return RedirectToAction("Index", "Home");
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var jwtToken = tokenHandler.WriteToken(token);
+
+                return Ok(new { Token = jwtToken });
             }
             catch (Exception ex)
             {
-                ViewData["mensaje"] = $"Ocurrió un error: {ex.Message}";
-                return View();
+                return BadRequest(new { mensaje = $"Ocurrió un error: {ex.Message}" });
             }
-            
         }
         //public async Task<IActionResult> Login(Login log  in)
         //{
