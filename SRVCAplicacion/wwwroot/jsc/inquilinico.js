@@ -13,37 +13,6 @@ async function obtenerVisitantes() {
     });
 }
 
-// Función para crear un nuevo visitante
-/*
-async function crearVisitantee() {
-    const nuevoVisitante = {
-        nombre: "Juan",
-        apellido: "Perez",
-        identificacion: "12345678",
-        activo: 1,  // Enum para Activo
-        telefono: "1234567890",
-        imgpath: "/images/juan.jpg",
-        estado: 1,  // Enum para Estado (Dentro)
-        id_punto_control: 1
-    };
-
-    const response = await fetch('/api/VisitanteInquilino', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(nuevoVisitante)
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        console.log('Visitante creado:', data);
-    }
-}
-*/
-
-// Puedes agregar más funciones aquí...
-
 // Función para crear un nuevo visitante axxxx
 async function CrearVisitante() {
 
@@ -137,7 +106,7 @@ async function guardarRegistro() {
     const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
     const depto_visita = document.getElementById('inputSectorDepto').value;
     const estado_visita = parseInt("1");
-    const id_usuario = parseInt("1");
+    //const id_usuario = parseInt("1");
     const id_visitante_inquilino = parseInt("1");
     const id_punto_control = parseInt("1");
     const nombre_punto_control = document.getElementById('inputNombrePControl').value;

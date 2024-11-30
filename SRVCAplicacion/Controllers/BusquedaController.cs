@@ -104,6 +104,39 @@ namespace SRVCAplicacion.Controllers
             }
         }
 
+        [HttpPut("Actualizar/{dni}")]
+        public async Task<IActionResult> PutUsuario(string dni, registro_visitas identificacion)
+        {
+            if (dni != identificacion.identificacion_visita)
+            {
+                return BadRequest();
+            }
+
+            _appDbContext.Entry(identificacion).State = EntityState.Modified;
+
+            try
+            {
+                await _appDbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!RegistroExiste(dni))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+        private bool RegistroExiste(string dni)
+        {
+            return _appDbContext.registro_Visitas.Any(e => e.identificacion_visita == dni);
+        }
+
 
     }
 }

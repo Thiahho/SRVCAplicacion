@@ -9,7 +9,7 @@ namespace SRVCAplicacion.Models
         [Key]
         public int id_registro_visitas { get; set; } = 0;  // ID del registro de la visita
 
-        public int id_usuario { get; set; } = 0;  // ID del usuario que registra la visita
+        public int? id_usuario { get; set; } = 0;  // ID del usuario que registra la visita
 
         [MaxLength(45)]
         public string? nombre_encargado { get; set; } = "";  // Nombre del encargado
