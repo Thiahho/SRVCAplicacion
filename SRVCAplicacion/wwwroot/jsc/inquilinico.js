@@ -65,8 +65,7 @@ async function CrearVisitante() {
         console.error('Error al enviar el formulario', error);
         alert("Error al enviar el formulario.");
     } finally {
-        // Rehabilitar el botón después de que se haya completado la acción
-        //
+        //limpia los campos
         document.getElementById('inputNombreNV').value = '';
         document.getElementById('inputApellidoNV').value = '';
         document.getElementById('inputDNINV').value = '';
@@ -92,6 +91,8 @@ async function buscarPorDNI() {
 
 }
 
+
+
 async function guardarRegistro() {
     const identificacion_visita = document.getElementById('inputDNIingreso').value;
     
@@ -99,14 +100,16 @@ async function guardarRegistro() {
     const apellido = document.getElementById('inputApellidoIngreso').value.trim();
     const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
 
-    const hora_ingreso = new Date(); // Obtiene la fecha y hora exacta
-    const hora_formateada = formatearFecha(hora_ingreso);
+    const fechaingreso = new Date();
+    const hora_ingreso = fechaingreso.toISOString();
+    console.log('Respuesta del servidor:', fechaingreso);
+    console.log('Respuesta del servidor:', hora_ingreso);
 
     const motivo = document.getElementById('inputMotivoIngreso').value;
     const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
     const depto_visita = document.getElementById('inputSectorDepto').value;
     const estado_visita = parseInt("1");
-    const id_usuario = parseInt("223");
+    const id_usuario = parseInt("1969");
     const id_visitante_inquilino = parseInt("1");
     const id_punto_control = parseInt("1");
     const nombre_punto_control = document.getElementById('inputNombrePControl').value;
@@ -186,12 +189,12 @@ async function mostrarRegistros() {
                 <td>${registro.id_registro_visitas}</td>
                 <td>${registro.motivo}</td>
                 <td>${registro.depto_visita}</td>
-                <td>${registro.hora_ingreso}</td>
-                <td>${registro.hora_salida}</td>
                 <td>${registro.nombre_visitante_inquilino}</td>
                 <td>${registro.identificacion_visita}</td>
+                <td>${registro.hora_ingreso}</td>
+                <td>${registro.hora_salida}</td>
                 <td>
-                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="horaSalida()">salida</button>`: ''  }
+                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="horaSalidas(${registro.identificacion_visita})">salida</button>` : ''  }
                 </td>
                 `;
             tabla.querySelector('tbody').appendChild(fila);
@@ -201,6 +204,7 @@ async function mostrarRegistros() {
     }
 }
 
+/*
 async function horaSalida() {
     const fechaSalida = new Date();  // Asumiendo que 'fechaSalida' es la hora que el usuario seleccionó
     const hora_formateada = fechaSalida.toISOString();
@@ -229,4 +233,45 @@ async function horaSalida() {
         console.error('Error en la solicitud:', error);
     }
 }
+*/
+//asdasdsa
+
+
+//prueba
+async function horaSalidas(dni) {
+    const fechaSalida = new Date();
+    const hora_formateada = fechaSalida.toISOString();
+    console.log('Respuesta fecha salida:', fechaSalida);
+    console.log('Respuesta formateada:', hora_formateada);
+
+    try {
+        const response = await fetch(`https://localhost:7285/api/busqueda/actualizarHorarioSalida/${dni}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(hora_formateada) // Enviamos el valor como una cadena ISO
+        });
+
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+            // Si la respuesta no es exitosa, procesamos el error
+            const errorData = await response.json();  // Parsear la respuesta como JSON
+            alert('hubo un error al intentar marcar la salida');
+            console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
+        } else {
+            // Si la respuesta es exitosa, procesamos la respuesta (aunque NoContent no tiene cuerpo)
+            alert('Se marco la salida correctamente');
+            console.log('Se marco la salida correctamente');
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    } finally {
+        // recarga de pagina
+        location.reload();
+    }
+}
+
+
+
 
