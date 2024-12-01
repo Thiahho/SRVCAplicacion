@@ -106,7 +106,7 @@ async function guardarRegistro() {
     const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
     const depto_visita = document.getElementById('inputSectorDepto').value;
     const estado_visita = parseInt("1");
-    //const id_usuario = parseInt("1");
+    const id_usuario = parseInt("223");
     const id_visitante_inquilino = parseInt("1");
     const id_punto_control = parseInt("1");
     const nombre_punto_control = document.getElementById('inputNombrePControl').value;
@@ -190,7 +190,10 @@ async function mostrarRegistros() {
                 <td>${registro.hora_salida}</td>
                 <td>${registro.nombre_visitante_inquilino}</td>
                 <td>${registro.identificacion_visita}</td>
-            `;
+                <td>
+                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="horaSalida()">salida</button>`: ''  }
+                </td>
+                `;
             tabla.querySelector('tbody').appendChild(fila);
         });
     } catch (error) {
@@ -200,7 +203,9 @@ async function mostrarRegistros() {
 
 async function horaSalida() {
     const fechaSalida = new Date();  // Asumiendo que 'fechaSalida' es la hora que el usuario seleccionó
-    const hora_formateada = formatearFecha(fechaSalida);
+    const hora_formateada = fechaSalida.toISOString();
+    console.log('Respuesta fecha salida:', fechaSalida);
+    console.log('Respuesta formateada:', hora_formateada);
 
     try {
         const response = await fetch('https://localhost:7285/api/busqueda/actualizarHorarioSalida/40141223', {
@@ -218,7 +223,7 @@ async function horaSalida() {
             console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
         } else {
             // Si la respuesta es exitosa, procesamos la respuesta (aunque NoContent no tiene cuerpo)
-            console.log('Horario actualizado correctamente');
+            console.log('Se marco la salida correctamente');
         }
     } catch (error) {
         console.error('Error en la solicitud:', error);
