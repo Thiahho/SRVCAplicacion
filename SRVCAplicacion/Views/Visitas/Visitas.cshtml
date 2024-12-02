@@ -87,19 +87,21 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <form>
+                                    <form id="formularioCrearRegistro">
                                         <div class="form-group">
                                             <label for="inputDNIi">DNI</label>
-                                            <input type="text" class="form-control" id="inputDNIingreso" placeholder="777">
-                                            <button type="button" id="bBuscarPorDNI">Buscar</button>
+                                            <input type="text" class="form-control" id="inputDNIingreso" placeholder="">
+                                <button type="button" id="bBuscarPorDNI" onclick="BuscarPorDNI()">Buscar</button>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputNombreI">Nombre</label>
-                                            <input type="text" class="form-control" id="inputNombreIngreso" placeholder="nombre Ingreso">
+                                            <td id="tdNombreIngreso"></td>
+                                            <input type="text" class="form-control" id="inputNombreIngreso"  readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputApellidoI">Apellido</label>
-                                            <input type="text" class="form-control" id="inputApellidoIngreso" placeholder="apellido Ingreso">
+                                            <td id="tdApellidoIngreso"></td>
+                                            <input type="text" class="form-control" id="inputApellidoIngreso" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputMotivoI">Motivo</label>

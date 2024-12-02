@@ -86,8 +86,62 @@ async function formatearFecha(fecha) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+async function BuscarPorDNI() {
+    // Obtener el valor del input
+    var dni = document.getElementById('inputDNIingreso').value;
 
-async function buscarPorDNI() {
+    // Llamar a la función que utilizará ese valor
+    console.log(dni); // Aquí puedes realizar lo que necesites con el valor
+    try {
+        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const datosPorDNI = await response.json();
+        console.log('Registros recibidos:', datosPorDNI);
+
+
+        if (datosPorDNI.nombre && datosPorDNI.apellido) {
+            inputNombreIngreso.value = datosPorDNI.nombre; // Asigna el nombre 
+            inputApellidoIngreso.value = datosPorDNI.apellido; // Asigna el apellido 
+            alert("El inquilono se encuentra en el registro.");
+        }
+
+    } catch (error) {
+        alert("el numero de dni no esta asociado a ningun inquilono registrado.");
+        console.error('Error al mostrar los registros:', error);
+        inputNombreIngreso.value = "";
+        inputApellidoIngreso.value = "";
+    }
+}
+async function cargarPorDNI(dni) {
+    try {
+        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const datosPorDNI = await response.json();
+        console.log('Registros recibidos:', datosPorDNI);
+
+        const inputNombre = document.getElementById('inputNombreIngreso');
+        const inputApellido = document.getElementById('inputApellidoIngreso');
+
+        if (datosPorDNI && datosPorDNI.nombre && datosPorDNI.apellido) {
+            inputNombre.placeholder = datosPorDNI.nombre; // Asigna el nombre al placeholder
+            inputApellido.placeholder = datosPorDNI.apellido; // Asigna el apellido al placeholder
+        } else {
+            console.error('No se encontraron los datos de nombre y apellido');
+        }
+
+    } catch (error) {
+        console.error('Error al mostrar los registros:', error);
+    }
 
 }
 
@@ -204,36 +258,6 @@ async function mostrarRegistros() {
     }
 }
 
-/*
-async function horaSalida() {
-    const fechaSalida = new Date();  // Asumiendo que 'fechaSalida' es la hora que el usuario seleccionó
-    const hora_formateada = fechaSalida.toISOString();
-    console.log('Respuesta fecha salida:', fechaSalida);
-    console.log('Respuesta formateada:', hora_formateada);
-
-    try {
-        const response = await fetch('https://localhost:7285/api/busqueda/actualizarHorarioSalida/40141223', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(hora_formateada) // Enviamos el valor como una cadena ISO
-        });
-
-        // Verificar si la respuesta es exitosa
-        if (!response.ok) {
-            // Si la respuesta no es exitosa, procesamos el error
-            const errorData = await response.json();  // Parsear la respuesta como JSON
-            console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
-        } else {
-            // Si la respuesta es exitosa, procesamos la respuesta (aunque NoContent no tiene cuerpo)
-            console.log('Se marco la salida correctamente');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud:', error);
-    }
-}
-*/
 //asdasdsa
 
 

@@ -41,6 +41,33 @@ namespace SRVCAplicacion.Controllers
             return await _context.visitante_Inquilino.ToListAsync();
         }
 
+        [HttpGet("obtener/{identificacionB}")]
+        public async Task<ActionResult<visitante_inquilino>> ObtenerVisitante(string identificacionB)
+        {
+            try
+            {
+                // Busca el visitante por el numero de dni
+                var visitante = await _context.visitante_Inquilino
+                    .FirstOrDefaultAsync(v => v.identificacion == identificacionB);
+
+                // Si no se encuentra el visitante, devuelve un error 404
+                if (visitante == null)
+                {
+                    return NotFound(new { message = "Visitante no encontrado" });
+                }
+
+                // Si se encuentra, devuelve el visitante
+                return Ok(visitante);
+            }
+            catch (Exception ex)
+            {
+                // Si ocurre un error, devuelve un error 400 con el mensaje de la excepción
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+
         [HttpPost("CrearInquilino")]
         public async Task<IActionResult> PostVisitanteInquilino(visitante_inquilino visitante)
         {
