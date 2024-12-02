@@ -1,5 +1,7 @@
 ﻿// visitante.js
 
+const { toLocaleString } = require("../fontawesome-free/js/v4-shims");
+
 // Función para obtener todos los visitantes
 async function obtenerVisitantes() {
     const response = await fetch('/api/VisitanteInquilino');
@@ -117,35 +119,6 @@ async function BuscarPorDNI() {
         inputApellidoIngreso.value = "";
     }
 }
-async function cargarPorDNI(dni) {
-    try {
-        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const datosPorDNI = await response.json();
-        console.log('Registros recibidos:', datosPorDNI);
-
-        const inputNombre = document.getElementById('inputNombreIngreso');
-        const inputApellido = document.getElementById('inputApellidoIngreso');
-
-        if (datosPorDNI && datosPorDNI.nombre && datosPorDNI.apellido) {
-            inputNombre.placeholder = datosPorDNI.nombre; // Asigna el nombre al placeholder
-            inputApellido.placeholder = datosPorDNI.apellido; // Asigna el apellido al placeholder
-        } else {
-            console.error('No se encontraron los datos de nombre y apellido');
-        }
-
-    } catch (error) {
-        console.error('Error al mostrar los registros:', error);
-    }
-
-}
-
-
 
 async function guardarRegistro() {
     const identificacion_visita = document.getElementById('inputDNIingreso').value;
@@ -155,6 +128,7 @@ async function guardarRegistro() {
     const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
 
     const fechaingreso = new Date();
+    fechaingreso.setHours(fechaingreso.getHours() - 3);
     const hora_ingreso = fechaingreso.toISOString();
     console.log('Respuesta del servidor:', fechaingreso);
     console.log('Respuesta del servidor:', hora_ingreso);
