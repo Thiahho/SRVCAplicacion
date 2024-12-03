@@ -106,7 +106,8 @@ async function BuscarPorDNI() {
         console.log('Registros recibidos:', datosPorDNI);
 
 
-        if (datosPorDNI.nombre && datosPorDNI.apellido) {
+        if (datosPorDNI.nombre && datosPorDNI.apellido && datosPorDNI.id_visitante_inquilino) {
+            inputIdInquilinoIngreso.value = datosPorDNI.id_visitante_inquilino; // Asigna el id 
             inputNombreIngreso.value = datosPorDNI.nombre; // Asigna el nombre 
             inputApellidoIngreso.value = datosPorDNI.apellido; // Asigna el apellido 
             alert("El inquilono se encuentra en el registro.");
@@ -115,6 +116,7 @@ async function BuscarPorDNI() {
     } catch (error) {
         alert("el numero de dni no esta asociado a ningun inquilono registrado.");
         console.error('Error al mostrar los registros:', error);
+        inputIdInquilinoIngreso.value = "";
         inputNombreIngreso.value = "";
         inputApellidoIngreso.value = "";
     }
@@ -122,7 +124,9 @@ async function BuscarPorDNI() {
 
 async function guardarRegistro() {
     const identificacion_visita = document.getElementById('inputDNIingreso').value;
-    
+
+    const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngreso').value;
+
     const nombre = document.getElementById('inputNombreIngreso').value.trim();
     const apellido = document.getElementById('inputApellidoIngreso').value.trim();
     const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
@@ -137,8 +141,8 @@ async function guardarRegistro() {
     const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
     const depto_visita = document.getElementById('inputSectorDepto').value;
     const estado_visita = parseInt("1");
-    const id_usuario = parseInt("1969");
-    const id_visitante_inquilino = parseInt("1");
+    //const id_usuario = parseInt("1969");
+    //const id_visitante_inquilino = id_visitante_inquilino;
     const id_punto_control = parseInt("1");
     const nombre_punto_control = document.getElementById('inputNombrePControl').value;
 
@@ -157,7 +161,7 @@ async function guardarRegistro() {
         hora_ingreso: hora_ingreso,
         estado_visita: estado_visita,
         id_punto_control: id_punto_control,
-        id_usuario: id_usuario,
+        //id_usuario: id_usuario,
         id_visitante_inquilino: id_visitante_inquilino,
         nombre_punto_control: nombre_punto_control
     };
