@@ -22,7 +22,7 @@ namespace SRVCAplicacion.Models
         public string CofirmarPass{ get; set; } = "";
         //[Column("tipo")]
         //public int Tipo { get; set; } 
-        public int Estado { get; set; }
+        public int estado { get; set; }
     }
 
     

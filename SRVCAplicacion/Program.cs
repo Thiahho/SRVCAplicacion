@@ -1,25 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SRVCAplicacion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.WebHost.UseKestrel(options =>
-//{
-//    options.ListenAnyIP((500));
-//    options.ListenAnyIP(5001,listenOPtions =>
-//    {
-//        listenOPtions.UseHttps();
-//    });
-//});
-
-// Add services to the container.
-
 //****************CORS
-
-//var builderC = WebApplication.CreateBuilder(args);
-
-//Configura CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTodo", policy =>
@@ -29,46 +15,40 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
-//Agregar servicios de controladores
-builder.Services.AddControllers();
+builder.WebHost.UseKestrel(options =>
+{
+    options.ListenLocalhost(5000); 
+    options.ListenLocalhost(5001, listenOptions => listenOptions.UseHttps()); 
+});
 
-//var appC = builderC.Build();
-
-//Aplicar la politica de CORS
-//appC.UseCors("PermitirTodo");
-
-//appC.UseAuthorization();
-
-//appC.MapControllers();
-
-//appC.Run();
-
-//*************FIN CORS
-
-
-
+// Registrar los servicios
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseNpgsql(connectionString);  // Cambiar a UseNpgsql
 });
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Acceso/Login";    
+        options.LoginPath = "/Acceso/Login";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
+// Registrar servicios adicionales
+builder.Services.AddScoped<ILogAudService, AuditoriaService>();
+builder.Services.AddHttpContextAccessor();
+
+// Build the application
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -80,14 +60,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Definir las rutas de los controladores
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Acceso}/{action=Login}/{id?}");
 
-//cors
+// Aplicar la política de CORS
 app.UseCors("PermitirTodo");
+
+// Mapear controladores
 app.MapControllers();
-//fin cors
+
 app.Run();
-
-
