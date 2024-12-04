@@ -8,17 +8,11 @@ namespace SRVCAplicacion.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        public VistasController(ApplicationDbContext context)
+        public VistasController(ApplicationDbContext context) 
         {
-            _context = context;
+                _context = context;
         }
         //--------------PUNTOS------------
-        [HttpGet("listaPuntos")]
-        public IActionResult listaPuntos()
-        {
-            return View("~/Views/Puntos/listaPuntos.cshtml");
-
-        }
         [HttpGet("PuntosActivos")]
         public IActionResult PuntosActivos()
         {
@@ -38,7 +32,7 @@ namespace SRVCAplicacion.Controllers
         {
             return View("~/Views/Usuario/listaUsuario.cshtml");
         }
-
+        
 
         [HttpGet("editarUsuario")]
         public IActionResult editarUsuario()
@@ -53,41 +47,38 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Usuario/agregarUsuario.cshtml");
 
         }
-        //--------------inquinilo------------
+        //--------------inquinilo/Visitas/Registro------------
 
-        [HttpGet("listaInquilino")]
-        public IActionResult listaInquilino()
+        [HttpGet("Inquilinos")]
+        public IActionResult Visitas()//Inquilinos
         {
-            return View("~/Views/Inquilinos/listaInquilino.cshtml");
+           return View("~/Views/Visitas/Visitas.cshtml");
 
         }
-        [HttpGet("editarInquilino")]
-        public IActionResult editarInquilino()
+
+        [HttpGet("registroIngresos")]
+        public IActionResult registroIngresos()
         {
-            return View("~/Views/Inquilinos/editarInquilino.cshtml");
+            return View("~/Views/Visitas/registroIngresos.cshtml");
+
         }
-        [HttpGet("agregarInquilino")]
-        public IActionResult agregarInquilino()
-        {
-            return View("~/Views/Inquilinos/agregarInquilino.cshtml");
-        }
+
         //-----------------------------BUSQUEDA-----------
-        [HttpGet("GenerarRegistros")]
+        [HttpGet("Busqueda")]
         public IActionResult GenerarRegistros()
         {
-            return View("~/Views/Historial/GenerarRegistro.cshtml");
+            return View("~/Views/Busqueda/GenerarRegistro.cshtml");
         }
 
-
-        //--------------REGISTROS------------
-
-        [HttpGet("HistorialRegistros")]
-        public IActionResult HistorialRegistros()
+        //-----------------------------LOG-----------
+        [HttpGet("Log_aud")]
+        public IActionResult Log_aud()//CambiosLOG
         {
-            return View("~/Views/Historial/HistorialRegistros.cshtml");
+            return View("~/Views/Log_aud/Log_aud.cshtml");
 
         }
 
+        
     }
 
 }
