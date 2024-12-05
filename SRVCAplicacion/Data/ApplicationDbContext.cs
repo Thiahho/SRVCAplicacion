@@ -14,9 +14,7 @@ namespace SRVCAplicacion.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("Server=localhost;Database=db;User=root;Password=123456;",
-                    new MySqlServerVersion(new Version(8, 0, 21)),
-                    mySqlOptions => mySqlOptions.EnableRetryOnFailure());
+                optionsBuilder.UseNpgsql("Host=localhost;Database=db;Username=postgres;Password=123456");
             }
         }
         public DbSet<Departamento> Departamento { get; set; }

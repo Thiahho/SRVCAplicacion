@@ -1,6 +1,6 @@
 ﻿//Funcion para mostrar usuarios(admin)
 async function mostrarUsuarios() {
-    
+
     try {
         const response = await fetch('https://localhost:7285/api/Usuario/Obtener');
         console.log('Respuesta del servidor:', response);
@@ -13,7 +13,7 @@ async function mostrarUsuarios() {
         console.log('Usuarios recibidos:', usuarios);
 
         const tabla = document.getElementById('usuarioTable');
-       // tabla.innerHTML = ''; Limpia la tabla
+        // tabla.innerHTML = ''; Limpia la tabla
 
         usuarios.forEach(usuario => {
             const fila = document.createElement('tr');
@@ -37,7 +37,7 @@ async function mostrarUsuarios() {
 
 
 //asdasd
-    
+
 
 
 //Funcion para cargar los datos del usuario elegido(admin)

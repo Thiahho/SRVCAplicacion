@@ -82,7 +82,7 @@ namespace SRVCAplicacion.Controllers
                     ViewData["mensaje"] = "No se encontró el usuario.-f";
                     return View();
                 }
-                if(usu.Estado != 1)
+                if(usu.estado != 1)
                 {
                     ViewData["mensaje"] = "El usuario esta Offline.";
                     return View();
@@ -144,6 +144,12 @@ namespace SRVCAplicacion.Controllers
         //        );
         //    return RedirectToAction("Index", "Home");
         //}
+        [HttpPost("Salir")]
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Acceso");
+        }
 
     }
 }

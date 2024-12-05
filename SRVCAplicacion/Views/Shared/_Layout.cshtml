@@ -269,7 +269,10 @@
                             <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                <a class="btn btn-primary" href="@Url.Action("Login", "Acceso")">Logout</a>
+                                @* <a class="btn btn-primary" href="@Url.Action("Salir", "Acceso")">Logout</a> *@
+                                <form action="@Url.Action("Salir", "Acceso")" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-primary">Logout</button>
+                                </form>
                             </div>
                         </div>
                     </div>

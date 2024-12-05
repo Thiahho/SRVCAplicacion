@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SRVCAplicacion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,13 +47,15 @@ builder.Services.AddControllers();
 //*************FIN CORS
 
 
+builder.Services.AddScoped<ILogAudService, AuditoriaService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseNpgsql(connectionString);
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
