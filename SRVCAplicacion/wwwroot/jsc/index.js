@@ -49,4 +49,30 @@ $(document).ready(function () {
             form.classList.add('was-validated')
         }, false)
     })
-})()
+})
+
+
+/**
+ 
+Función para actualizar el contador en tiempo real.*/
+async function ContadorInquilinos() {
+    try {
+        const response = await fetch("https://localhost:7285/api/Inquilino/ConteoInquilino"); // Ruta del endpoint
+        if (!response.ok) throw new Error("Error al obtener datos");
+
+        const data = await response.json();
+        const countElement = document.getElementById("totalInquilinos");
+
+        if (countElement) {
+            countElement.textContent = data.activeCount || 0; // Mostrar el número de activos
+        }
+    } catch (error) {
+        console.error("Error al actualizar el contador:", error);
+    }
+}
+
+// Actualizar el contador cada 5 segundos
+setInterval(ContadorInquilinos, 5000);
+
+// Llamar la función al cargar la página
+document.addEventListener("DOMContentLoaded", ContadorInquilinos);
