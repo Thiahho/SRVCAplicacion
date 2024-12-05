@@ -6,6 +6,7 @@ using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PuntosController : Controller
@@ -13,9 +14,9 @@ namespace SRVCAplicacion.Controllers
         private readonly ApplicationDbContext _appDbContext;
 
 
-        public PuntosController(ApplicationDbContext  appDb)
+        public PuntosController(ApplicationDbContext appDb)
         {
-            _appDbContext = appDb;            
+            _appDbContext = appDb;
         }
 
         //[HttpGet("PuntosActivos")]

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 using SRVCAplicacion.Models;
 
 namespace SRVCAplicacion.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class LogAudController : Controller
@@ -39,20 +39,6 @@ namespace SRVCAplicacion.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Error al registrar auditoría: {ex.Message}");
-            }
-        }
-
-        [HttpGet("obtener")]
-        public async Task<ActionResult<IEnumerable<log_aud>>> ObtenerLog()
-        {
-            try
-            {
-                var log = await _context.log_Aud.ToListAsync();
-                return Ok(log);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
             }
         }
     }

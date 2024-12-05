@@ -1,20 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using SRVCAplicacion.Data;
 using SRVCAplicacion.Models;
 using SRVCAplicacion.Services;
+using System.Reflection.Metadata;
 
 namespace SRVCAplicacion.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class UsuarioController : Controller
     {
 
         private readonly ApplicationDbContext _appDbContext;
         private readonly ILogAudService _auditoria;
-
         public UsuarioController(ApplicationDbContext appdb, ILogAudService logAudService)
         {
             _appDbContext = appdb;
@@ -32,7 +34,7 @@ namespace SRVCAplicacion.Controllers
         //{
         //  return View();
         //}
-        
+
         //public IActionResult agregarUsuario()
         //{
         //    return View();
@@ -55,7 +57,7 @@ namespace SRVCAplicacion.Controllers
         }
 
         [HttpPost("Crear")]
-        public async Task<IActionResult> PostUsuarios(Usuario usuario)
+        public async Task<IActionResult> PostUsuarios([FromBody] Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
@@ -92,6 +94,213 @@ namespace SRVCAplicacion.Controllers
         }
 
 
+        //[HttpPut("Actualizar/{id}")]
+        //public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
+        //{
+        //    if (id != usuario.id_usuario)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _appDbContext.Entry(usuario).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _appDbContext.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException ex)
+        //    {
+        //        Console.WriteLine($"Error al actualizar usuario: {ex.Message}");
+        //        if (!UsuarioExiste(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+        //[HttpPut("Actualizar/{id}")]
+        //public async Task<IActionResult> PutUsuario(int id, [FromBody] Usuario usuario)
+        //{
+        //    try
+        //    {
+        //        var usuarioExiste = await _appDbContext.Usuario.FindAsync(id);
+
+        //        if (usuarioExiste == null)
+        //        {
+        //            return NotFound("El usuario no existe.");
+        //        }
+        //        var valorOriginal = $"Usuario: {usuarioExiste.usuario}, Email: {usuarioExiste.email}, Teléfono: {usuarioExiste.telefono}, DNI: {usuarioExiste.dni}," +
+        //                            $" Estado: {usuarioExiste.Estado}";
+
+
+        //        usuarioExiste.usuario = usuario.usuario;
+        //        usuarioExiste.email = usuario.email;
+        //        usuarioExiste.telefono = usuario.telefono;
+        //        usuarioExiste.dni = usuario.dni;
+        //        usuarioExiste.contraseña = usuario.contraseña;
+        //        usuarioExiste.Estado = usuario.Estado;
+
+        //        var valorNuevo = $"Usuario: {usuarioExiste.usuario}, Email: {usuarioExiste.email}, Teléfono: {usuarioExiste.telefono}, DNI: {usuarioExiste.dni}," +
+        //                         $" Estado: {usuarioExiste.Estado}";
+
+        //        var registroAudito = new log_aud
+        //        {
+        //            accion = "Actualizacion de Usuario",
+        //            hora = DateTime.UtcNow,
+        //            valor_original = valorOriginal,
+        //            valor_nuevo = valorNuevo,
+        //            tabla = "Usuarios",
+        //            id_punto_control = usuarioExiste.id_punto_control
+        //        };
+
+        //        _appDbContext.Usuario.Update(usuarioExiste);
+        //        _appDbContext.log_Aud.Add(registroAudito);
+        //        await _appDbContext.SaveChangesAsync();
+
+        //        return Ok("Usuario actualizado correctamente!");
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+        //[HttpPut("Actualizar/{id}")]
+        //public async Task<IActionResult> ActualizarUsuario(int id, [FromBody] Usuario usuarioActualizado)
+        //{
+        //    try
+        //    {
+        //        if (usuarioActualizado == null || string.IsNullOrEmpty(usuarioActualizado.usuario) ||
+        //            string.IsNullOrEmpty(usuarioActualizado.dni) || string.IsNullOrEmpty(usuarioActualizado.email) ||
+        //            string.IsNullOrEmpty(usuarioActualizado.telefono) || string.IsNullOrEmpty(usuarioActualizado.Estado.ToString()))
+        //        {
+        //            return BadRequest(new { mensaje = "Los datos del usuario no son válidos" });
+        //        }
+
+        //        var usuarioOriginal = _appDbContext.Usuario.FirstOrDefault(u => u.id_usuario == id);
+        //        if (usuarioOriginal == null)
+        //        {
+        //            return NotFound(new { mensaje = "Usuario no encontrado" });
+        //        }
+
+        //        // Actualizar los valores del usuario original con los nuevos valores
+        //        usuarioOriginal.usuario = usuarioActualizado.usuario;
+        //        usuarioOriginal.dni = usuarioActualizado.dni;
+        //        usuarioOriginal.contraseña = usuarioActualizado.contraseña;
+        //        usuarioOriginal.email = usuarioActualizado.email;
+        //        usuarioOriginal.telefono = usuarioActualizado.telefono;
+        //        usuarioOriginal.Estado = usuarioActualizado.Estado;
+
+        //        await _appDbContext.SaveChangesAsync();  // Guardar los cambios en el usuario
+
+        //        // Registrar la auditoría
+        //        var registroAuditoria = new log_aud
+        //        {
+        //            id_usuario = usuarioOriginal.id_usuario,
+        //            accion = "Modificación de usuario",
+        //            hora = DateTime.UtcNow,
+        //            valor_original = string.Join(", ", new string[] {
+        //        $"Nombre: {usuarioOriginal.usuario}",
+        //        $"DNI: {usuarioOriginal.dni}",
+        //        $"Contraseña: {usuarioOriginal.contraseña}",
+        //        $"Email: {usuarioOriginal.email}",
+        //        $"Teléfono: {usuarioOriginal.telefono}"
+        //    }),
+        //            valor_nuevo = string.Join(", ", new string[] {
+        //        $"Nombre: {usuarioActualizado.usuario}",
+        //        $"DNI: {usuarioActualizado.dni}",
+        //        $"Contraseña: {usuarioActualizado.contraseña}",
+        //        $"Email: {usuarioActualizado.email}",
+        //        $"Teléfono: {usuarioActualizado.telefono}"
+        //    }),
+        //            tabla = "usuarios",
+        //            id_punto_control = usuarioOriginal.id_punto_control
+        //        };
+
+        //        _appDbContext.log_Aud.Add(registroAuditoria);
+        //        await _appDbContext.SaveChangesAsync();  // Guardar los cambios de auditoría
+
+        //        return Ok(new { mensaje = "Usuario actualizado con éxito y cambios registrados en auditoría" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { mensaje = "Error al actualizar el usuario", detalle = ex.Message });
+        //    }
+        //}
+
+        //[HttpPut("Actualizar/{id}")]
+        //public async Task<IActionResult> ActualizarUsuario(int id, Usuario usuarioActualizado)
+        //{
+        //    if (usuarioActualizado == null)
+        //    {
+        //        return BadRequest(new { mensaje = "Los datos del usuario no son válidos" });
+        //    }
+
+        //    // 1. Obtener los datos originales del usuario
+        //    var usuarioOriginal = await _appDbContext.Usuario.FindAsync(id);
+        //    if (usuarioOriginal == null)
+        //    {
+        //        return NotFound("Usuario no encontrado.");
+        //    }
+
+        //    // 2. Crear una lista para registrar los cambios en la auditoría
+        //    var auditoriaList = new List<log_aud>();
+
+        //    // 3. Registrar siempre los valores actuales (aunque no se modifiquen)
+
+        //    // Construir las cadenas para los valores originales y nuevos
+        //    string valorOriginalUsuario = $"Usuario: {usuarioOriginal.usuario}, Dni: {usuarioOriginal.dni}, Email: {usuarioOriginal.email}, Contraseña: {usuarioOriginal.contraseña}, Estado: {usuarioOriginal.Estado}, Punto Control: {usuarioOriginal.id_punto_control}";
+        //    string valorNuevoUsuario = $"Usuario: {usuarioActualizado.usuario}, Dni: {usuarioActualizado.dni}, Email: {usuarioActualizado.email}, Contraseña: {usuarioActualizado.contraseña}, Estado: {usuarioActualizado.Estado}, Punto Control: {usuarioActualizado.id_punto_control}";
+
+        //    Console.WriteLine($"valorOriginalUsuario: {valorOriginalUsuario}");
+        //    Console.WriteLine($"valorNuevoUsuario: {valorNuevoUsuario}");
+
+        //    // 4. Registrar la auditoría para todos los campos, incluso si no hay cambios
+
+        //    auditoriaList.Add(new log_aud
+        //    {
+        //        id_usuario = id,
+        //        accion = "Actualización de usuario",
+        //        hora = DateTime.UtcNow,
+        //        valor_original = valorOriginalUsuario,
+        //        valor_nuevo = valorNuevoUsuario,
+        //        tabla = "Usuario",
+        //        id_punto_control = usuarioActualizado.id_punto_control
+        //    });
+
+        //    // 5. Actualizar el usuario con los nuevos valores
+        //    usuarioOriginal.usuario = usuarioActualizado.usuario;
+        //    usuarioOriginal.dni = usuarioActualizado.dni;
+        //    usuarioOriginal.email = usuarioActualizado.email;
+        //    usuarioOriginal.contraseña = usuarioActualizado.contraseña;
+        //    usuarioOriginal.Estado = usuarioActualizado.Estado;
+        //    usuarioOriginal.id_punto_control = usuarioActualizado.id_punto_control;
+
+        //    // 6. Guardar los cambios en el usuario
+        //    try
+        //    {
+        //        await _appDbContext.SaveChangesAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { mensaje = $"Error al guardar los cambios: {ex.Message}" });
+        //    }
+
+        //    // 7. Registrar la auditoría
+        //    await _appDbContext.log_Aud.AddRangeAsync(auditoriaList);
+        //    await _appDbContext.SaveChangesAsync();
+
+        //    return Ok(new { mensaje = "Usuario actualizado con éxito" });
+        //}
+
+        //OBTIENE BIEN LOS VALORES YA SEAN LOS ORIGINALE Y EL NUEVO PERO A LA HORA DE MANDAR TIRA UN ERROR LA EXCEPCION
+        //OBTIENE BIEN LOS VALORES YA SEAN LOS ORIGINALE Y EL NUEVO PERO A LA HORA DE MANDAR TIRA UN ERROR LA EXCEPCION
+        //OBTIENE BIEN LOS VALORES YA SEAN LOS ORIGINALE Y EL NUEVO PERO A LA HORA DE MANDAR TIRA UN ERROR LA EXCEPCION
+        //OBTIENE BIEN LOS VALORES YA SEAN LOS ORIGINALE Y EL NUEVO PERO A LA HORA DE MANDAR TIRA UN ERROR LA EXCEPCION
         [HttpPut("Actualizar/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromBody] Usuario usuarioActualizado)
         {
@@ -150,33 +359,79 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(new { mensaje = "Error al guardar los cambios", detalle = ex.Message });
             }
         }
-                [HttpGet("GetUsuarioActual/{id}")]
-                public IActionResult GetUsuarioActual(int id)
+
+
+
+
+        //[HttpPut("id")]
+        //public async Task<IActionResult> PostUsuario(int id, [FromBody] Usuario userActualizado)
+        //{
+        //    if(id != userActualizado.id_usuario)
+        //    {
+        //        return BadRequest("El id no existe.");
+        //    }
+
+        //    var usuarioOri = await _appDbContext.Usuario.FindAsync(id);
+        //    if(usuarioOri == null)
+        //    {
+        //        return NotFound("Usuario no encontrado.");
+        //    }
+
+        //    var log = new List<log_aud>();
+
+        //    if(usuarioOri.usuario != userActualizado.usuario)
+        //    {
+        //        log.Add(new log_aud
+        //        {
+        //            id_usuario=id,
+        //            accion
+
+        //        })
+        //    }
+        //}
+
+        //[HttpGet("GetUsuarioActual/{id}")]
+        //public IActionResult GetUsuarioActual(int id)
+        //{
+        //    var usuario = _appDbContext.Usuario
+        //        .Where(u => u.id_usuario == id)
+        //        .Select(u => new { u.usuario }) // Devuelve solo la columna `usuario`
+        //        .FirstOrDefault();
+
+        //    if (usuario == null)
+        //    {
+        //        return NotFound("Usuario no encontrado.");
+        //    }
+
+        //    return Ok(usuario);
+        //}
+        [HttpGet("GetUsuarioActual/{id}")]
+        public IActionResult GetUsuarioActual(int id)
+        {
+            var usuario = _appDbContext.Usuario
+                .Where(u => u.id_usuario == id)
+                .Select(u => new
                 {
-                    var usuario = _appDbContext.Usuario
-                        .Where(u => u.id_usuario == id)
-                        .Select(u => new
-                        {
-                            u.usuario,
-                            u.contraseña,
-                            u.telefono,
-                            u.dni,
-                            u.estado,
-                            u.email,
-                            u.id_punto_control
-                        }) // Devuelve solo los campos necesarios
-                        .FirstOrDefault();
+                    u.usuario,
+                    u.contraseña,
+                    u.telefono,
+                    u.dni,
+                    u.estado,
+                    u.email,
+                    u.id_punto_control
+                }) // Devuelve solo los campos necesarios
+                .FirstOrDefault();
 
-                    if (usuario == null)
-                    {
-                        Console.WriteLine($"Usuario con ID {id} no encontrado.");
-                        return NotFound("Usuario no encontrado.");
-                    }
+            if (usuario == null)
+            {
+                Console.WriteLine($"Usuario con ID {id} no encontrado.");
+                return NotFound("Usuario no encontrado.");
+            }
 
-                    Console.WriteLine($"Usuario encontrado: {usuario.usuario}");
-                    return Ok(usuario);
-                }
+            Console.WriteLine($"Usuario encontrado: {usuario.usuario}");
+            return Ok(usuario);
+        }
 
+        //asasdasdasdasasdasda
     }
-    //asasdasdasdasasdasda
 }

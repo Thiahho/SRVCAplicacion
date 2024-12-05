@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 using SRVCAplicacion.Models;
@@ -8,6 +9,7 @@ namespace SRVCAplicacion.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class InquilinoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -16,7 +18,7 @@ namespace SRVCAplicacion.Controllers
         public InquilinoController(ApplicationDbContext context, ILogAudService logAudService)
         {
             _context = context;
-            _auditoria = logAudService; 
+            _auditoria = logAudService;
         }
 
         //[HttpGet("Inquilinos")]
@@ -37,7 +39,23 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //por dni y nombre filtro
+
+
+        [HttpGet("ConteoInquilino")]
+        protected async Task<ActionResult> GetConteoInquilinos()
+        {
+            try
+            {
+                int cont = await _context.visitante_Inquilino.CountAsync(i => i.activo == 1);
+                return Ok(cont);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<IEnumerable<visitante_inquilino>>> GetVisitantesInquilino()
         {
@@ -72,7 +90,7 @@ namespace SRVCAplicacion.Controllers
 
 
         [HttpPost("CrearInquilino")]
-        public async Task<IActionResult> PostVisitanteInquilino(visitante_inquilino visitante)
+        public async Task<IActionResult> PostVisitanteInquilino([FromBody] visitante_inquilino visitante)
         {
             if (!ModelState.IsValid)
             {
@@ -107,9 +125,48 @@ namespace SRVCAplicacion.Controllers
 
 
 
-        [HttpPut("{identificacion}")]
-        public async Task<IActionResult> PutVisitanteInquilino(int id, visitante_inquilino visitante_Inquilino)
+        //[HttpPut("{identificacion}")]
+        //public async Task<IActionResult> PutVisitanteInquilino(int id, [FromBody]visitante_inquilino visitante)
+        //{
+        //    if(visitante == null)
+        //    {
+        //        return BadRequest(new {mensaje="Datos vacios."});
+        //    }
+
+        //    var inquilinoExistente = _context.visitante_Inquilino.FirstOrDefaultAsync(v => v.id_visitante_inquilino == id);
+
+        //    if(inquilinoExistente == null)
+        //    {
+        //        return BadRequest(new { mensaje = $"Inquilino con ID: {id} no encontrado."});
+        //    }
+
+        //    var valorOriginal = $"Usuario:{inquilinoExistente.nombre}, Dni:{inquilinoExistente.dni}, Email:{usuarioExistente.email}, Contraseña:{usuarioExistente.contraseña}, Estado:{usuarioExistente.Estado}, Punto Control:{usuarioExistente.id_punto_control}";
+        //    var valorNuevo = $"Usuario:{usuarioActualizado.usuario}, Dni:{usuarioActualizado.dni}, Email:{usuarioActualizado.email}, Contraseña:{usuarioActualizado.contraseña}, Estado:{usuarioActualizado.Estado}, Punto Control:{usuarioActualizado.id_punto_control}";
+
+        //    _context.Entry(visitante).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!VisitanteInquilinoExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+        [HttpPut("identificacion")]
+        public async Task<IActionResult> Actualizar(int id, [FromBody] visitante_inquilino visitante_Inquilino)
         {
+
             if (visitante_Inquilino == null)
             {
                 return BadRequest(new { mensaje = "Datos vacios." });
@@ -159,24 +216,6 @@ namespace SRVCAplicacion.Controllers
             catch (DbUpdateException ex)
             {
                 return BadRequest(new { mensaje = "Error al guardar los cambios", detalle = ex.Message });
-            }
-        }
-        private bool VisitanteInquilinoExists(string id)
-        {
-            return _context.visitante_Inquilino.Any(e => e.identificacion == id);
-        }
-
-        [HttpGet("ConteoInquilino")]
-        protected async Task<ActionResult> GetConteoInquilinos()
-        {
-            try
-            {
-                int cont = await _context.visitante_Inquilino.CountAsync(i => i.activo == 1);
-                return Ok(cont);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
             }
         }
 

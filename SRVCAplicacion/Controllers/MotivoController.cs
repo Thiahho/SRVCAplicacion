@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Route("api/controller")]
+    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
     public class MotivoController : Controller
     {
-     
+
         private readonly ApplicationDbContext appDbContext;
 
         public MotivoController(ApplicationDbContext context)
