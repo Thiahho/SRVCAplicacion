@@ -18,10 +18,8 @@ namespace SRVCAplicacion.Data
             }
         }
         public DbSet<Departamento> Departamento { get; set; }
-        public DbSet<Entra> Entra { get; set; }
         public DbSet<Motivo> Motivo { get; set; }
         public DbSet<registro_visitas> registro_Visitas { get; set; }
-        public DbSet<Salida> Salida { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<visitante_inquilino> visitante_Inquilino{ get; set; }
         public DbSet<log_aud> log_Aud{ get; set; }
