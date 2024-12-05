@@ -9,8 +9,7 @@ namespace SRVCAplicacion.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class InquilinoController : Controller
+    public class InquilinoController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogAudService _auditoria;
@@ -42,7 +41,7 @@ namespace SRVCAplicacion.Controllers
 
 
         [HttpGet("ConteoInquilino")]
-        protected async Task<ActionResult> GetConteoInquilinos()
+        public async Task<ActionResult> GetConteoInquilinos()
         {
             try
             {
@@ -54,7 +53,6 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<IEnumerable<visitante_inquilino>>> GetVisitantesInquilino()
