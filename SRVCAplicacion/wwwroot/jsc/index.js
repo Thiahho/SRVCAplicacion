@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#example').DataTable({
         "language": {
             "decimal": "",
@@ -33,14 +33,14 @@ $(document).ready(function() {
 
     var forms = document.querySelectorAll('.needs-validation')
 
-    
+
     Array.prototype.slice.call(forms).forEach(function (form) {
         form.addEventListener('submit', function (event) {
             if (!form.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()
 
-               
+
                 document.getElementById('formAlert').classList.remove('d-none');
             } else {
                 document.getElementById('formAlert').classList.add('d-none');

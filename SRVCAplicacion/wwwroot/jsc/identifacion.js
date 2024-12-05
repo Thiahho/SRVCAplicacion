@@ -52,7 +52,7 @@ async function cargarDepartamentos() {
 
         const departamentos = await response.json();
         const departamentoSelect = document.getElementById('depto_visita');
-            
+
         departamentoSelect.innerHTML = '<option value="" selected disabled>Seleccione Departamento</option>';
 
         departamentos.forEach(departamento => {

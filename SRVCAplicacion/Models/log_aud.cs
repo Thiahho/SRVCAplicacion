@@ -23,6 +23,7 @@ namespace SRVCAplicacion.Models
         public string valor_nuevo { get; set; } = "";  // Valor nuevo después del cambio
         public string tabla { get; set; } = "";  // Valor nuevo después del cambio
         public int id_punto_control { get; set; } = 0;  // ID del punto de control asociado
+        public string tabla { get; set; } = "";  // ID del punto de control asociado
     }
 
 }
