@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SRVCAplicacion.Models
 {
+    [Table("departamento")]
     public class Departamento
     {
         [Key]

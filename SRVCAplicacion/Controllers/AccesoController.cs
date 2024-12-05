@@ -198,5 +198,12 @@ namespace SRVCAplicacion.Controllers
             //}
 
         }
+
+        [HttpPost("Salir")]
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Acceso");
+        }
     }
 }

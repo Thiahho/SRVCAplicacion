@@ -15,11 +15,11 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
-builder.WebHost.UseKestrel(options =>
-{
-    options.ListenLocalhost(5000); 
-    options.ListenLocalhost(5001, listenOptions => listenOptions.UseHttps()); 
-});
+//builder.WebHost.UseKestrel(options =>
+//{
+//    options.ListenLocalhost(5000); 
+//    options.ListenLocalhost(5001, listenOptions => listenOptions.UseHttps()); 
+//});
 
 // Registrar los servicios
 builder.Services.AddControllersWithViews();

@@ -2,7 +2,7 @@
 async function mostrarLog() {
 
     try {
-        const response = await fetch('https://localhost:7285/api/LogAud/Obtener');
+        const response = await fetch('https://localhost:7285/api/LogAud/obtener');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
