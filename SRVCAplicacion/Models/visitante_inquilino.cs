@@ -36,5 +36,8 @@ namespace SRVCAplicacion.Models
 
         [Required]
         public int id_punto_control { get; set; } = 0;
+
+        //[Required]
+        //public int estado_actualizacion { get; set; } = 0;
     }
 }

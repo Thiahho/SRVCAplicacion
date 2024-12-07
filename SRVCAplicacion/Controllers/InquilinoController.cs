@@ -18,6 +18,7 @@ namespace SRVCAplicacion.Controllers
         {
             _context = context;
             _auditoria = logAudService;
+
         }
 
         //[HttpGet("Inquilinos")]
@@ -100,17 +101,19 @@ namespace SRVCAplicacion.Controllers
                 await _context.SaveChangesAsync();
 
                 var log = new log_aud
-                {
+                {   
+                    
                     
                     //id_usuario = visitante.id_visitante_inquilino,
                     id_usuario = 1,
-                    accion = "Creación de usuario",
+                    accion = "Creación de inquilino",
                     valor_original = null,
                     //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
                     valor_nuevo = $"Nombre:{visitante.nombre}, Dni:{visitante.identificacion}, Activo:{visitante.activo}, Telefono:{visitante.telefono}," +
                                  $"Estado:{visitante.estado}, Punto Control:{visitante.id_punto_control}, Tabla:'visitante_inquilino'",
                     hora = DateTime.UtcNow,
-                    id_punto_control = visitante.id_punto_control
+                    id_punto_control = visitante.id_punto_control,
+                    estado_actualizacion = 1
                 };
                 
 
@@ -203,7 +206,7 @@ namespace SRVCAplicacion.Controllers
                     hora = DateTime.Now,
                     valor_original = valorOriginal,
                     valor_nuevo = valorNuevo,
-                    tabla = "Usuario",
+                    //tabla = "Usuario",
                     id_punto_control = visitante_Inquilino.id_punto_control
                 };
                 if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))

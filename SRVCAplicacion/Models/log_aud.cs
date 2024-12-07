@@ -21,10 +21,14 @@ namespace SRVCAplicacion.Models
         public string? valor_original { get; set; } = "";  // Valor original antes del cambio
 
         [MaxLength(160)]
-        public string? valor_nuevo { get; set; } = "";  // Valor nuevo después del cambio
+        public string valor_nuevo { get; set; } = "";  // Valor nuevo después del cambio
 
         public int id_punto_control { get; set; } = 0;  // ID del punto de control asociado
-        public string? tabla { get; set; } = "";  // ID del punto de control asociado
+
+        //public string? tabla { get; set; } = "";  // ID del punto de control asociado
+
+        [Required]
+        public int? estado_actualizacion { get; set; } = 0;
     }
 
 }

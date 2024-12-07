@@ -79,7 +79,7 @@ namespace SRVCAplicacion.Controllers
                                   $"Estado:{usuario.estado}, Punto Control:{usuario.id_punto_control}, Tabla:'usuarios'",
                     hora = DateTime.UtcNow,
                     id_punto_control = usuario.id_punto_control,
-                    tabla = "usuarios"
+                    //tabla = "usuarios"
                 };
 
                 await _auditoria.RegistrarCambio(log);
@@ -340,7 +340,7 @@ namespace SRVCAplicacion.Controllers
                     hora = DateTime.Now,
                     valor_original = valorOriginal,
                     valor_nuevo = valorNuevo,
-                    tabla = "Usuario",
+                    //tabla = "Usuario",
                     id_punto_control = usuarioActualizado.id_punto_control
                 };
                 if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))
