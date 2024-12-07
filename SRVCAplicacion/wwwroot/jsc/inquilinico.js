@@ -16,6 +16,7 @@ async function obtenerVisitantes() {
 }
 
 // Función para crear un nuevo visitante axxxx
+
 async function CrearVisitante() {
 
     const nombre = document.getElementById('inputNombreNV').value;
@@ -75,6 +76,7 @@ async function CrearVisitante() {
     }
 
 }
+
 // fin crear visitante
 
 async function formatearFecha(fecha) {

@@ -86,7 +86,7 @@ namespace SRVCAplicacion.Controllers
         }
 
 
-
+        
         [HttpPost("CrearInquilino")]
         public async Task<IActionResult> PostVisitanteInquilino([FromBody] visitante_inquilino visitante)
         {
@@ -101,7 +101,9 @@ namespace SRVCAplicacion.Controllers
 
                 var log = new log_aud
                 {
-                    id_usuario = visitante.id_visitante_inquilino,
+                    
+                    //id_usuario = visitante.id_visitante_inquilino,
+                    id_usuario = 1,
                     accion = "Creación de usuario",
                     valor_original = null,
                     //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
@@ -110,6 +112,10 @@ namespace SRVCAplicacion.Controllers
                     hora = DateTime.UtcNow,
                     id_punto_control = visitante.id_punto_control
                 };
+                
+
+                // Log para verificar los datos del log
+                Console.WriteLine($"Intentando registrar log: {log.valor_nuevo}");
 
                 await _auditoria.RegistrarCambio(log);
                 return CreatedAtAction(nameof(GetIdentificacion), new { id = visitante.identificacion }, visitante);
@@ -117,11 +123,11 @@ namespace SRVCAplicacion.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { error = ex.Message });
             }
         }
-
-
+        
+        
 
         //[HttpPut("{identificacion}")]
         //public async Task<IActionResult> PutVisitanteInquilino(int id, [FromBody]visitante_inquilino visitante)
