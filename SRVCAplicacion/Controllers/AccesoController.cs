@@ -91,7 +91,9 @@ namespace SRVCAplicacion.Controllers
                 List<Claim> claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, usu.usuario),
-                    new Claim("usuario", usu.usuario)
+                    new Claim("usuario", usu.usuario),
+                    //new Claim(ClaimTypes.NameIdentifier, usu.id_usuario.ToString()),
+                    new Claim("id_usuario", usu.id_usuario.ToString())
                 };
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

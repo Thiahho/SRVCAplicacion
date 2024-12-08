@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SRVCAplicacion.Data;
 using SRVCAplicacion.Models;
 using SRVCAplicacion.Services;
+using System.Security.Claims;
 
 namespace SRVCAplicacion.Controllers
 {
@@ -91,6 +92,12 @@ namespace SRVCAplicacion.Controllers
         [HttpPost("CrearInquilino")]
         public async Task<IActionResult> PostVisitanteInquilino([FromBody] visitante_inquilino visitante)
         {
+            // Obtener el valor del claim "id_usuario".
+            var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
+
+            //Parsea el valor de la claim a int, las claim solo guardan string.
+            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -101,11 +108,11 @@ namespace SRVCAplicacion.Controllers
                 await _context.SaveChangesAsync();
 
                 var log = new log_aud
-                {   
-                    
-                    
+                {
+
                     //id_usuario = visitante.id_visitante_inquilino,
-                    id_usuario = 1,
+                    
+                    id_usuario = idUsarioLog,
                     accion = "Creación de inquilino",
                     valor_original = null,
                     //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
