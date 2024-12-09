@@ -27,6 +27,7 @@ namespace SRVCAplicacion.Data
         public DbSet<visitante_inquilino> visitante_Inquilino { get; set; }
         public DbSet<log_aud> log_Aud { get; set; }
         public DbSet<Puntos_de_controles> Puntos_de_controles { get; set; }
+        public DbSet<cambio_turno> cambio_turno { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
