@@ -9,12 +9,13 @@ namespace SRVCAplicacion.Models
     public class registro_visitas
     {
         [Key]
-        public int id_registro_visitas { get; set; } = 0;  // ID del registro de la visita
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id_registro_visitas { get; set; }  // ID del registro de la visita
 
         public int? id_usuario { get; set; } = 0;  // ID del usuario que registra la visita
 
         [MaxLength(45)]
-        public string? nombre_encargado { get; set; } = "";  // Nombre del encargado
+        public string nombre_encargado { get; set; } = "";  // Nombre del encargado
 
         [MaxLength(45)]
         public string motivo { get; set; } = "";  // Motivo de la visita
@@ -25,7 +26,7 @@ namespace SRVCAplicacion.Models
         [MaxLength(45)]
         public string depto_visita { get; set; } = "";  // Departamento donde se realiza la visita
 
-        public DateTime? hora_ingreso { get; set; }  // Hora de ingreso de la visita
+        public DateTime hora_ingreso { get; set; }  // Hora de ingreso de la visita
 
         public DateTime? hora_salida { get; set; }  // Hora de salida de la visita
 
@@ -53,5 +54,6 @@ namespace SRVCAplicacion.Models
         //    HoraDeSalida = horaDeSalida;
         //    Motivo = motivo;
         //}
+        public int estado_actualizacion { get; set; }
     }
 }

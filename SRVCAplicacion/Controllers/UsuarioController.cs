@@ -59,6 +59,13 @@ namespace SRVCAplicacion.Controllers
         [HttpPost("Crear")]
         public async Task<IActionResult> PostUsuarios([FromBody] Usuario usuario)
         {
+
+            // Obtener el valor del claim "id_usuario".
+            var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
+
+            //Parsea el valor de la claim a int, las claim solo guardan string.
+            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -71,7 +78,8 @@ namespace SRVCAplicacion.Controllers
 
                 var log = new log_aud
                 {
-                    id_usuario = usuario.id_usuario,
+                    //id_usuario = usuario.id_usuario,
+                    id_usuario = idUsarioLog,
                     accion = "Creación de usuario",
                     valor_original = null,
                     //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
@@ -83,7 +91,6 @@ namespace SRVCAplicacion.Controllers
                 };
 
                 await _auditoria.RegistrarCambio(log);
-
                 return CreatedAtAction(nameof(ObtenerUsuarios), new { id = usuario.id_usuario }, usuario);
 
             }
@@ -304,6 +311,11 @@ namespace SRVCAplicacion.Controllers
         [HttpPut("Actualizar/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromBody] Usuario usuarioActualizado)
         {
+            // Obtener el valor del claim "id_usuario".
+            var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
+
+            //Parsea el valor de la claim a int, las claim solo guardan string.
+            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
 
             if (usuarioActualizado == null)
             {
@@ -335,13 +347,14 @@ namespace SRVCAplicacion.Controllers
 
                 var logAud = new log_aud
                 {
-                    id_usuario = id,
+                    id_usuario = idUsarioLog,
                     accion = "Actualización de usuario",
                     hora = DateTime.Now,
                     valor_original = valorOriginal,
                     valor_nuevo = valorNuevo,
                     //tabla = "Usuario",
-                    id_punto_control = usuarioActualizado.id_punto_control
+                    id_punto_control = usuarioActualizado.id_punto_control,
+                     estado_actualizacion = 1
                 };
                 if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))
                 {
@@ -433,5 +446,23 @@ namespace SRVCAplicacion.Controllers
         }
 
         //asasdasdasdasasdasda
+        [HttpGet("obtener-claims")]
+        public IActionResult ObtenerClaims()
+        {
+            // Obtener el valor del claim "id_usuario".
+            var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
+            //Parsea el valor de la claim a int, las claim solo guardan string.
+            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+
+            // Obtener el valor del claim "usuario".
+            var nombre_encargadoLog = User.Claims.FirstOrDefault(c => c.Type == "usuario")?.Value;
+
+            // Obtener el valor del claim "id_usuario".
+            var id_punto_controlClaim = User.Claims.FirstOrDefault(c => c.Type == "id_punto_control");
+            //Parsea el valor de la claim a int, las claim solo guardan string.
+            int id_punto_controlLog = int.Parse(id_punto_controlClaim.Value);
+
+            return Ok(new { idUsarioLog, nombre_encargadoLog, id_punto_controlLog });
+        }
     }
 }

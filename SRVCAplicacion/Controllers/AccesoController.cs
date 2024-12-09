@@ -93,7 +93,8 @@ namespace SRVCAplicacion.Controllers
                     new Claim(ClaimTypes.Name, usu.usuario),
                     new Claim("usuario", usu.usuario),
                     //new Claim(ClaimTypes.NameIdentifier, usu.id_usuario.ToString()),
-                    new Claim("id_usuario", usu.id_usuario.ToString())
+                    new Claim("id_usuario", usu.id_usuario.ToString()),
+                    new Claim("id_punto_control", usu.id_punto_control.ToString())
                 };
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
