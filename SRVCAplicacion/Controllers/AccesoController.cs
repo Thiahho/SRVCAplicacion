@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
+using SRVCAplicacion.Services;
 
 namespace SRVCAplicacion.Controllers
 {
@@ -118,95 +119,58 @@ namespace SRVCAplicacion.Controllers
                 return View();
             }
 
-            //}
-            //[HttpPost("login")]
-            //public async Task<IActionResult> Login([FromBody] Login login)
-            //{
-            //    try
-            //    {
-            //        // Verificar las credenciales del usuario
-            //        var usu = await _appDbContext.Usuario
-            //            .Where(u => u.usuario == login.usuario && u.contraseña == login.contraseña)
-            //            .FirstOrDefaultAsync();
-
-            //        if (usu == null)
-            //        {
-            //            return Unauthorized(new { mensaje = "No se encontró el usuario." });
-            //        }
-
-            //        if (usu.estado != 1)
-            //        {
-            //            return Unauthorized(new { mensaje = "El usuario está Offline." });
-            //        }
-
-            //        // Crear los claims para el JWT
-            //        var claims = new List<Claim>
-            //        {
-            //            new Claim(ClaimTypes.Name, usu.usuario),
-            //            new Claim("usuario", usu.usuario),
-            //            new Claim("email", usu.email)
-            //        };
-
-            //        // Configurar el secreto y la firma del JWT
-            //        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            //        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            //        // Crear el JWT
-            //        var token = new JwtSecurityToken(
-            //            issuer: _configuration["Jwt:Issuer"],
-            //            audience: _configuration["Jwt:Audience"],
-            //            claims: claims,
-            //            expires: DateTime.Now.AddHours(1),
-            //            signingCredentials: credentials
-            //        );
-
-            //        var tokenHandler = new JwtSecurityTokenHandler();
-            //        var jwtToken = tokenHandler.WriteToken(token);
-
-            //        return Ok(new { Token = jwtToken });
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return BadRequest(new { mensaje = $"Ocurrió un error: {ex.Message}" });
-            //    }
-            //}
-            //public async Task<IActionResult> Login(Login log  in)
-            //{
-            //    Usuario? usuario = await _appDbContext.Usuario
-            //        .Where(u => u.usu == login.usuario && u.pass == login.contraseña)
-            //        .FirstOrDefaultAsync();
-
-            //    if(usuario == null)
-            //    {
-            //        ViewData["mensaje"] = "No se encontro el usuario.-f";
-            //        return View();
-            //    }
-            //    List<Claim>claims = new List<Claim>();
-            //    {
-            //        new Claim(ClaimTypes.Name, usuario.usu);
-            //    };
-
-            //    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-            //    AuthenticationProperties properties = new AuthenticationProperties()
-            //    {
-            //        AllowRefresh = true,
-            //    };
-
-            //    await HttpContext.SignInAsync(
-            //        CookieAuthenticationDefaults.AuthenticationScheme,
-            //        new ClaimsPrincipal(claimsIdentity),
-            //        properties
-            //        );
-            //    return RedirectToAction("Index", "Home");
-            //}
-
+          
         }
 
+        //[HttpPost("Salir")]
+        //public async Task<IActionResult> Salir()
+        //{
+        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    return RedirectToAction("Login", "Acceso");
+        //}
         [HttpPost("Salir")]
         public async Task<IActionResult> Salir()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Acceso");
+            try
+            {
+                // Obtener los datos del usuario autenticado desde los claims
+                var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario")?.Value;
+                var usuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "usuario")?.Value;
+                var idPuntoControlClaim = User.Claims.FirstOrDefault(c => c.Type == "id_punto_control")?.Value;
+
+                if (idUsuarioClaim == null || idPuntoControlClaim == null)
+                {
+                    return BadRequest(new { error = "No se encontraron los datos del usuario autenticado." });
+                }
+
+                // Parsear los valores
+                int idUsuario = int.Parse(idUsuarioClaim);
+                int idPuntoControl = int.Parse(idPuntoControlClaim);
+
+                // Crear el objeto cambio_turno
+                var cambioTurno = new cambio_turno
+                {
+                    id_usuario = idUsuario,
+                    id_punto_control = idPuntoControl,
+                    egreso = DateTime.UtcNow, // Fecha y hora actual
+                    observaciones = $"Usuario {usuarioClaim} cerró sesión.",
+                    activo = 0 // Marca como inactivo si aplica
+                };
+
+                // Registrar el egreso en la base de datos
+                await _appDbContext.cambio_turno.AddAsync(cambioTurno);
+                await _appDbContext.SaveChangesAsync();
+
+                // Cerrar sesión
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // Redirigir a la página de login
+                return RedirectToAction("Login", "Acceso");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message, innerError = ex.InnerException?.Message });
+            }
         }
-    }
+    } 
 }

@@ -16,7 +16,7 @@ namespace SRVCAplicacion.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Post:5432;Database=srvc;Username=postgres;Password=admin123;",
+                optionsBuilder.UseNpgsql("Host=localhost;Post:5432;Database=srvc;Username=postgres;Password=123456;",
                     mySqlOptions => mySqlOptions.EnableRetryOnFailure());
             }
         }

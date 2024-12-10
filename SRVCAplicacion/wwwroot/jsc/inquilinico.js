@@ -325,7 +325,7 @@ async function guardarRegistro() {
         const responseClaims = await fetch('https://localhost:7285/api/Usuario/obtener-claims');
         const dataClaims = await responseClaims.json();
 
-        // Acceder a los valores de los claims
+        // Acceder a los valores de los claims 
         var id_usuario = dataClaims.idUsarioLog;
         var nombre_encargado = dataClaims.nombre_encargadoLog; // Cambié 'nombre_encargadoLog' por 'nombre_encargado'
         var id_punto_control = dataClaims.id_punto_controlLog; // Cambié 'id_punto_controlLog' por 'id_punto_control'
