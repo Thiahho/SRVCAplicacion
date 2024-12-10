@@ -124,201 +124,93 @@ async function BuscarPorDNI() {
     }
 }
 
-async function guardarRegistroO() {
-    /*
-    // Obtener el valor del claim "id_usuario".
-    var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
-            //Parsea el valor de la claim a int, las claim solo guardan string.
-    id_usuario = int.Parse(idUsuarioClaim.Value);
-    */
+//async function guardarRegistroO() {
 
-    // Obtener el valor del claim "usuario".
-    var nombre_encargado = User.Claims.FirstOrDefault(c => c.Type == "usuario");
+//    // Obtener el valor del claim "usuario".
+//    var nombre_encargado = User.Claims.FirstOrDefault(c => c.Type == "usuario");
 
 
-    const identificacion_visita = document.getElementById('inputDNIingreso').value;
+//    const identificacion_visita = document.getElementById('inputDNIingreso').value;
 
-    const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngreso').value;
+//    const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngreso').value;
 
-    const nombre = document.getElementById('inputNombreIngreso').value.trim();
-    const apellido = document.getElementById('inputApellidoIngreso').value.trim();
-    const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
+//    const nombre = document.getElementById('inputNombreIngreso').value.trim();
+//    const apellido = document.getElementById('inputApellidoIngreso').value.trim();
+//    const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
 
-    const fechaingreso = new Date();
-    fechaingreso.setHours(fechaingreso.getHours() - 3);
-    const hora_ingreso = fechaingreso.toISOString();
-    console.log('Respuesta del servidor:', fechaingreso);
-    console.log('Respuesta del servidor:', hora_ingreso);
+//    const fechaingreso = new Date();
+//    fechaingreso.setHours(fechaingreso.getHours() - 3);
+//    const hora_ingreso = fechaingreso.toISOString();
+//    console.log('Respuesta del servidor:', fechaingreso);
+//    console.log('Respuesta del servidor:', hora_ingreso);
 
-    const motivo = document.getElementById('inputMotivoIngreso').value;
-    const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
-    const depto_visita = document.getElementById('inputSectorDepto').value;
-    const estado_visita = parseInt("1");
-    //const id_usuario = parseInt("1969");
-    //const id_visitante_inquilino = id_visitante_inquilino;
-    const id_punto_control = parseInt("1");
-    const nombre_punto_control = document.getElementById('inputNombrePControl').value;
-    const estado_actualizacion = parseInt("1");
+//    const motivo = document.getElementById('inputMotivoIngreso').value;
+//    const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
+//    const depto_visita = document.getElementById('inputSectorDepto').value;
+//    const estado_visita = parseInt("1");
+//    //const id_usuario = parseInt("1969");
+//    //const id_visitante_inquilino = id_visitante_inquilino;
+//    const id_punto_control = parseInt("1");
+//    const nombre_punto_control = document.getElementById('inputNombrePControl').value;
+//    const estado_actualizacion = parseInt("1");
 
-    if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
-        alert("Todos los campos son obligatorios.");
-        document.getElementById('crearNuevoVisitante').disabled = false;
-        return;
-    }
+//    if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
+//        alert("Todos los campos son obligatorios.");
+//        document.getElementById('crearNuevoVisitante').disabled = false;
+//        return;
+//    }
 
-    const formData = {
-        id_usuario: id_usuario,
-        nombre_encargado: nombre_encargado,
-        nombre_visitante_inquilino: nombre_visitante_inquilino,
-        identificacion_visita: identificacion_visita,
-        motivo: motivo,
-        motivo_personalizado: motivo_personalizado,
-        depto_visita: depto_visita,
-        hora_ingreso: hora_ingreso,
-        estado_visita: estado_visita,
-        id_punto_control: id_punto_control,
-        //id_usuario: id_usuario,
-        id_visitante_inquilino: id_visitante_inquilino,
-        nombre_punto_control: nombre_punto_control,
-        estado_actualizacion: estado_actualizacion
-    };
+//    const formData = {
+//        id_usuario: id_usuario,
+//        nombre_encargado: nombre_encargado,
+//        nombre_visitante_inquilino: nombre_visitante_inquilino,
+//        identificacion_visita: identificacion_visita,
+//        motivo: motivo,
+//        motivo_personalizado: motivo_personalizado,
+//        depto_visita: depto_visita,
+//        hora_ingreso: hora_ingreso,
+//        estado_visita: estado_visita,
+//        id_punto_control: id_punto_control,
+//        //id_usuario: id_usuario,
+//        id_visitante_inquilino: id_visitante_inquilino,
+//        nombre_punto_control: nombre_punto_control,
+//        estado_actualizacion: estado_actualizacion
+//    };
 
-    try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/CrearRegistro', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            alert("Registro creado exitosamente.");
-            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
-        } else {
-            // Si hay un error en el backend, mostrarlo
-            alert("Error: " + result.message || "Error desconocido");
-        }
-    } catch (error) {
-        console.error('Error al enviar el formulario', error);
-        alert("Error al enviar el formulario.");
-    } finally {
-        //Limpia los campos al terminar
-        document.getElementById('inputDNIingreso').value = '';
-        document.getElementById('inputNombreIngreso').value = '';
-        document.getElementById('inputApellidoIngreso').value = '';
-        document.getElementById('inputMotivoIngreso').value = '';
-        document.getElementById('motivoPersonalizado').value = '';
-        document.getElementById('inputSectorDepto').value = '';
-        document.getElementById('inputNombrePControl').value = '';
-
-    }
-}
-
-
-
-
-//async function guardarRegistros() {
-//    // Realizar la llamada al endpoint
-//    fetch('https://localhost:7285/api/Usuario/obtener-claims')
-//        .then(response => response.json()) // Convertir la respuesta a JSON
-//        .then(data => {
-//            // Acceder a los valores de los claims
-//            var id_usuario = data.idUsarioLog;
-//            var nombre_encargado = data.nombre_encargadoLog;
-//            var id_punto_control = data.id_punto_controlLog;
-
-//            // Usar las variables en tu código
-//            console.log('ID Usuario:', id_usuario);
-//            console.log('Nombre Encargado:', nombre_encargado);
-//            console.log('ID Punto Control:', id_punto_control);
-
-//            const identificacion_visita = document.getElementById('inputDNIingreso').value;
-
-//            const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngreso').value;
-
-//            const nombre = document.getElementById('inputNombreIngreso').value.trim();
-//            const apellido = document.getElementById('inputApellidoIngreso').value.trim();
-//            const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
-
-//            const fechaingreso = new Date();
-//            fechaingreso.setHours(fechaingreso.getHours() - 3);
-//            const hora_ingreso = fechaingreso.toISOString();
-//            console.log('Respuesta del servidor:', fechaingreso);
-//            console.log('Respuesta del servidor:', hora_ingreso);
-
-//            const motivo = document.getElementById('inputMotivoIngreso').value;
-//            const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
-//            const depto_visita = document.getElementById('inputSectorDepto').value;
-//            const estado_visita = parseInt("1");
-//            //const id_usuario = parseInt("1969");
-//            //const id_visitante_inquilino = id_visitante_inquilino;
-//            //const id_punto_control = parseInt("1");
-//            const nombre_punto_control = document.getElementById('inputNombrePControl').value;
-//            const estado_actualizacion = parseInt("1");
-
-//            if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
-//                alert("Todos los campos son obligatorios.");
-//                document.getElementById('crearNuevoVisitante').disabled = false;
-//                return;
-//            }
-
-//            const formData = {
-//                id_usuario: id_usuario,
-//                nombre_encargado: nombre_encargado,
-//                nombre_visitante_inquilino: nombre_visitante_inquilino,
-//                identificacion_visita: identificacion_visita,
-//                motivo: motivo,
-//                motivo_personalizado: motivo_personalizado,
-//                depto_visita: depto_visita,
-//                hora_ingreso: hora_ingreso,
-//                estado_visita: estado_visita,
-//                id_punto_control: id_punto_control,
-//                //id_usuario: id_usuario,
-//                id_visitante_inquilino: id_visitante_inquilino,
-//                nombre_punto_control: nombre_punto_control,
-//                estado_actualizacion: estado_actualizacion
-//            };
-
-//            try {
-//                const response = await fetch('https://localhost:7285/api/Busqueda/CrearRegistro', {
-//                    method: 'POST',
-//                    headers: {
-//                        'Content-type': 'application/json'
-//                    },
-//                    body: JSON.stringify(formData)
-//                });
-
-//                const result = await response.json();
-
-//                if (response.ok) {
-//                    alert("Registro creado exitosamente.");
-//                    document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
-//                } else {
-//                    // Si hay un error en el backend, mostrarlo
-//                    alert("Error: " + result.message || "Error desconocido");
-//                }
-//            } catch (error) {
-//                console.error('Error al enviar el formulario', error);
-//                alert("Error al enviar el formulario.");
-//            } finally {
-//                //Limpia los campos al terminar
-//                document.getElementById('inputDNIingreso').value = '';
-//                document.getElementById('inputNombreIngreso').value = '';
-//                document.getElementById('inputApellidoIngreso').value = '';
-//                document.getElementById('inputMotivoIngreso').value = '';
-//                document.getElementById('motivoPersonalizado').value = '';
-//                document.getElementById('inputSectorDepto').value = '';
-//                document.getElementById('inputNombrePControl').value = '';
-
-//            }
-//        })
-//        .catch(error => {
-//            console.error('Error al obtener los claims:', error);
+//    try {
+//        const response = await fetch('https://localhost:7285/api/Busqueda/CrearRegistro', {
+//            method: 'POST',
+//            headers: {
+//                'Content-type': 'application/json'
+//            },
+//            body: JSON.stringify(formData)
 //        });
+
+//        const result = await response.json();
+
+//        if (response.ok) {
+//            alert("Registro creado exitosamente.");
+//            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
+//        } else {
+//            // Si hay un error en el backend, mostrarlo
+//            alert("Error: " + result.message || "Error desconocido");
+//        }
+//    } catch (error) {
+//        console.error('Error al enviar el formulario', error);
+//        alert("Error al enviar el formulario.");
+//    } finally {
+//        //Limpia los campos al terminar
+//        document.getElementById('inputDNIingreso').value = '';
+//        document.getElementById('inputNombreIngreso').value = '';
+//        document.getElementById('inputApellidoIngreso').value = '';
+//        document.getElementById('inputMotivoIngreso').value = '';
+//        document.getElementById('motivoPersonalizado').value = '';
+//        document.getElementById('inputSectorDepto').value = '';
+//        document.getElementById('inputNombrePControl').value = '';
+
+//    }
 //}
+
 async function guardarRegistro() {
     try {
         // Realizar la llamada al endpoint para obtener los claims
@@ -327,10 +219,10 @@ async function guardarRegistro() {
 
         // Acceder a los valores de los claims 
         var id_usuario = dataClaims.idUsarioLog;
-        var nombre_encargado = dataClaims.nombre_encargadoLog; // Cambié 'nombre_encargadoLog' por 'nombre_encargado'
-        var id_punto_control = dataClaims.id_punto_controlLog; // Cambié 'id_punto_controlLog' por 'id_punto_control'
+        var nombre_encargado = dataClaims.nombre_encargadoLog; 
+        var id_punto_control = dataClaims.id_punto_controlLog; 
 
-        // Usar las variables en tu código
+        // prueba para ver por consola si trae los valores correctos
         console.log('ID Usuario:', id_usuario);
         console.log('Nombre Encargado:', nombre_encargado);
         console.log('ID Punto Control:', id_punto_control);
@@ -349,18 +241,18 @@ async function guardarRegistro() {
         const motivo = document.getElementById('inputMotivoIngreso').value;
         const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
         const depto_visita = document.getElementById('inputSectorDepto').value;
-        const estado_visita = 1; // Estado fijo en 1 (según tu código)
+        const estado_visita = 1; 
         const nombre_punto_control = document.getElementById('inputNombrePControl').value;
-        const estado_actualizacion = 1; // Estado fijo en 1 (según tu código)
+        const estado_actualizacion = 1;
 
-        // Validación de campos
+        // Valida que los campos esten todos llenos
         if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
             alert("Todos los campos son obligatorios.");
             document.getElementById('crearNuevoVisitante').disabled = false; // Asegúrate de que el botón se habilite
             return;
         }
 
-        // Datos del formulario
+        // crea una nueva const con los datos ingresados
         const formData = {
             id_usuario: id_usuario,
             nombre_encargado: nombre_encargado,
@@ -378,7 +270,7 @@ async function guardarRegistro() {
         };
         console.log('datos:', formData);
 
-        // Enviar los datos al servidor para crear el registro
+        // mando los datos al servidor para crear el registro
         const response = await fetch('https://localhost:7285/api/Busqueda/CrearRegistro', {
             method: 'POST',
             headers: {
@@ -391,9 +283,9 @@ async function guardarRegistro() {
 
         if (response.ok) {
             alert("Registro creado exitosamente.");
-            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
+            document.getElementById('formCrearVisitante').reset(); 
         } else {
-            // Si hay un error en el backend, mostrarlo
+            // para mostrar si hay errores en el back
             alert("Error: " + result.message || "Error desconocido");
         }
 
@@ -401,7 +293,7 @@ async function guardarRegistro() {
         console.error('Error al obtener los claims o al enviar el formulario', error);
         alert("Error al obtener los claims o al enviar el formulario.");
     } finally {
-        // Limpiar los campos al terminar
+        // limpio los campos
         document.getElementById('inputDNIingreso').value = '';
         document.getElementById('inputNombreIngreso').value = '';
         document.getElementById('inputApellidoIngreso').value = '';
@@ -416,7 +308,7 @@ async function guardarRegistro() {
 
 async function mostrarRegistros() {
     try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener');
+        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -440,7 +332,7 @@ async function mostrarRegistros() {
                 <td>${registro.hora_ingreso}</td>
                 <td>${registro.hora_salida}</td>
                 <td>
-                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="horaSalidas(${registro.identificacion_visita})">salida</button>` : ''  }
+                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.identificacion_visita})">salida</button>` : ''  }
                 </td>
                 `;
             tabla.querySelector('tbody').appendChild(fila);
@@ -450,23 +342,16 @@ async function mostrarRegistros() {
     }
 }
 
-//asdasdsa
 
 
-//prueba
-async function horaSalidas(dni) {
-    const fechaSalida = new Date();
-    const hora_formateada = fechaSalida.toISOString();
-    console.log('Respuesta fecha salida:', fechaSalida);
-    console.log('Respuesta formateada:', hora_formateada);
+async function marcarSalida(dni) {
 
     try {
-        const response = await fetch(`https://localhost:7285/api/busqueda/actualizarHorarioSalida/${dni}`, {
+        const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?dni=${dni}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(hora_formateada) // Enviamos el valor como una cadena ISO
         });
 
         // Verificar si la respuesta es exitosa
@@ -476,7 +361,7 @@ async function horaSalidas(dni) {
             alert('hubo un error al intentar marcar la salida');
             console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
         } else {
-            // Si la respuesta es exitosa, procesamos la respuesta (aunque NoContent no tiene cuerpo)
+            // Si la respuesta es exitosa, procesamos la respuesta
             alert('Se marco la salida correctamente');
             console.log('Se marco la salida correctamente');
         }
@@ -487,7 +372,3 @@ async function horaSalidas(dni) {
         location.reload();
     }
 }
-
-
-
-

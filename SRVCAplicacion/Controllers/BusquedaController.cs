@@ -104,6 +104,30 @@ namespace SRVCAplicacion.Controllers
             }
         }
 
+        //chat
+        [HttpGet("obtener-todos")]
+        public async Task<ActionResult<IEnumerable<registro_visitas>>> ObtenerTodosLosRegistros()
+        {
+            try
+            {
+                var registros = await _appDbContext.registro_Visitas
+                    .AsNoTracking() // Evita el seguimiento de cambios, útil para mejorar el rendimiento y evitar problemas con EF
+                    .ToListAsync();
+
+                if (!registros.Any())
+                {
+                    return NotFound("No se encontraron registros.");
+                }
+
+                return Ok(registros);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ocurrió un error: {ex.Message}");
+            }
+        }
+
+
         [HttpPut("Actualizar/{dni}")]
         public async Task<IActionResult> PutUsuario(string dni, registro_visitas identificacion)
         {
@@ -137,57 +161,37 @@ namespace SRVCAplicacion.Controllers
             return _appDbContext.registro_Visitas.Any(e => e.identificacion_visita == dni);
         }
 
-        [HttpPut("ActualizarHorarioSalida/{dni}")]
-        public async Task<IActionResult> ActualizarHorarioSalida(string dni, [FromBody] string nuevoHorarioSalida)
+        
+        [HttpPut("ActualizarHoraSalida")]
+        public async Task<IActionResult> ActualizarHoraSalida([FromQuery] string dni)
         {
-            // Intentar convertir el string recibido a un DateTime
-            if (!DateTime.TryParse(nuevoHorarioSalida, out DateTime horarioSalida))
+            if (string.IsNullOrWhiteSpace(dni))
             {
-                // Devolver un objeto JSON con el mensaje de error
-                return BadRequest(new { mensaje = "El horario de salida no tiene un formato válido." });
+                return BadRequest("El DNI no puede estar vacío.");
             }
 
-            // Buscar el registro de visita por el identificador (dni)
-            var registro = await _appDbContext.registro_Visitas
-                                              .FirstOrDefaultAsync(r => r.identificacion_visita == dni);
-
-            // Si no se encuentra el registro, retornamos NotFound
+            // Buscar el registro asociado al DNI
+            var registro = await _appDbContext.registro_Visitas.FirstOrDefaultAsync(r => r.identificacion_visita == dni);
             if (registro == null)
             {
-                return NotFound();
+                return NotFound("No se encontró un registro asociado al DNI proporcionado.");
             }
 
-            // Actualizar solo el campo 'hora_salida'
-            registro.hora_salida = horarioSalida;
-
-            // Marcar el estado de la entidad como modificado para que se actualice
-            _appDbContext.Entry(registro).State = EntityState.Modified;
+            // Actualizar la hora de salida
+            registro.hora_salida = DateTime.UtcNow;
 
             try
             {
-                // Guardar los cambios en la base de datos
-                await _appDbContext.SaveChangesAsync();
+                await _appDbContext.SaveChangesAsync(); // Guardar cambios en la base de datos
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                // Si hay un problema de concurrencia, se verifica si el registro aún existe
-                if (!RegistroExiste(dni))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(500, $"Error al actualizar el registro: {ex.Message}");
             }
 
-            return NoContent(); // Indica que la operación fue exitosa pero no se devuelve contenido
+            return Ok("Hora de salida actualizada correctamente.");
         }
-        private bool RegistroExiste(string dni)
-        {
-            return _appDbContext.registro_Visitas.Any(e => e.identificacion_visita == dni);
-        }
-
 
     }
 }
+
