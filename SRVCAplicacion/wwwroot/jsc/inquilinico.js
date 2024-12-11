@@ -126,7 +126,7 @@ async function BuscarPorDNI() {
     }
 }
 
-async function guardarRegistro() {
+async function guardarRegistroVisitante() {
     try {
         // Realizar la llamada al endpoint para obtener los claims
         const responseClaims = await fetch('https://localhost:7285/api/Usuario/obtener-claims');
@@ -158,7 +158,7 @@ async function guardarRegistro() {
         const depto_visita = document.getElementById('inputSectorDepto').value;
         const estado_visita = 1; 
         const nombre_punto_control = document.getElementById('inputNombrePControl').value;
-        const estado_actualizacion = 1;
+        const estado_actualizacion = 2;
 
         // Valida que los campos esten todos llenos
         if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
@@ -222,7 +222,44 @@ async function guardarRegistro() {
 }
 
 
-async function mostrarRegistros() {
+//async function mostrarRegistrosREAL() {
+//    try {
+//        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+//        console.log('Respuesta del servidor:', response);
+
+//        if (!response.ok) {
+//            throw new Error('Hubo un error al obtener los datos');
+//        }
+
+//        const registros = await response.json();
+//        console.log('Registros recibidos:', registros);
+
+//        const tabla = document.getElementById('tablaRegistrosI');
+//        // tabla.innerHTML = ''; Limpia la tabla
+
+//        registros.forEach(registro => {
+//            const fila = document.createElement('tr');
+//            fila.innerHTML = `
+//                <td>${registro.id_registro_visitas}</td>
+//                <td>${registro.motivo}</td>
+//                <td>${registro.depto_visita}</td>
+//                <td>${registro.nombre_visitante_inquilino}</td>
+//                <td>${registro.identificacion_visita}</td>
+//                <td>${registro.hora_ingreso}</td>
+//                <td>${registro.hora_salida}</td>
+//                <td>
+//                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.id_registro_visitas})">salida</button>` : ''  }
+//                </td>
+//                `;
+//            tabla.querySelector('tbody').appendChild(fila);
+//        });
+//    } catch (error) {
+//        console.error('Error al mostrar los registros:', error);
+//    }
+//}
+
+//funcion mejorada 
+async function mostrarRegistrosVisitas() {
     try {
         const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
         console.log('Respuesta del servidor:', response);
@@ -235,24 +272,25 @@ async function mostrarRegistros() {
         console.log('Registros recibidos:', registros);
 
         const tabla = document.getElementById('tablaRegistrosI');
-        // tabla.innerHTML = ''; Limpia la tabla
 
-        registros.forEach(registro => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${registro.id_registro_visitas}</td>
-                <td>${registro.motivo}</td>
-                <td>${registro.depto_visita}</td>
-                <td>${registro.nombre_visitante_inquilino}</td>
-                <td>${registro.identificacion_visita}</td>
-                <td>${registro.hora_ingreso}</td>
-                <td>${registro.hora_salida}</td>
-                <td>
-                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.id_registro_visitas})">salida</button>` : ''  }
-                </td>
-                `;
-            tabla.querySelector('tbody').appendChild(fila);
-        });
+        registros.filter(registro => registro.estado_actualizacion === 2)
+                .forEach(registro => {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                    <td>${registro.id_registro_visitas}</td>
+                    <td>${registro.motivo}</td>
+                    <td>${registro.depto_visita}</td>
+                    <td>${registro.nombre_visitante_inquilino}</td>
+                    <td>${registro.identificacion_visita}</td>
+                    <td>${registro.hora_ingreso}</td>
+                    <td>${registro.hora_salida}</td>
+                    <td>
+                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.id_registro_visitas})">salida</button>` : ''}
+                    </td>
+                    `;
+                    tabla.querySelector('tbody').appendChild(fila);
+                });
+        
     } catch (error) {
         console.error('Error al mostrar los registros:', error);
     }

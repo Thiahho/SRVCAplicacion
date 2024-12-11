@@ -83,12 +83,24 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Ingresos</span>
+                    <span>visitantes</span>
                 </a>
                 <div id="collapseFour" class="collapse" aria-labelledby="collapseFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("Visitas", "Vistas")">Crear visitante/registro</a>
                         <a class="collapse-item" href="@Url.Action("registroIngresos", "Vistas")">Ver ingresos</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>inquilinos</span>
+                </a>
+                <div id="collapseFive" class="collapse" aria-labelledby="collapseFive" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("Inquilino", "Vistas")">Crear Inquilino/registro</a>
+                        <a class="collapse-item" href="@Url.Action("registroInquilinos", "Vistas")">Ver ingresos</a>
                     </div>
                 </div>
             </li>

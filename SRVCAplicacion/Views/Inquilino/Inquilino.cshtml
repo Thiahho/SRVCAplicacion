@@ -87,30 +87,30 @@
                         <form id="formularioCrearRegistro">
                             <div class="form-group">
                                 <label for="inputDNIi">DNI</label>
-                                <input type="text" class="form-control" id="inputDNIingreso" placeholder="">
-                                <button type="button" id="bBuscarPorDNI" onclick="BuscarPorDNI()">Buscar</button>
+                                <input type="text" class="form-control" id="inputDNIingresoI" placeholder="">
+                                <button type="button" id="bBuscarPorDNI" onclick="BuscarPorDNIInquilino()">Buscar</button>
                             </div>
                             <div class="form-group">
                                 <label for="inputNombreI">Id del Inquilino</label>
                                 <td id="tdIdInquilinoIngreso"></td>
-                                <input type="text" class="form-control" id="inputIdInquilinoIngreso" readonly>
+                                <input type="text" class="form-control" id="inputIdInquilinoIngresoI" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="inputNombreI">Nombre</label>
                                 <td id="tdNombreIngreso"></td>
-                                <input type="text" class="form-control" id="inputNombreIngreso" readonly>
+                                <input type="text" class="form-control" id="inputNombreIngresoI" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="inputApellidoI">Apellido</label>
                                 <td id="tdApellidoIngreso"></td>
-                                <input type="text" class="form-control" id="inputApellidoIngreso" readonly>
+                                <input type="text" class="form-control" id="inputApellidoIngresoI" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="inputMotivoI">Motivo</label>
-                                <input type="text" class="form-control" id="inputMotivoIngreso" value="ingresa a su depto" readonly>
+                                <input type="text" class="form-control" id="inputMotivoIngresoI" value="ingresa a su depto" readonly>
                                 <div class="form-group">
                                     <label for="motivo">Motivo personalizado:</label>
-                                    <textarea id="motivoPersonalizado" name="motivo" required></textarea>
+                                    <textarea id="motivoPersonalizadoI" name="motivo" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -126,7 +126,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" onclick="guardarRegistro()" class="btn btn-primary" id="botonGuardarRegistro">Guardar registro</button>
+                        <button type="button" onclick="guardarRegistroInquilino()" class="btn btn-primary" id="botonGuardarRegistro">Guardar registro</button>
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@
     <script src="~/jsc/demo/chart-area-demo.js"></script>
     <script src="~/jsc/demo/chart-pie-demo.js"></script>
     <script src="~/jsc/vistas.js"></script>
-    <script src="~/jsc/inquilinico.js"></script>
+    <script src="~/jsc/inquilino.js"></script>
 
 </body>
 

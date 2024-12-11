@@ -57,8 +57,8 @@ namespace SRVCAplicacion.Controllers
         }
         //--------------inquinilo/Visitas/Registro------------
 
-        [HttpGet("Inquilinos")]
-        public IActionResult Visitas()//Inquilinos
+        [HttpGet("Visitas")]
+        public IActionResult Visitas()//visitas
         {
            return View("~/Views/Visitas/Visitas.cshtml");
 
@@ -85,8 +85,21 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Log_aud/Log_aud.cshtml");
 
         }
+        //---------------------inquilino---------
+        [HttpGet("Inquilinos")]
+        public IActionResult Inquilino()//Inquilinos
+        {
+            return View("~/Views/Inquilino/Inquilino.cshtml");
 
-        
+        }
+        [HttpGet("registroInquilinos")]
+        public IActionResult registroInquilinos()
+        {
+            return View("~/Views/Inquilino/registroInquilinos.cshtml");
+
+        }
+
+
     }
 
 }

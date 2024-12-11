@@ -205,7 +205,8 @@ namespace SRVCAplicacion.Controllers
 
             //return Ok("Hora de salida actualizada correctamente.");
             var rowsAffected = await _appDbContext.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow} WHERE id_registro_visitas = {idRegistro}");
+                //$"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow} WHERE id_registro_visitas = {idRegistro}");
+                $"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow}, estado_visita = 0 WHERE id_registro_visitas = {idRegistro}");
 
             if (rowsAffected == 0)
             {
