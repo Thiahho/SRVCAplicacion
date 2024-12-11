@@ -23,8 +23,10 @@ async function CrearVisitante() {
     const apellido = document.getElementById('inputApellidoNV').value;
     const identificacion = document.getElementById('inputDNINV').value;
     const telefono = document.getElementById('inputTelefonoNV').value;
-    const activo = parseInt("1");
-    const estado = parseInt("1");
+    //1 ingreso, 0 salio
+    const activo = 0;
+    //1 inquilino, 2 visitante
+    const estado = 2;
     // const estado = parseInt(document.getElementById('estado').value);
     const id_punto_control = parseInt("1"); 
     //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
@@ -47,7 +49,7 @@ async function CrearVisitante() {
     };
 
     try {
-        const response = await fetch('https://localhost:7285/api/Inquilino/CrearInquilino', {
+        const response = await fetch('https://localhost:7285/api/Inquilino/CrearVisitante', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -62,7 +64,7 @@ async function CrearVisitante() {
             document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
         } else {
             // Si hay un error en el backend, mostrarlo
-            alert("Error: " + result.message || "Error desconocido");
+            alert("Error: " + result.message || "el numero de dni ya esta registrado en la base de datos");
         }
     } catch (error) {
         console.error('Error al enviar el formulario', error);
@@ -116,100 +118,13 @@ async function BuscarPorDNI() {
         }
 
     } catch (error) {
-        alert("el numero de dni no esta asociado a ningun inquilono registrado.");
+        alert("el numero de dni no esta asociado a ningun visitante registrado.");
         console.error('Error al mostrar los registros:', error);
         inputIdInquilinoIngreso.value = "";
         inputNombreIngreso.value = "";
         inputApellidoIngreso.value = "";
     }
 }
-
-//async function guardarRegistroO() {
-
-//    // Obtener el valor del claim "usuario".
-//    var nombre_encargado = User.Claims.FirstOrDefault(c => c.Type == "usuario");
-
-
-//    const identificacion_visita = document.getElementById('inputDNIingreso').value;
-
-//    const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngreso').value;
-
-//    const nombre = document.getElementById('inputNombreIngreso').value.trim();
-//    const apellido = document.getElementById('inputApellidoIngreso').value.trim();
-//    const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
-
-//    const fechaingreso = new Date();
-//    fechaingreso.setHours(fechaingreso.getHours() - 3);
-//    const hora_ingreso = fechaingreso.toISOString();
-//    console.log('Respuesta del servidor:', fechaingreso);
-//    console.log('Respuesta del servidor:', hora_ingreso);
-
-//    const motivo = document.getElementById('inputMotivoIngreso').value;
-//    const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
-//    const depto_visita = document.getElementById('inputSectorDepto').value;
-//    const estado_visita = parseInt("1");
-//    //const id_usuario = parseInt("1969");
-//    //const id_visitante_inquilino = id_visitante_inquilino;
-//    const id_punto_control = parseInt("1");
-//    const nombre_punto_control = document.getElementById('inputNombrePControl').value;
-//    const estado_actualizacion = parseInt("1");
-
-//    if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
-//        alert("Todos los campos son obligatorios.");
-//        document.getElementById('crearNuevoVisitante').disabled = false;
-//        return;
-//    }
-
-//    const formData = {
-//        id_usuario: id_usuario,
-//        nombre_encargado: nombre_encargado,
-//        nombre_visitante_inquilino: nombre_visitante_inquilino,
-//        identificacion_visita: identificacion_visita,
-//        motivo: motivo,
-//        motivo_personalizado: motivo_personalizado,
-//        depto_visita: depto_visita,
-//        hora_ingreso: hora_ingreso,
-//        estado_visita: estado_visita,
-//        id_punto_control: id_punto_control,
-//        //id_usuario: id_usuario,
-//        id_visitante_inquilino: id_visitante_inquilino,
-//        nombre_punto_control: nombre_punto_control,
-//        estado_actualizacion: estado_actualizacion
-//    };
-
-//    try {
-//        const response = await fetch('https://localhost:7285/api/Busqueda/CrearRegistro', {
-//            method: 'POST',
-//            headers: {
-//                'Content-type': 'application/json'
-//            },
-//            body: JSON.stringify(formData)
-//        });
-
-//        const result = await response.json();
-
-//        if (response.ok) {
-//            alert("Registro creado exitosamente.");
-//            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
-//        } else {
-//            // Si hay un error en el backend, mostrarlo
-//            alert("Error: " + result.message || "Error desconocido");
-//        }
-//    } catch (error) {
-//        console.error('Error al enviar el formulario', error);
-//        alert("Error al enviar el formulario.");
-//    } finally {
-//        //Limpia los campos al terminar
-//        document.getElementById('inputDNIingreso').value = '';
-//        document.getElementById('inputNombreIngreso').value = '';
-//        document.getElementById('inputApellidoIngreso').value = '';
-//        document.getElementById('inputMotivoIngreso').value = '';
-//        document.getElementById('motivoPersonalizado').value = '';
-//        document.getElementById('inputSectorDepto').value = '';
-//        document.getElementById('inputNombrePControl').value = '';
-
-//    }
-//}
 
 async function guardarRegistro() {
     try {
@@ -295,6 +210,7 @@ async function guardarRegistro() {
     } finally {
         // limpio los campos
         document.getElementById('inputDNIingreso').value = '';
+        document.getElementById('inputIdInquilinoIngreso').value = '';
         document.getElementById('inputNombreIngreso').value = '';
         document.getElementById('inputApellidoIngreso').value = '';
         document.getElementById('inputMotivoIngreso').value = '';

@@ -89,8 +89,8 @@ namespace SRVCAplicacion.Controllers
 
 
         
-        [HttpPost("CrearInquilino")]
-        public async Task<IActionResult> PostVisitanteInquilino([FromBody] visitante_inquilino visitante)
+        [HttpPost("CrearVisitante")]
+        public async Task<IActionResult> PostVisitante([FromBody] visitante_inquilino visitante)
         {
             // Obtener el valor del claim "id_usuario".
             var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
@@ -113,7 +113,7 @@ namespace SRVCAplicacion.Controllers
                     //id_usuario = visitante.id_visitante_inquilino,
                     
                     id_usuario = idUsarioLog,
-                    accion = "Creación de inquilino",
+                    accion = "Creación de visitante",
                     valor_original = null,
                     //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
                     valor_nuevo = $"Nombre:{visitante.nombre}, Dni:{visitante.identificacion}, Activo:{visitante.activo}, Telefono:{visitante.telefono}," +
@@ -136,47 +136,58 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        
-        
 
-        //[HttpPut("{identificacion}")]
-        //public async Task<IActionResult> PutVisitanteInquilino(int id, [FromBody]visitante_inquilino visitante)
-        //{
-        //    if(visitante == null)
-        //    {
-        //        return BadRequest(new {mensaje="Datos vacios."});
-        //    }
+        [HttpPost("CrearInquilino")]
+        public async Task<IActionResult> PostInquilino([FromBody] visitante_inquilino inquilino)
+        {
+            // Obtener el valor del claim "id_usuario".
+            var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
 
-        //    var inquilinoExistente = _context.visitante_Inquilino.FirstOrDefaultAsync(v => v.id_visitante_inquilino == id);
+            //Parsea el valor de la claim a int, las claim solo guardan string.
+            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
 
-        //    if(inquilinoExistente == null)
-        //    {
-        //        return BadRequest(new { mensaje = $"Inquilino con ID: {id} no encontrado."});
-        //    }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                await _context.visitante_Inquilino.AddAsync(inquilino);
+                await _context.SaveChangesAsync();
 
-        //    var valorOriginal = $"Usuario:{inquilinoExistente.nombre}, Dni:{inquilinoExistente.dni}, Email:{usuarioExistente.email}, Contraseña:{usuarioExistente.contraseña}, Estado:{usuarioExistente.Estado}, Punto Control:{usuarioExistente.id_punto_control}";
-        //    var valorNuevo = $"Usuario:{usuarioActualizado.usuario}, Dni:{usuarioActualizado.dni}, Email:{usuarioActualizado.email}, Contraseña:{usuarioActualizado.contraseña}, Estado:{usuarioActualizado.Estado}, Punto Control:{usuarioActualizado.id_punto_control}";
+                var log = new log_aud
+                {
 
-        //    _context.Entry(visitante).State = EntityState.Modified;
+                    //id_usuario = visitante.id_visitante_inquilino,
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!VisitanteInquilinoExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+                    id_usuario = idUsarioLog,
+                    accion = "Creación de inquilino",
+                    valor_original = null,
+                    //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
+                    valor_nuevo = $"Nombre:{inquilino.nombre}, Dni:{inquilino.identificacion}, Activo:{inquilino.activo}, Telefono:{inquilino.telefono}," +
+                                 $"Estado:{inquilino.estado}, Punto Control:{inquilino.id_punto_control}, Tabla:'visitante_inquilino'",
+                    hora = DateTime.UtcNow,
+                    id_punto_control = inquilino.id_punto_control,
+                    estado_actualizacion = 1
+                };
 
-        //    return NoContent();
-        //}
+
+                // Log para verificar los datos del log
+                Console.WriteLine($"Intentando registrar log: {log.valor_nuevo}");
+
+                await _auditoria.RegistrarCambio(log);
+                return CreatedAtAction(nameof(GetIdentificacion), new { id = inquilino.identificacion }, inquilino);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+
+
+
         [HttpPut("identificacion")]
         public async Task<IActionResult> Actualizar(int id, [FromBody] visitante_inquilino visitante_Inquilino)
         {
