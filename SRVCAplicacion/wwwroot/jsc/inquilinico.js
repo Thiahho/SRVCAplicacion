@@ -332,7 +332,7 @@ async function mostrarRegistros() {
                 <td>${registro.hora_ingreso}</td>
                 <td>${registro.hora_salida}</td>
                 <td>
-                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.identificacion_visita})">salida</button>` : ''  }
+                    ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.id_registro_visitas})">salida</button>` : ''  }
                 </td>
                 `;
             tabla.querySelector('tbody').appendChild(fila);
@@ -344,10 +344,10 @@ async function mostrarRegistros() {
 
 
 
-async function marcarSalida(dni) {
+async function marcarSalida(idRegistro) {
 
     try {
-        const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?dni=${dni}`, {
+        const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

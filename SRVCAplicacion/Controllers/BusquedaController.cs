@@ -163,34 +163,60 @@ namespace SRVCAplicacion.Controllers
 
         
         [HttpPut("ActualizarHoraSalida")]
-        public async Task<IActionResult> ActualizarHoraSalida([FromQuery] string dni)
+        public async Task<IActionResult> ActualizarHoraSalida([FromQuery] int idRegistro)
         {
-            if (string.IsNullOrWhiteSpace(dni))
-            {
-                return BadRequest("El DNI no puede estar vacío.");
-            }
 
-            // Buscar el registro asociado al DNI
-            var registro = await _appDbContext.registro_Visitas.FirstOrDefaultAsync(r => r.identificacion_visita == dni);
-            if (registro == null)
-            {
-                return NotFound("No se encontró un registro asociado al DNI proporcionado.");
-            }
 
-            // Actualizar la hora de salida
-            registro.hora_salida = DateTime.UtcNow;
+            //if (idRegistro == null)
+            //{
+            //    return BadRequest("El id no puede estar vacío.");
+            //}
 
-            try
+            //// Buscar el registro asociado al id_registro_vissitas
+            //var registro = await _appDbContext.registro_Visitas.FirstOrDefaultAsync(r => r.id_registro_visitas == idRegistro);
+            //if (registro == null)
+            //{
+            //    return NotFound("No se encontró un registro asociado al id proporcionado.");
+            //}
+
+            //// Actualizar la hora de salida
+            //registro.hora_salida = DateTime.UtcNow;
+
+            //    try
+            //    {
+            //        await _appDbContext.SaveChangesAsync(); // Guardar cambios en la base de datos
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return StatusCode(500, $"Error al actualizar el registro: {ex.Message}");
+            //    }
+
+            //    return Ok("Hora de salida actualizada correctamente.");
+            //}
+            //try
+            //{
+            //    _appDbContext.Entry(registro).Property(r => r.hora_salida).IsModified = true;
+            //    await _appDbContext.SaveChangesAsync();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, $"Error al actualizar el registro: {ex.Message}");
+            //}
+
+            //return Ok("Hora de salida actualizada correctamente.");
+            var rowsAffected = await _appDbContext.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow} WHERE id_registro_visitas = {idRegistro}");
+
+            if (rowsAffected == 0)
             {
-                await _appDbContext.SaveChangesAsync(); // Guardar cambios en la base de datos
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar el registro: {ex.Message}");
+                return NotFound("No se encontró el registro para actualizar.");
             }
 
             return Ok("Hora de salida actualizada correctamente.");
         }
+
+
+
 
     }
 }
