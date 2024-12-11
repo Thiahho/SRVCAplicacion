@@ -1,9 +1,9 @@
 ﻿async function CrearInquilino() {
 
-    const nombre = document.getElementById('inputNombreNV').value;
-    const apellido = document.getElementById('inputApellidoNV').value;
-    const identificacion = document.getElementById('inputDNINV').value;
-    const telefono = document.getElementById('inputTelefonoNV').value;
+    const nombre = document.getElementById('inputNombreNI').value;
+    const apellido = document.getElementById('inputApellidoNI').value;
+    const identificacion = document.getElementById('inputDNINI').value;
+    const telefono = document.getElementById('inputTelefonoNI').value;
     //1 ingreso, 0 salio
     const activo = 0;
     //1 inquilino, 2 visitante
@@ -52,10 +52,10 @@
         alert("Error al enviar el formulario.");
     } finally {
         //limpia los campos
-        document.getElementById('inputNombreNV').value = '';
-        document.getElementById('inputApellidoNV').value = '';
-        document.getElementById('inputDNINV').value = '';
-        document.getElementById('inputTelefonoNV').value = '';
+        document.getElementById('inputNombreNI').value = '';
+        document.getElementById('inputApellidoNI').value = '';
+        document.getElementById('inputDNINI').value = '';
+        document.getElementById('inputTelefonoNI').value = '';
     }
 
 }
@@ -113,10 +113,10 @@ async function guardarRegistroInquilino() {
         console.log('Nombre Encargado:', nombre_encargado);
         console.log('ID Punto Control:', id_punto_control);
 
-        const identificacion_visita = document.getElementById('inputDNIingreso').value;
-        const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngreso').value;
-        const nombre = document.getElementById('inputNombreIngreso').value.trim();
-        const apellido = document.getElementById('inputApellidoIngreso').value.trim();
+        const identificacion_visita = document.getElementById('inputDNIingresoI').value;
+        const id_visitante_inquilino = document.getElementById('inputIdInquilinoIngresoI').value;
+        const nombre = document.getElementById('inputNombreIngresoI').value.trim();
+        const apellido = document.getElementById('inputApellidoIngresoI').value.trim();
         const nombre_visitante_inquilino = (nombre && apellido) ? nombre + ' ' + apellido : nombre + apellido;
 
         const fechaingreso = new Date();
@@ -124,11 +124,11 @@ async function guardarRegistroInquilino() {
         const hora_ingreso = fechaingreso.toISOString();
         console.log('Fecha y Hora de Ingreso:', hora_ingreso);
 
-        const motivo = document.getElementById('inputMotivoIngreso').value;
-        const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
-        const depto_visita = document.getElementById('inputSectorDepto').value;
+        const motivo = document.getElementById('inputMotivoIngresoI').value;
+        const motivo_personalizado = document.getElementById('motivoPersonalizadoI').value;
+        const depto_visita = document.getElementById('inputSectorDeptoI').value;
         const estado_visita = 1;
-        const nombre_punto_control = document.getElementById('inputNombrePControl').value;
+        const nombre_punto_control = document.getElementById('inputNombrePControlI').value;
         const estado_actualizacion = 1;
 
         // Valida que los campos esten todos llenos
@@ -180,14 +180,14 @@ async function guardarRegistroInquilino() {
         alert("Error al obtener los claims o al enviar el formulario.");
     } finally {
         // limpio los campos
-        document.getElementById('inputDNIingreso').value = '';
-        document.getElementById('inputIdInquilinoIngreso').value = '';
-        document.getElementById('inputNombreIngreso').value = '';
-        document.getElementById('inputApellidoIngreso').value = '';
-        document.getElementById('inputMotivoIngreso').value = '';
-        document.getElementById('motivoPersonalizado').value = '';
-        document.getElementById('inputSectorDepto').value = '';
-        document.getElementById('inputNombrePControl').value = '';
+        document.getElementById('inputDNIingresoI').value = '';
+        document.getElementById('inputIdInquilinoIngresoI').value = '';
+        document.getElementById('inputNombreIngresoI').value = '';
+        document.getElementById('inputApellidoIngresoI').value = '';
+        document.getElementById('inputMotivoIngresoI').value = '';
+        document.getElementById('motivoPersonalizadoI').value = '';
+        document.getElementById('inputSectorDeptoI').value = '';
+        document.getElementById('inputNombrePControlI').value = '';
         document.getElementById('crearNuevoVisitante').disabled = false; // Habilitar el botón al finalizar
     }
 }
@@ -218,7 +218,7 @@ async function mostrarRegistrosInquilinos() {
                     <td>${registro.hora_ingreso}</td>
                     <td>${registro.hora_salida}</td>
                     <td>
-                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalida(${registro.id_registro_visitas})">salida</button>` : ''}
+                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaInquilino(${registro.id_registro_visitas})">salida</button>` : ''}
                     </td>
                     `;
                 tabla.querySelector('tbody').appendChild(fila);
@@ -226,5 +226,34 @@ async function mostrarRegistrosInquilinos() {
 
     } catch (error) {
         console.error('Error al mostrar los registros:', error);
+    }
+}
+
+async function marcarSalidaInquilino(idRegistro) {
+
+    try {
+        const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+            // Si la respuesta no es exitosa, procesamos el error
+            const errorData = await response.json();  // Parsear la respuesta como JSON
+            alert('hubo un error al intentar marcar la salida');
+            console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
+        } else {
+            // Si la respuesta es exitosa, procesamos la respuesta
+            alert('Se marco la salida correctamente');
+            console.log('Se marco la salida correctamente');
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    } finally {
+        // recarga de pagina
+        location.reload();
     }
 }
