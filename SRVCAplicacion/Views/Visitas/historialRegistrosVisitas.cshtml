@@ -50,7 +50,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-area">
-                        <table id="tablaRegistrosHistorialV" class="display" style="width:100%">
+                        <!--    <table id="tablaRegistrosHistorialV" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id registro</th>
@@ -64,7 +64,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--
+                                
                                 <tr>
                                     <td id="idRegistroV"></td>
                                     <td id="motivoV"></td>
@@ -77,9 +77,33 @@
                                         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </td>
                                 </tr>
-                                -->
+                                
                             </tbody>
 
+                        </table> -->
+                        <table id="tablaHistorialRegistrosVI" class="display table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id registro</th>
+                                    <th>Motivo</th>
+                                    <th>Depto/Sector</th>
+                                    <th>Nombre</th>
+                                    <th>Identificación</th>
+                                    <th>Hora de ingreso</th>
+                                    <th>Hora de salida</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-control" name="idhisRegistroVISI" readonly></td>
+                                    <td><input type="text" class="form-control" name="motivohisVISI" readonly></td>
+                                    <td><input type="text" class="form-control" name="deptohisSectorVISI" readonly></td>
+                                    <td><input type="text" class="form-control" name="nombrehisVISI" readonly></td>
+                                    <td><input type="text" class="form-control" name="identificacionhisVISI" readonly></td>
+                                    <td><input type="text" class="form-control" name="horahisIngresoVISI" readonly></td>
+                                    <td><input type="text" class="form-control" name="horahisSalidaVISI" readonly></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -137,7 +161,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            mostrarRegistrosVisitasHistorial();
+            mostrarRegistrosVisitantesHistorialTEXBOX();
         });
     </script>
 

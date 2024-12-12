@@ -333,3 +333,82 @@ async function mostrarRegistrosVisitasActivos() {
         console.error('Error al mostrar los registros:', error);
     }
 }
+
+
+//prueba insertar datos a los texbox del fron para mejorar visual
+async function mostrarRegistrosVisitasActivosTEXBOX() {
+    try {
+        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const registros = await response.json();
+        console.log('Registros recibidos:', registros);
+
+        const tbody = document.querySelector('#tablaRegistrosV tbody');
+        tbody.innerHTML = ''; // Limpiar contenido previo
+
+        registros
+            .filter(registro => registro.estado_actualizacion === 2)
+            .filter(registro => registro.estado_visita === 1)
+            .forEach(registro => {
+                const fila = `
+                    <tr>
+                        <td><input type="text" class="form-control" value="${registro.id_registro_visitas}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.motivo}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.depto_visita}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.nombre_visitante_inquilino}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.identificacion_visita}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.hora_ingreso}" readonly></td>
+                        <td>
+                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaVisita(${registro.id_registro_visitas})">salió</button>` : ''}
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', fila);
+            });
+
+    } catch (error) {
+        console.error('Error al mostrar los registros:', error);
+    }
+}
+
+async function mostrarRegistrosVisitantesHistorialTEXBOX() {
+    try {
+        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const registros = await response.json();
+        console.log('Registros recibidos:', registros);
+
+        const tbody = document.querySelector('#tablaHistorialRegistrosVI tbody');
+        tbody.innerHTML = ''; // Limpiar contenido previo
+
+        registros.filter(registro => registro.estado_actualizacion === 2)
+            .filter(registro => registro.estado_visita === 0)
+            .forEach(registro => {
+                const fila = `
+                    <tr>
+                        <td><input type="text" class="form-control" value="${registro.id_registro_visitas}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.motivo}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.depto_visita}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.nombre_visitante_inquilino}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.identificacion_visita}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.hora_ingreso}" readonly></td>
+                        <td><input type="text" class="form-control" value="${registro.hora_salida}" readonly></td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', fila);
+            });
+
+    } catch (error) {
+        console.error('Error al mostrar los registros:', error);
+    }
+}

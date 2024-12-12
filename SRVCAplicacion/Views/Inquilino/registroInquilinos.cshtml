@@ -50,7 +50,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-area">
-                        <table id="tablaRegistrosI" class="display" style="width:100%">
+                        <!-- <table id="tablaRegistrosI" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id registro</th>
@@ -64,7 +64,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--
+                                
                                 <tr>
                                     <td id="idRegistroV"></td>
                                     <td id="motivoV"></td>
@@ -77,58 +77,40 @@
                                         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </td>
                                 </tr>
-                                -->
+                                
                             </tbody>
 
+                         </table> -->
+                        <table id="tablaRegistrosIN" class="display table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id registro</th>
+                                    <th>Motivo</th>
+                                    <th>Depto/Sector</th>
+                                    <th>Nombre</th>
+                                    <th>Identificación</th>
+                                    <th>Hora de ingreso</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button></button>
+                                    </td>
+                                    <td><input type="text" class="form-control" name="idRegistroInqui" readonly></td>
+                                    <td><input type="text" class="form-control" name="motivoInqui" readonly></td>
+                                    <td><input type="text" class="form-control" name="deptoSectorInqui" readonly></td>
+                                    <td><input type="text" class="form-control" name="nombreInqui" readonly></td>
+                                    <td><input type="text" class="form-control" name="identificacionInqui" readonly></td>
+                                    <td><input type="text" class="form-control" name="horaIngresoInqui" readonly></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- boton editar -->
-
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Que desea hacer?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form>
-                            <h1>Seleccione una opcion</h1>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#marcarSalidaV" data-dismiss="modal">Marcar Salida</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="marcarSalidaV" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Confirmar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="botonConfirmarSalidaV">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
@@ -180,7 +162,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            mostrarRegistrosInquilinosActivos();
+            mostrarRegistrosInquilinosActivosTEXBOX();
         });
     </script>
 
