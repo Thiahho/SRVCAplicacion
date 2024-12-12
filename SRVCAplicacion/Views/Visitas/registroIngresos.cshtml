@@ -51,7 +51,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-area">
-                        <table id="tablaRegistrosI" class="display" style="width:100%">
+                        <table id="tablaRegistrosV" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id registro</th>
@@ -86,51 +86,6 @@
                 </div>
             </div>
         </div>
-        <!-- boton editar -->
-
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Que desea hacer?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form>
-                            <h1>Seleccione una opcion</h1>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#marcarSalidaV" data-dismiss="modal">Marcar Salida</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="marcarSalidaV" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Confirmar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="botonConfirmarSalidaV">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
@@ -178,11 +133,11 @@
     <script src="~/jsc/demo/chart-area-demo.js"></script>
     <script src="~/jsc/demo/chart-pie-demo.js"></script>
     <script src="~/jsc/vistas.js"></script>
-    <script src="~/jsc/inquilinico.js"></script>
+    <script src="~/jsc/visitas.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            mostrarRegistrosVisitas();
+            mostrarRegistrosVisitasActivos();
         });
     </script>
 

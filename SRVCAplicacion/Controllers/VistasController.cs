@@ -71,6 +71,13 @@ namespace SRVCAplicacion.Controllers
 
         }
 
+        [HttpGet("historialRegistrosVisitas")]
+        public IActionResult historialRegistrosVisitas()
+        {
+            return View("~/Views/Visitas/historialRegistrosVisitas.cshtml");
+
+        }
+
         //-----------------------------BUSQUEDA-----------
         [HttpGet("Busqueda")]
         public IActionResult GenerarRegistros()
@@ -96,6 +103,12 @@ namespace SRVCAplicacion.Controllers
         public IActionResult registroInquilinos()
         {
             return View("~/Views/Inquilino/registroInquilinos.cshtml");
+
+        }
+        [HttpGet("historialRegistrosInquilino")]
+        public IActionResult historialRegistrosInquilino()
+        {
+            return View("~/Views/Inquilino/historialRegistrosInquilino.cshtml");
 
         }
 
