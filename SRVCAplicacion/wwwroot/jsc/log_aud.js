@@ -32,3 +32,45 @@ async function mostrarLog() {
         console.error('Error al mostrar los cambios:', error);
     }
 }
+
+
+
+//MostrarLOG mejorado
+async function mostrarLogMejorado() {
+    try {
+        const response = await fetch('https://localhost:7285/api/LogAud/obtener');
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const log_aud = await response.json();
+        console.log('Registros recibidos:', log_aud);
+
+        const tbody = document.querySelector('#tablaLogAud tbody');
+        tbody.innerHTML = ''; // Limpiar contenido previo
+
+         log_aud
+                .forEach(log => {
+                    const fila = `
+                        <tr>
+                            <td><input type="text" class="form-control" value="${log.id_log_aud}" readonly></td>
+                            <td><input type="text" class="form-control" value="${log.id_usuario}" readonly></td>
+                            <td><input type="text" class="form-control" value="${log.accion}" readonly></td>
+                            <td><input type="text" class="form-control" value="${log.hora}" readonly></td>
+                            <td>
+                                ${log.valor_original != null
+                                    ? `<textarea class="form-control" readonly>${log.valor_original}</textarea>`
+                                    : `<input type="text" class="form-control" value=" " readonly>`}
+                            </td>
+                            <td><textarea class="form-control" readonly>${log.valor_nuevo}</textarea></td>
+                        </tr>
+                    `;
+                    tbody.insertAdjacentHTML('beforeend', fila);
+                });
+
+    } catch (error) {
+        console.error('Error al mostrar los registros:', error);
+    }
+}

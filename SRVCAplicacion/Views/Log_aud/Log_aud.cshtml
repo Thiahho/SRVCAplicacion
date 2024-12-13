@@ -23,85 +23,62 @@
     <link href="~/css/datatables.min.css" rel="stylesheet">
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="~/css/styles.css">
+
 </head>
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-       
         <div class="container">
 
             <!-- Page Heading -->
-            <!-- Content Row -->
             <div class="row">
-
                 <!-- Earnings (Monthly) Card Example -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Log_aud</h1>
                     </div>
 
-
-                    <!-- INICIO Formulario para agregar usuarios -->
                     <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Cambios</h6>
-
                             </div>
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="chart-area">
-                                    <table id="logTable" class="display" style="width:100%">
+                                    <table id="tablaLogAud" class="display table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>ID_log_aud</th>
-                                                <th>ID_Usuario</th>
+                                                <th>Id registro LOG</th>
+                                                <th>ID Usuario</th>
                                                 <th>Accion</th>
                                                 <th>Hora</th>
                                                 <th>Valor Original</th>
                                                 <th>Nuevo Valor</th>
-                                                <th>Id punto de control</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            <tr>
+                                                <td><input type="text" class="form-control" name="idRegistroLog" readonly></td>
+                                                <td><input type="text" class="form-control" name="motivoLog" readonly></td>
+                                                <td><input type="text" class="form-control" name="accionLog" readonly></td>
+                                                <td><input type="text" class="form-control" name="horaLog" readonly></td>
+                                                <td><input type="text" class="form-control" name="valorHoriginalLog" readonly></td>
+                                                <td><input type="text" class="form-control" name="nuevoValorLog" readonly></td>
+                                            </tr>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
                     <a class="scroll-to-top rounded" href="#page-top">
                         <i class="fas fa-angle-up"></i>
                     </a>
-
-                    <!-- Logout Modal-->
-                   @*  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para partir?</h5>
-                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                    <a class="btn btn-primary" href="@Url.Action("Salir", "Home")">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> *@
 
                     <!-- Bootstrap core JavaScript-->
                     <script src="~/jquery/jquery.min.js"></script>
@@ -113,7 +90,6 @@
                     <!-- Custom scripts for all pages-->
                     <script src="~/jsc/sb-admin-2.min.js"></script>
 
-
                     <script src="~/jsc/datatables.min.js"></script>
 
                     <!-- Page level plugins -->
@@ -123,18 +99,18 @@
                     <script src="~/jsc/demo/chart-area-demo.js"></script>
                     <script src="~/jsc/demo/chart-pie-demo.js"></script>
 
-                    <!-- <script src="~/jsc/usuario.js"></script>-->
                     <script src="~/jsc/log_aud.js"></script>
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
-
-                            mostrarLog();
+                            mostrarLogMejorado();
                         });
                     </script>
-                    
-
-
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 
 </html>

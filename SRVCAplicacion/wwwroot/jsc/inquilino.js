@@ -359,7 +359,7 @@ async function mostrarRegistrosInquilinosActivosTEXBOX() {
                         <td><input type="text" class="form-control" value="${registro.identificacion_visita}" readonly></td>
                         <td><input type="text" class="form-control" value="${registro.hora_ingreso}" readonly></td>
                         <td>
-                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaVisita(${registro.id_registro_visitas})">salió</button>` : ''}
+                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaInquilino(${registro.id_registro_visitas})">salió</button>` : ''}
                         </td>
                     </tr>
                 `;

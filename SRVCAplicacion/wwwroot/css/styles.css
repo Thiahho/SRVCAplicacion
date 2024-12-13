@@ -1,0 +1,24 @@
+﻿body {
+}
+
+/* Hacer que el div se estire automáticamente con el contenido */
+.card-body {
+    min-height: 400px; /* Altura mínima para el cuerpo de la tarjeta */
+    max-height: 80vh; /* Establecer una altura máxima relativa al tamaño de la ventana */
+    overflow-y: auto; /* Habilitar scroll vertical si el contenido es más largo */
+}
+
+/* Hacer que la tabla ocupe el 100% del ancho disponible */
+#tablaLogAud {
+    width: 100%;
+    max-height: 400px; /* Limitar la altura máxima si deseas que la tabla se quede dentro de un área específica */
+    overflow-y: auto;
+    /*display: block;  Permitir el scroll si el contenido es largo */
+}
+
+#tablaHistorialRegistrosIN {
+    width: 100%;
+    max-height: 400px; /* Limitar la altura máxima si deseas que la tabla se quede dentro de un área específica */
+    overflow-y: auto;
+    /*display: block;  Permitir el scroll si el contenido es largo */
+}
