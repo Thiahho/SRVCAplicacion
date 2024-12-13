@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
+using SRCVShared.Models;
+using SRCVShared.Data;
 using SRVCAplicacion.Services;
 using System.Reflection.Metadata;
+using SRVWindowsService.Services;
 
 namespace SRVCAplicacion.Controllers
 {

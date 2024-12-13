@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Models;
+using SRCVShared.Models;
 using System.ComponentModel.DataAnnotations;
-
-namespace SRVCAplicacion.Data
+namespace SRCVShared.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -12,14 +11,16 @@ namespace SRVCAplicacion.Data
         {
             this.httpContextAccessor = httpContextAccessor;
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("Host=localhost;Post:5432;Database=srvc;Username=postgres;Password=admin123;",
-                    mySqlOptions => mySqlOptions.EnableRetryOnFailure());
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseNpgsql("Host=localhost;Post:5292;Database=srvc;Username=postgres;Password=c328fe9e;",
+        //            mySqlOptions => mySqlOptions.EnableRetryOnFailure());
+        //    }
+        //}
+
+
         public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Motivo> Motivo { get; set; }
         public DbSet<registro_visitas> registro_Visitas { get; set; }

@@ -1,7 +1,7 @@
-﻿using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
+﻿using SRCVShared.Data;
+using SRCVShared.Models;
 
-namespace SRVCAplicacion.Services
+namespace SRVWindowsService.Services
 {
     public interface ILogAudService
     {

@@ -1,7 +1,8 @@
-﻿    using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SRVCAplicacion.Models
+namespace SRCVShared.Models
+
 {
     [Table("log_aud")]
 

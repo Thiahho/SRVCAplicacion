@@ -32,5 +32,7 @@
   <ItemGroup>
     <None Include="wwwroot\jsc\log_aud.js" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\SRVCShared\SRVCShared.csproj" />
+  </ItemGroup>
 </Project>

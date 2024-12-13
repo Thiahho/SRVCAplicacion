@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
+using SRCVShared.Models;
+using SRCVShared.Data;
 
 namespace SRVCAplicacion.Controllers
 {
@@ -59,5 +59,9 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(new { error = ex.Message, innerError = ex.InnerException?.Message });
             }
         }
+
+
+        //[HttpGet("ultima")]
+
     }
 }

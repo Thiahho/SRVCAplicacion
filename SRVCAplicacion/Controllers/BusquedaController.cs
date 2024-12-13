@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
-
+using SRCVShared.Models;
+using SRCVShared.Data;
 namespace SRVCAplicacion.Controllers
 {
     [Route("api/[controller]")]

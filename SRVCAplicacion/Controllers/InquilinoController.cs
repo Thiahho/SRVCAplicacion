@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
-using SRVCAplicacion.Services;
-using System.Security.Claims;
+using SRCVShared.Models;
+using SRCVShared.Data;
+using SRVWindowsService.Services;
 
 namespace SRVCAplicacion.Controllers
 {

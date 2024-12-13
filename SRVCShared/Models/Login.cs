@@ -1,4 +1,4 @@
-﻿namespace SRVCAplicacion.Models
+﻿namespace SRCVShared.Models
 {
     public class Login
     {
