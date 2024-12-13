@@ -12,7 +12,7 @@
     const id_punto_control = parseInt("1");
     //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
 
-    // Validar campos (Ejemplo: nombre y apellido no pueden estar vacíos)
+    // Validar campos
     if (!nombre || !apellido || !identificacion || !telefono) {
         alert("Todos los campos son obligatorios.");
         document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
@@ -65,9 +65,8 @@
 async function BuscarPorDNIVisita() {
     // Obtener el valor del input
     var dni = document.getElementById('inputDNIingreso').value;
-
-    // Llamar a la función que utilizará ese valor
-    console.log(dni); // Aquí puedes realizar lo que necesites con el valor
+ 
+    console.log(dni);
     try {
         const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
         console.log('Respuesta del servidor:', response);
@@ -81,7 +80,7 @@ async function BuscarPorDNIVisita() {
 
 
         if (datosPorDNI.nombre && datosPorDNI.apellido && datosPorDNI.id_visitante_inquilino) {
-            inputIdInquilinoIngreso.value = datosPorDNI.id_visitante_inquilino; // Asigna el id 
+            inputIdInquilinoIngreso.value = datosPorDNI.id_visitante_inquilino; 
             inputNombreIngreso.value = datosPorDNI.nombre; // Asigna el nombre 
             inputApellidoIngreso.value = datosPorDNI.apellido; // Asigna el apellido 
             alert("El inquilono se encuentra en el registro.");
@@ -178,7 +177,7 @@ async function guardarRegistroVisitante() {
         // Valida que los campos esten todos llenos
         if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
             alert("Todos los campos son obligatorios.");
-            document.getElementById('crearNuevoVisitante').disabled = false; // Asegúrate de que el botón se habilite
+            document.getElementById('crearNuevoVisitante').disabled = false;
             return;
         }
 
@@ -232,7 +231,7 @@ async function guardarRegistroVisitante() {
         document.getElementById('motivoPersonalizado').value = '';
         document.getElementById('inputSectorDepto').value = '';
         document.getElementById('inputNombrePControl').value = '';
-        document.getElementById('crearNuevoVisitante').disabled = false; // Habilitar el botón al finalizar
+        document.getElementById('crearNuevoVisitante').disabled = false;
     }
 }
 
@@ -287,7 +286,7 @@ async function marcarSalidaVisita(idRegistro) {
 
         // Verificar si la respuesta es exitosa
         if (!response.ok) {
-            // Si la respuesta no es exitosa, procesamos el error
+            // Si la respuesta no es exitosa procesamos el error
             const errorData = await response.json();  // Parsear la respuesta como JSON
             alert('hubo un error al intentar marcar la salida');
             console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
