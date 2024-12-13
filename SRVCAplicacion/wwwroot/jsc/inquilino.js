@@ -97,6 +97,48 @@ async function BuscarPorDNIInquilino() {
     }
 }
 
+async function BuscarPorDNIInquilinoFILTRO() {
+    // Obtener el valor del input
+    var dni = document.getElementById('inputDNIingresoI').value;
+
+    console.log(dni); // Log del valor ingresado
+    try {
+        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const datosPorDNI = await response.json();
+        console.log('Registros recibidos:', datosPorDNI);
+
+        // filtro para ver si no es una visita
+        if (datosPorDNI.estado === 2) {
+            alert("Este DNI pertenece a un visitante, no a un inquilino.");
+            inputIdInquilinoIngresoI.value = "";
+            inputNombreIngresoI.value = "";
+            inputApellidoIngresoI.value = "";
+        } else if (datosPorDNI.estado === 1) {
+            inputIdInquilinoIngresoI.value = datosPorDNI.id_visitante_inquilino;
+            inputNombreIngresoI.value = datosPorDNI.nombre;
+            inputApellidoIngresoI.value = datosPorDNI.apellido;
+            alert("El inquilino se encuentra en el registro.");
+        } else {
+            alert("El estado del registro es desconocido.");
+            inputIdInquilinoIngresoI.value = "";
+            inputNombreIngresoI.value = "";
+            inputApellidoIngresoI.value = "";
+        }
+    } catch (error) {
+        alert("El número de DNI no está asociado a ningún inquilino registrado.");
+        console.error('Error al mostrar los registros:', error);
+        inputIdInquilinoIngresoI.value = "";
+        inputNombreIngresoI.value = "";
+        inputApellidoIngresoI.value = "";
+    }
+}
+
 async function guardarRegistroInquilino() {
     try {
         // Realizar la llamada al endpoint para obtener los claims
@@ -134,7 +176,7 @@ async function guardarRegistroInquilino() {
         // Valida que los campos esten todos llenos
         if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
             alert("Todos los campos son obligatorios.");
-            document.getElementById('crearNuevoVisitante').disabled = false; // Asegúrate de que el botón se habilite
+            //document.getElementById('crearNuevoVisitante').disabled = false; // Asegúrate de que el botón se habilite
             return;
         }
 

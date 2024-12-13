@@ -96,6 +96,50 @@ async function BuscarPorDNIVisita() {
     }
 }
 
+async function BuscarPorDNIVisitaFILTRO() {
+    // Obtener el valor del input
+    var dni = document.getElementById('inputDNIingreso').value;
+
+    console.log(dni); // Log del valor ingresado
+    try {
+        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
+        console.log('Respuesta del servidor:', response);
+
+        if (!response.ok) {
+            throw new Error('Hubo un error al obtener los datos');
+        }
+
+        const datosPorDNI = await response.json();
+        console.log('Registros recibidos:', datosPorDNI);
+
+        // filtro para ver si no es una visita
+        if (datosPorDNI.estado === 1) {
+            alert("Este DNI pertenece a un inquilino, no a un visitante.");
+            inputIdInquilinoIngreso.value = "";
+            inputNombreIngreso.value = "";
+            inputApellidoIngreso.value = "";
+        } else if (datosPorDNI.estado === 2) {
+            inputIdInquilinoIngreso.value = datosPorDNI.id_visitante_inquilino;
+            inputNombreIngreso.value = datosPorDNI.nombre; 
+            inputApellidoIngreso.value = datosPorDNI.apellido;
+            alert("El visitante se encuentra en el registro.");
+        } else {
+            alert("El estado del registro es desconocido.");
+            inputIdInquilinoIngreso.value = "";
+            inputNombreIngreso.value = "";
+            inputApellidoIngreso.value = "";
+        }
+    } catch (error) {
+        alert("El número de DNI no está asociado a ningún visitante registrado.");
+        console.error('Error al mostrar los registros:', error);
+        inputIdInquilinoIngreso.value = "";
+        inputNombreIngreso.value = "";
+        inputApellidoIngreso.value = "";
+    }
+}
+
+
+
 
 async function guardarRegistroVisitante() {
     try {
