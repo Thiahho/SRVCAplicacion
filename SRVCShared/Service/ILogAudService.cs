@@ -1,4 +1,5 @@
-﻿using SRCVShared.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SRCVShared.Data;
 using SRCVShared.Models;
 
 namespace SRVWindowsService.Services

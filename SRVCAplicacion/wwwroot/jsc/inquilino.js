@@ -449,3 +449,4 @@ async function mostrarRegistrosInquilinosHistorialTEXBOX() {
         console.error('Error al mostrar los registros:', error);
     }
 }
+

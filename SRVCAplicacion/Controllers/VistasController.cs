@@ -111,6 +111,13 @@ namespace SRVCAplicacion.Controllers
             return View("~/Views/Inquilino/historialRegistrosInquilino.cshtml");
 
         }
+        //-----------------------------editar-----------
+        [HttpGet("editar")]
+        public IActionResult editar()//editar o eliminar inquilino / visitante
+        {
+            return View("~/Views/edit/editar.cshtml");
+
+        }
 
 
     }
