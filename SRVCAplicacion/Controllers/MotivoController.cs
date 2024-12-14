@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Data;
+using SRCVShared.Data;
 
 namespace SRVCAplicacion.Controllers
 {

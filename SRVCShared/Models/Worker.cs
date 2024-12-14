@@ -1,5 +1,9 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SRCVShared.Data;
 using SRVCShared;
+using System.Net.Http;
 
 namespace SRVWindowsService
 {

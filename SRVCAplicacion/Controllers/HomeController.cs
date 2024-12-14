@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SRVCAplicacion.Models;
+using SRCVShared.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

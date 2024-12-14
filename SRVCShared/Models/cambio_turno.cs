@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SRVCAplicacion.Models
+namespace SRCVShared.Models
 {
     [Table("cambio_turno")]
     public class cambio_turno
@@ -17,6 +17,7 @@ namespace SRVCAplicacion.Models
         public string? observaciones { get; set; } = "";
         public int? activo { get; set; } = 0;  // ID del usuario que realiza la acción
 
-
+        [ForeignKey("id_punto_control")]
+        public Puntos_de_controles PuntoControl { get; set; }
     }
 }

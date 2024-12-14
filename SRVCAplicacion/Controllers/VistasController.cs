@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SRVCAplicacion.Data;
+using SRCVShared.Data;
 
 namespace SRVCAplicacion.Controllers
 {

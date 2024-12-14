@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SRVCAplicacion.Models
+namespace SRCVShared.Models
 {
     [Table("puntos_de_controles")]
     public class Puntos_de_controles
@@ -14,5 +14,6 @@ namespace SRVCAplicacion.Models
         public int? estado {  get; set; }
         public DateTime? actualizacion {  get; set; }
         public string? token_temporal_auth {  get; set; }
+        public ICollection<cambio_turno> CambiosTurno { get; set; }
     }
 }

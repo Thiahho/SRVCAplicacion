@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Models;
+using SRCVShared.Models;
 using System.ComponentModel.DataAnnotations;
-
-namespace SRVCAplicacion.Data
+namespace SRCVShared.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -12,14 +11,16 @@ namespace SRVCAplicacion.Data
         {
             this.httpContextAccessor = httpContextAccessor;
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("Host=localhost;Post:5432;Database=srvc;Username=postgres;Password=admin123;",
-                    mySqlOptions => mySqlOptions.EnableRetryOnFailure());
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseNpgsql("Host=localhost;Post:5292;Database=srvc;Username=postgres;Password=c328fe9e;",
+        //            mySqlOptions => mySqlOptions.EnableRetryOnFailure());
+        //    }
+        //}
+
+
         public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Motivo> Motivo { get; set; }
         public DbSet<registro_visitas> registro_Visitas { get; set; }
@@ -41,6 +42,11 @@ namespace SRVCAplicacion.Data
             modelBuilder.Entity<registro_visitas>().HasKey(r => r.id_usuario);
             modelBuilder.Entity<Motivo>().HasKey(r => r.id_motivo);
             modelBuilder.Entity<Puntos_de_controles>();
+
+            modelBuilder.Entity<cambio_turno>().HasOne(ct=>ct.PuntoControl)
+                .WithMany(pc=>pc.CambiosTurno)
+                .HasForeignKey(ct=>ct.id_punto_control)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
         //private Usuario ObtenerUsuarioActual()

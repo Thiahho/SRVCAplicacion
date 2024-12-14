@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SRVCAplicacion.Data;
+using SRCVShared.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using SRVCAplicacion.Services;
+using SRVWindowsService.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

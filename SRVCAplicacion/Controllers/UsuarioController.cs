@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using SRVCAplicacion.Data;
-using SRVCAplicacion.Models;
+using SRCVShared.Models;
+using SRCVShared.Data;
 using SRVCAplicacion.Services;
 using System.Reflection.Metadata;
+using SRVWindowsService.Services;
 
 namespace SRVCAplicacion.Controllers
 {
@@ -83,7 +84,7 @@ namespace SRVCAplicacion.Controllers
                     accion = "Creación de usuario",
                     valor_original = null,
                     //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
-                    valor_nuevo = $"Usuario:{usuario.usuario}, Dni:{usuario.dni}, Email:{usuario.email}, Contraseña:{usuario.contraseña}," +
+                    valor_nuevo = $"Usuario:{usuario.usuario}, Dni:{usuario.dni}, Email:{usuario.email}, clave:{usuario.clave}," +
                                   $"Estado:{usuario.estado}, Punto Control:{usuario.id_punto_control}, Tabla:'usuarios'",
                     hora = DateTime.UtcNow,
                     id_punto_control = usuario.id_punto_control,
@@ -149,7 +150,7 @@ namespace SRVCAplicacion.Controllers
         //        usuarioExiste.email = usuario.email;
         //        usuarioExiste.telefono = usuario.telefono;
         //        usuarioExiste.dni = usuario.dni;
-        //        usuarioExiste.contraseña = usuario.contraseña;
+        //        usuarioExiste.clave = usuario.clave;
         //        usuarioExiste.Estado = usuario.Estado;
 
         //        var valorNuevo = $"Usuario: {usuarioExiste.usuario}, Email: {usuarioExiste.email}, Teléfono: {usuarioExiste.telefono}, DNI: {usuarioExiste.dni}," +
@@ -197,7 +198,7 @@ namespace SRVCAplicacion.Controllers
         //        // Actualizar los valores del usuario original con los nuevos valores
         //        usuarioOriginal.usuario = usuarioActualizado.usuario;
         //        usuarioOriginal.dni = usuarioActualizado.dni;
-        //        usuarioOriginal.contraseña = usuarioActualizado.contraseña;
+        //        usuarioOriginal.clave = usuarioActualizado.clave;
         //        usuarioOriginal.email = usuarioActualizado.email;
         //        usuarioOriginal.telefono = usuarioActualizado.telefono;
         //        usuarioOriginal.Estado = usuarioActualizado.Estado;
@@ -213,14 +214,14 @@ namespace SRVCAplicacion.Controllers
         //            valor_original = string.Join(", ", new string[] {
         //        $"Nombre: {usuarioOriginal.usuario}",
         //        $"DNI: {usuarioOriginal.dni}",
-        //        $"Contraseña: {usuarioOriginal.contraseña}",
+        //        $"clave: {usuarioOriginal.clave}",
         //        $"Email: {usuarioOriginal.email}",
         //        $"Teléfono: {usuarioOriginal.telefono}"
         //    }),
         //            valor_nuevo = string.Join(", ", new string[] {
         //        $"Nombre: {usuarioActualizado.usuario}",
         //        $"DNI: {usuarioActualizado.dni}",
-        //        $"Contraseña: {usuarioActualizado.contraseña}",
+        //        $"clave: {usuarioActualizado.clave}",
         //        $"Email: {usuarioActualizado.email}",
         //        $"Teléfono: {usuarioActualizado.telefono}"
         //    }),
@@ -260,8 +261,8 @@ namespace SRVCAplicacion.Controllers
         //    // 3. Registrar siempre los valores actuales (aunque no se modifiquen)
 
         //    // Construir las cadenas para los valores originales y nuevos
-        //    string valorOriginalUsuario = $"Usuario: {usuarioOriginal.usuario}, Dni: {usuarioOriginal.dni}, Email: {usuarioOriginal.email}, Contraseña: {usuarioOriginal.contraseña}, Estado: {usuarioOriginal.Estado}, Punto Control: {usuarioOriginal.id_punto_control}";
-        //    string valorNuevoUsuario = $"Usuario: {usuarioActualizado.usuario}, Dni: {usuarioActualizado.dni}, Email: {usuarioActualizado.email}, Contraseña: {usuarioActualizado.contraseña}, Estado: {usuarioActualizado.Estado}, Punto Control: {usuarioActualizado.id_punto_control}";
+        //    string valorOriginalUsuario = $"Usuario: {usuarioOriginal.usuario}, Dni: {usuarioOriginal.dni}, Email: {usuarioOriginal.email}, clave: {usuarioOriginal.clave}, Estado: {usuarioOriginal.Estado}, Punto Control: {usuarioOriginal.id_punto_control}";
+        //    string valorNuevoUsuario = $"Usuario: {usuarioActualizado.usuario}, Dni: {usuarioActualizado.dni}, Email: {usuarioActualizado.email}, clave: {usuarioActualizado.clave}, Estado: {usuarioActualizado.Estado}, Punto Control: {usuarioActualizado.id_punto_control}";
 
         //    Console.WriteLine($"valorOriginalUsuario: {valorOriginalUsuario}");
         //    Console.WriteLine($"valorNuevoUsuario: {valorNuevoUsuario}");
@@ -329,13 +330,13 @@ namespace SRVCAplicacion.Controllers
                 return NotFound(new { mensaje = $"Usuario con ID {id} no encontrado." });
             }
 
-            var valorOriginal = $"Usuario:{usuarioExistente.usuario}, Dni:{usuarioExistente.dni}, Email:{usuarioExistente.email}, Contraseña:{usuarioExistente.contraseña}," +
+            var valorOriginal = $"Usuario:{usuarioExistente.usuario}, Dni:{usuarioExistente.dni}, Email:{usuarioExistente.email}, Contraseña:{usuarioExistente.clave}," +
                 $" Estado:{usuarioExistente.estado}, Punto Control:{usuarioExistente.id_punto_control}";
-            var valorNuevo = $"Usuario:{usuarioActualizado.usuario}, Dni:{usuarioActualizado.dni}, Email:{usuarioActualizado.email}, Contraseña:{usuarioActualizado.contraseña}, " +
+            var valorNuevo = $"Usuario:{usuarioActualizado.usuario}, Dni:{usuarioActualizado.dni}, Email:{usuarioActualizado.email}, Contraseña:{usuarioActualizado.clave}, " +
                 $"Estado:{usuarioActualizado.estado}, Punto Control:{usuarioActualizado.id_punto_control}";
 
             usuarioExistente.usuario = usuarioActualizado.usuario;
-            usuarioExistente.contraseña = usuarioActualizado.contraseña;
+            usuarioExistente.clave = usuarioActualizado.clave;
             usuarioExistente.telefono = usuarioActualizado.telefono;
             usuarioExistente.dni = usuarioActualizado.dni;
             usuarioExistente.estado = usuarioActualizado.estado;
@@ -426,7 +427,7 @@ namespace SRVCAplicacion.Controllers
                 .Select(u => new
                 {
                     u.usuario,
-                    u.contraseña,
+                    u.clave,
                     u.telefono,
                     u.dni,
                     u.estado,
