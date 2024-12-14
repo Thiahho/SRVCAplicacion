@@ -43,6 +43,11 @@ namespace SRCVShared.Data
             modelBuilder.Entity<Motivo>().HasKey(r => r.id_motivo);
             modelBuilder.Entity<Puntos_de_controles>();
 
+            modelBuilder.Entity<cambio_turno>().HasOne(ct=>ct.PuntoControl)
+                .WithMany(pc=>pc.CambiosTurno)
+                .HasForeignKey(ct=>ct.id_punto_control)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
         //private Usuario ObtenerUsuarioActual()
         //{

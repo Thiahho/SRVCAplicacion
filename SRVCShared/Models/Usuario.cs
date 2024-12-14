@@ -17,7 +17,7 @@ namespace SRCVShared.Models
         //[Column("usu"), MaxLength(50)]
         public string? dni { get; set; } = "";
         //[Column("pass"), MaxLength(50)]
-        public string? contraseña { get; set; } = "";
+        public string? clave { get; set; } = "";
         [NotMapped] 
         public string CofirmarPass{ get; set; } = "";
         //[Column("tipo")]

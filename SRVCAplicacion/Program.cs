@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SRCVShared.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore.Update;
-using SRVWindowsService.Service;
 using SRVWindowsService.Services;
 
 

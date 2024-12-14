@@ -17,6 +17,7 @@ namespace SRCVShared.Models
         public string? observaciones { get; set; } = "";
         public int? activo { get; set; } = 0;  // ID del usuario que realiza la acción
 
-
+        [ForeignKey("id_punto_control")]
+        public Puntos_de_controles PuntoControl { get; set; }
     }
 }

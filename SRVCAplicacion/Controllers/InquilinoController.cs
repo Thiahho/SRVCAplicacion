@@ -87,15 +87,16 @@ namespace SRVCAplicacion.Controllers
         }
 
 
-        
+
         [HttpPost("CrearVisitante")]
         public async Task<IActionResult> PostVisitante([FromBody] visitante_inquilino visitante)
         {
-            // Obtener el valor del claim "id_usuario".
             var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
 
-            //Parsea el valor de la claim a int, las claim solo guardan string.
-            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+            //    //Parsea el valor de la claim a int, las claim solo guardan string.
+               int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+
+          
 
             if (!ModelState.IsValid)
             {
@@ -136,53 +137,53 @@ namespace SRVCAplicacion.Controllers
             }
         }
 
-        [HttpPost("CrearInquilino")]
-        public async Task<IActionResult> PostInquilino([FromBody] visitante_inquilino inquilino)
-        {
-            // Obtener el valor del claim "id_usuario".
-            var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
+        //[HttpPost("CrearInquilino")]
+        //public async Task<IActionResult> PostInquilino([FromBody] visitante_inquilino inquilino)
+        //{
+        //    // Obtener el valor del claim "id_usuario".
+        //    var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
 
-            //Parsea el valor de la claim a int, las claim solo guardan string.
-            int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+        //    //Parsea el valor de la claim a int, las claim solo guardan string.
+        //    int idUsarioLog = int.Parse(idUsuarioClaim.Value);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                await _context.visitante_Inquilino.AddAsync(inquilino);
-                await _context.SaveChangesAsync();
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    try
+        //    {
+        //        await _context.visitante_Inquilino.AddAsync(inquilino);
+        //        await _context.SaveChangesAsync();
 
-                var log = new log_aud
-                {
+        //        var log = new log_aud
+        //        {
 
-                    //id_usuario = visitante.id_visitante_inquilino,
+        //            //id_usuario = visitante.id_visitante_inquilino,
 
-                    id_usuario = idUsarioLog,
-                    accion = "Creación de inquilino",
-                    valor_original = null,
-                    //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
-                    valor_nuevo = $"Nombre:{inquilino.nombre}, Dni:{inquilino.identificacion}, Activo:{inquilino.activo}, Telefono:{inquilino.telefono}," +
-                                 $"Estado:{inquilino.estado}, Punto Control:{inquilino.id_punto_control}, Tabla:'visitante_inquilino'",
-                    hora = DateTime.UtcNow,
-                    id_punto_control = inquilino.id_punto_control,
-                    estado_actualizacion = 1
-                };
+        //            id_usuario = idUsarioLog,
+        //            accion = "Creación de inquilino",
+        //            valor_original = null,
+        //            //valor_nuevo = $"Usuario:{usuario.usuario}, Email:{usuario.email}, Dni:{usuario.dni}, {}",
+        //            valor_nuevo = $"Nombre:{inquilino.nombre}, Dni:{inquilino.identificacion}, Activo:{inquilino.activo}, Telefono:{inquilino.telefono}," +
+        //                         $"Estado:{inquilino.estado}, Punto Control:{inquilino.id_punto_control}, Tabla:'visitante_inquilino'",
+        //            hora = DateTime.UtcNow,
+        //            id_punto_control = inquilino.id_punto_control,
+        //            estado_actualizacion = 1
+        //        };
 
 
-                // Log para verificar los datos del log
-                Console.WriteLine($"Intentando registrar log: {log.valor_nuevo}");
+        //        // Log para verificar los datos del log
+        //        Console.WriteLine($"Intentando registrar log: {log.valor_nuevo}");
 
-                await _auditoria.RegistrarCambio(log);
-                return CreatedAtAction(nameof(GetIdentificacion), new { id = inquilino.identificacion }, inquilino);
+        //        await _auditoria.RegistrarCambio(log);
+        //        return CreatedAtAction(nameof(GetIdentificacion), new { id = inquilino.identificacion }, inquilino);
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { error = ex.Message });
+        //    }
+        //}
 
 
 

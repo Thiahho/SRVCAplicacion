@@ -14,5 +14,6 @@ namespace SRCVShared.Models
         public int? estado {  get; set; }
         public DateTime? actualizacion {  get; set; }
         public string? token_temporal_auth {  get; set; }
+        public ICollection<cambio_turno> CambiosTurno { get; set; }
     }
 }
