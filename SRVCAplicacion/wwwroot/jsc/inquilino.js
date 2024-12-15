@@ -41,8 +41,11 @@
         const result = await response.json();
 
         if (response.ok) {
-            alert("Inquilino creado exitosamente.");
-            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
+            // Mostrar un mensaje de éxito
+            var toast = document.getElementById("toast");
+            toast.innerHTML = "Inquilino creado correctamente.";
+            toast.className = "show";
+            setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         } else {
             // Si hay un error en el backend, mostrarlo
             alert("Error: " + result.message || "el numero de dni ya esta registrado en la base de datos");

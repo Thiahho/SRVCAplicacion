@@ -256,7 +256,7 @@ namespace SRVCAplicacion.Controllers
                     var log = new log_aud
                     {
                         id_usuario = idUsarioLog,
-                        accion = "Actualización de visita",
+                        accion = "Actualización de visitante",
                         hora = DateTime.UtcNow,
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
@@ -287,7 +287,7 @@ namespace SRVCAplicacion.Controllers
         }
 
         
-        [HttpPut("ActualizarInquilinos/{id}")]
+        [HttpPut("ActualizarInquilino")]
         public async Task<IActionResult> ActualizarInquilinos(int id, [FromBody] visitante_inquilino visitante_Inquilino)
         {
 
