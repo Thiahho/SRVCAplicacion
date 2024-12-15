@@ -18,7 +18,7 @@ namespace SRVCAplicacion.Controllers
 
         public SincronizacionController(ApplicationDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
 
 
@@ -53,6 +53,7 @@ namespace SRVCAplicacion.Controllers
         [HttpPost("GenerarJson")]
         public async Task<IActionResult> GenerarJson()
         {
+            const string _outputPath = "C:\\Data";
             try
             {
                 //var usuarios = await _dbContext.Usuario.ToListAsync();
@@ -110,6 +111,7 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(new { Message = "Error al generar archivo JSON.", Error = ex.Message });
             }
         }
+
 
     }
 }
