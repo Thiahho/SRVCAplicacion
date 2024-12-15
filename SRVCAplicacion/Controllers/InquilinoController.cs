@@ -227,7 +227,7 @@ namespace SRVCAplicacion.Controllers
                     {
                         id_usuario = idUsarioLog,
                         accion = "Actualización de inquilino",
-                        hora = DateTime.Now,
+                        hora = DateTime.UtcNow,
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
                         //tabla = "Usuario",
@@ -257,7 +257,7 @@ namespace SRVCAplicacion.Controllers
                     {
                         id_usuario = idUsarioLog,
                         accion = "Actualización de visita",
-                        hora = DateTime.Now,
+                        hora = DateTime.UtcNow,
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
                         //tabla = "Usuario",
