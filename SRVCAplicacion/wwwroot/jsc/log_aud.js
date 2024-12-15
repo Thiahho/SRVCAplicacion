@@ -74,3 +74,23 @@ async function mostrarLogMejorado() {
         console.error('Error al mostrar los registros:', error);
     }
 }
+
+async function sincronizar() {
+    const statusDiv = document.getElementById("status");
+
+    try {
+        const response = await fetch("https://localhost:7285/api/Sincronizacion/GenerarJson", {
+            method: "POST"
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            statusDiv.innerHTML = `<span style="color: green;">${result.Message}: ${result.Path}</span>`;
+        } else {
+            const error = await response.json();
+            statusDiv.innerHTML = `<span style="color: red;">Error: ${error.Message}</span>`;
+        }
+    } catch (error) {
+        console.error('Error al mostrar los registros:', error);
+    }
+}

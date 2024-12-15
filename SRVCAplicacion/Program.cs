@@ -40,11 +40,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/Login"; // Ruta para acceso denegado
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
-
 // Registrar servicios adicionales
 builder.Services.AddScoped<ILogAudService, AuditoriaService>();
 builder.Services.AddHttpContextAccessor();
-
 // Build the application
 var app = builder.Build();
 

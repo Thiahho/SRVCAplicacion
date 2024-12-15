@@ -46,7 +46,7 @@ namespace SRVCAplicacion.Controllers
         {
             try
             {
-                int cont = await _context.visitante_Inquilino.CountAsync(i => i.activo == 1);
+                int cont = await _context.visitante_Inquilino.CountAsync(i => i.activo == 1 && i.estado==1);
                 return Ok(cont);
             }
             catch (Exception ex)

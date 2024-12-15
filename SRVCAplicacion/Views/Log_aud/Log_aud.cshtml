@@ -42,6 +42,9 @@
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Cambios</h6>
+                                <button id="sync">Sincronizacion</button>
+
+
                             </div>
                             <!-- Card Body -->
                             <div class="card-body">
@@ -102,7 +105,21 @@
                         document.addEventListener('DOMContentLoaded', function () {
                             mostrarLogMejorado();
                         });
+
+
                     </script>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const syncButton = document.getElementById("sync");
+
+                            if (syncButton) {
+                                syncButton.addEventListener("click", sincronizar);
+                            } else {
+                                console.error("Botón de sincronización no encontrado.");
+                            }
+                        });
+                    </script>
+
                 </div>
             </div>
         </div>
