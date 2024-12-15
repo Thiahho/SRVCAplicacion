@@ -42,10 +42,11 @@
 
         if (response.ok) {
             // Mostrar un mensaje de éxito
-            var toast = document.getElementById("toast");
-            toast.innerHTML = "Inquilino creado correctamente.";
-            toast.className = "show";
-            setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
+            alert("Inquilino creado correctamente.");
+            //var toast = document.getElementById("mensajessad");
+            //toast.innerHTML = "Inquilino creado correctamente.";
+            //toast.className = "show";
+            //setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         } else {
             // Si hay un error en el backend, mostrarlo
             alert("Error: " + result.message || "el numero de dni ya esta registrado en la base de datos");
@@ -234,15 +235,13 @@ async function marcarSalidaInquilinoDesactivar(idRegistro) {
         }
         console.log('Primer fetch completado con éxito');
 
-        // Si el primer endpoint es exitoso, procedemos con el segundo
+        // Si el primer endpoint es exitoso, seguimos con el segundo
         const desactivarResponse = await fetch(`https://localhost:7285/api/Inquilino/desactivarActivoPRUEBA/${idRegistro}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        console.log('Segundo fetch ejecutado');
-        console.log('Estado del segundo fetch:', desactivarResponse.status);
 
         if (!desactivarResponse.ok) {
             // Manejo de error del segundo endpoint
@@ -337,6 +336,26 @@ async function mostrarRegistrosInquilinosHistorialTEXBOX() {
 
     } catch (error) {
         console.error('Error al mostrar los registros:', error);
+    }
+}
+async function mostrarTotalInquilinosActivos() {
+    try {
+        // Realizar la solicitud al endpoint
+        const response = await fetch('https://localhost:7285/api/Inquilino/contarInquilinosActivos',
+            { method: 'GET' });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+        }
+
+        // Obtener los datos como JSON
+        const totalInquilinosActivos = await response.json();
+
+        // Actualizar el contenido del elemento con el ID "totalInquilinos"
+        document.getElementById('totalInquilinos').textContent = totalInquilinosActivos;
+    } catch (error) {
+        console.error('Error al mostrar el total de inquilinos activos:', error);
+        document.getElementById('totalInquilinos').textContent = 'Error';
     }
 }
 

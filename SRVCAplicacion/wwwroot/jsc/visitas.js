@@ -138,9 +138,7 @@ async function BuscarPorDNIVisitaFILTRO() {
 }
 
 
-
-
-async function guardarRegistroVisitante() {
+async function guardarRegistroVisitanteActivar() {
     try {
         // Realizar la llamada al endpoint para obtener los claims
         const responseClaims = await fetch('https://localhost:7285/api/Usuario/obtener-claims');
@@ -211,8 +209,21 @@ async function guardarRegistroVisitante() {
         const result = await response.json();
 
         if (response.ok) {
-            alert("Registro creado exitosamente.");
-            document.getElementById('formCrearVisitante').reset();
+
+            const activarResponse = await fetch(`https://localhost:7285/api/Inquilino/activarActivo/${identificacion_visita}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+
+            if (activarResponse.ok) {
+                alert("Registro creado exitosamente.");
+                //alert("Inquilino activado exitosamente.");
+            } else {
+                const activarError = await activarResponse.json();
+                alert("Error al activar al visitante: " + (activarError.mensaje || "Error desconocido"));
+            }
         } else {
             // para mostrar si hay errores en el back
             alert("Error: " + result.message || "Error desconocido");
@@ -236,42 +247,6 @@ async function guardarRegistroVisitante() {
 }
 
 
-//async function mostrarRegistrosVisitas() {
-//    try {
-//        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
-//        console.log('Respuesta del servidor:', response);
-
-//        if (!response.ok) {
-//            throw new Error('Hubo un error al obtener los datos');
-//        }
-
-//        const registros = await response.json();
-//        console.log('Registros recibidos:', registros);
-
-//        const tabla = document.getElementById('tablaRegistrosI');
-
-//        registros.filter(registro => registro.estado_actualizacion === 2)
-//            .forEach(registro => {
-//                const fila = document.createElement('tr');
-//                fila.innerHTML = `
-//                    <td>${registro.id_registro_visitas}</td>
-//                    <td>${registro.motivo}</td>
-//                    <td>${registro.depto_visita}</td>
-//                    <td>${registro.nombre_visitante_inquilino}</td>
-//                    <td>${registro.identificacion_visita}</td>
-//                    <td>${registro.hora_ingreso}</td>
-//                    <td>${registro.hora_salida}</td>
-//                    <td>
-//                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaVisita(${registro.id_registro_visitas})">salida</button>` : ''}
-//                    </td>
-//                    `;
-//                tabla.querySelector('tbody').appendChild(fila);
-//            });
-
-//    } catch (error) {
-//        console.error('Error al mostrar los registros:', error);
-//    }
-//}
 
 
 async function marcarSalidaVisita(idRegistro) {
@@ -302,6 +277,53 @@ async function marcarSalidaVisita(idRegistro) {
         location.reload();
     }
 }
+
+//
+async function marcarSalidaVisitaDesactivar(idRegistro) {
+
+    try {
+        const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error al marcar salida:', errorData.mensaje);
+            alert('Hubo un error al intentar marcar la salida.');
+            return; // Salir de la función si el primer endpoint falla
+        }
+        console.log('Primer fetch completado con éxito');
+
+        // Si el primer endpoint es exitoso, seguimos con el segundo
+        const desactivarResponse = await fetch(`https://localhost:7285/api/Inquilino/desactivarActivoPRUEBA/${idRegistro}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!desactivarResponse.ok) {
+            // Manejo de error del segundo endpoint
+            const activarError = await desactivarResponse.json();
+            console.error('Error al desactivar activo:', activarError.mensaje);
+            alert("Error al desactivar al inquilino: " + (activarError.mensaje || "Error desconocido"));
+            return; // Salir si el segundo endpoint falla
+        }
+
+        // Si ambos endpoints son exitosos
+        alert('Se marcó la salida y se desactivó correctamente.');
+        console.log('Salida marcada y activo desactivado.');
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    } finally {
+        // recarga de pagina
+        location.reload();
+    }
+}
+//
 
 
 async function mostrarRegistrosVisitasHistorial() {
@@ -407,7 +429,7 @@ async function mostrarRegistrosVisitasActivosTEXBOX() {
                         <td><input type="text" class="form-control" value="${registro.identificacion_visita}" readonly></td>
                         <td><input type="text" class="form-control" value="${registro.hora_ingreso}" readonly></td>
                         <td>
-                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaVisita(${registro.id_registro_visitas})">salió</button>` : ''}
+                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaVisitaDesactivar(${registro.id_registro_visitas})">salió</button>` : ''}
                         </td>
                     </tr>
                 `;
@@ -453,5 +475,25 @@ async function mostrarRegistrosVisitantesHistorialTEXBOX() {
 
     } catch (error) {
         console.error('Error al mostrar los registros:', error);
+    }
+}
+async function mostrarTotalVisitasActivos() {
+    try {
+        // Realizar la solicitud al endpoint
+        const response = await fetch('https://localhost:7285/api/Inquilino/contarVisitantesActivos',
+            { method: 'GET' });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+        }
+
+        // Obtener los datos como JSON
+        const totalVisitantesActivos = await response.json();
+
+        // Actualizar el contenido del elemento con el ID "totalInquilinos"
+        document.getElementById('totalVisitantes').textContent = totalVisitantesActivos;
+    } catch (error) {
+        console.error('Error al mostrar el total de inquilinos activos:', error);
+        document.getElementById('totalVisitantes').textContent = 'Error';
     }
 }

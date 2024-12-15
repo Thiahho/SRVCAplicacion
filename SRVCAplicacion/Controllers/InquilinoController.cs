@@ -54,6 +54,38 @@ namespace SRVCAplicacion.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("contarInquilinosActivos")]
+        public async Task<ActionResult> contarInquilinosActivos()
+        {
+            try
+            {
+                var activosInquilinos = await _context.visitante_Inquilino
+                            .Where(a => a.estado == 1 && a.activo == 1)
+                            .CountAsync();
+                return Ok(activosInquilinos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "ERROR en el servidor", detalle = ex.Message });
+            }
+        }
+        [HttpGet("contarVisitantesActivos")]
+        public async Task<ActionResult> contarVisitantesActivos()
+        {
+            try
+            {
+                var activosInquilinos = await _context.visitante_Inquilino
+                            .Where(a => a.estado == 2 && a.activo == 1)
+                            .CountAsync();
+                return Ok(activosInquilinos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "ERROR en el servidor", detalle = ex.Message });
+            }
+        }
+
+
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<IEnumerable<visitante_inquilino>>> GetVisitantesInquilino()
