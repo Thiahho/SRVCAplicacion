@@ -285,119 +285,232 @@ namespace SRVCAplicacion.Controllers
             }
             
         }
-
-        
-        [HttpPut("ActualizarInquilino")]
-        public async Task<IActionResult> ActualizarInquilinos(int id, [FromBody] visitante_inquilino visitante_Inquilino)
+        //asdasd
+        [HttpPut("activarActivo/{dni}")]
+        public async Task<IActionResult> activarActivo(string dni)
         {
-
-            if (visitante_Inquilino == null)
+            if (string.IsNullOrWhiteSpace(dni))
             {
-                return BadRequest(new { mensaje = "Datos vacios." });
+                return BadRequest(new { mensaje = "El DNI proporcionado no es válido." });
             }
-
-            var inquilinoExistente = _context.visitante_Inquilino.FirstOrDefault(u => u.id_visitante_inquilino == id);
-
-            if (inquilinoExistente == null)
-            {
-                return NotFound(new { mensaje = $"Inquilino con ID {id} no encontrado." });
-            }
-
-            var valorOriginal = $"Inquilino:{inquilinoExistente.nombre}, Dni:{inquilinoExistente.identificacion},Estado:{inquilinoExistente.estado},Activo:{inquilinoExistente.activo}, Punto Control:{inquilinoExistente.id_punto_control}";
-            var valorNuevo = $"Inquilino:{visitante_Inquilino.nombre}, Dni:{visitante_Inquilino.identificacion},Estado:{visitante_Inquilino.estado},Activo:{visitante_Inquilino.activo}, Punto Control:{visitante_Inquilino.id_punto_control}";
-
-            inquilinoExistente.nombre = visitante_Inquilino.nombre;
-            inquilinoExistente.identificacion = visitante_Inquilino.identificacion;
-            inquilinoExistente.telefono = visitante_Inquilino.telefono;
-            inquilinoExistente.estado = visitante_Inquilino.estado;
-            inquilinoExistente.activo = visitante_Inquilino.activo;
-            inquilinoExistente.id_punto_control = visitante_Inquilino.id_punto_control;
 
             try
             {
+                // Buscar el registro con el DNI proporcionado
+                var inquilino = await _context.visitante_Inquilino.FirstOrDefaultAsync(v => v.identificacion == dni);
 
-                var logAud = new log_aud
+                if (inquilino == null)
                 {
-                    id_usuario = id,
-                    accion = "Actualización de inquilino",
-                    hora = DateTime.Now,
-                    valor_original = valorOriginal,
-                    valor_nuevo = valorNuevo,
-                    //tabla = "Usuario",
-                    id_punto_control = visitante_Inquilino.id_punto_control
-                };
-                if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))
-                {
-                    return NotFound(new { mensaje = "Error al generar el log de auditoría. Los valores originales o nuevos están vacíos." });
+                    return NotFound(new { mensaje = "No se encontró un visitante con el DNI proporcionado." });
                 }
 
-                //_appDbContext.log_Aud.Add(logAud);
-                await _context.SaveChangesAsync();
-                await _auditoria.RegistrarCambio(logAud);
+                // Actualizar el campo activo
+                inquilino.activo = 1;
 
-                return Ok(new { mensaje = "Inquilino actualizado con éxito" });
+                await _context.SaveChangesAsync();
+
+                return NoContent(); // Respuesta estándar para una actualización exitosa
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException dbEx)
             {
-                return BadRequest(new { mensaje = "Error al guardar los cambios", detalle = ex.Message });
+                return StatusCode(500, new { mensaje = "Error al actualizar la base de datos.", error = dbEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Ocurrió un error inesperado.", error = ex.Message });
+            }
+        }
+
+        //desactivar activo
+        [HttpPut("desactivarActivo/{dni}")]
+        public async Task<IActionResult> desactivarActivo(string dni)
+        {
+            if (string.IsNullOrWhiteSpace(dni))
+            {
+                return BadRequest(new { mensaje = "El DNI proporcionado no es válido." });
+            }
+
+            try
+            {
+                // Buscar el registro con el DNI proporcionado
+                var inquilino = await _context.visitante_Inquilino.FirstOrDefaultAsync(v => v.identificacion == dni);
+
+                if (inquilino == null)
+                {
+                    return NotFound(new { mensaje = "No se encontró un visitante con el DNI proporcionado." });
+                }
+
+                // Actualizar el campo activo
+                inquilino.activo = 0;
+
+                await _context.SaveChangesAsync();
+
+                return NoContent(); // Respuesta estándar para una actualización exitosa
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode(500, new { mensaje = "Error al actualizar la base de datos.", error = dbEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Ocurrió un error inesperado.", error = ex.Message });
             }
         }
 
 
-        [HttpPut("ActualizarVisita")]
-        public async Task<IActionResult> ActualizarVisita(int id, [FromBody] visitante_inquilino visitante_Inquilino)
+        //
+        [HttpPut("desactivarActivoPRUEBA/{idRegistroSalida}")]
+        public async Task<IActionResult> desactivarActivo(int idRegistroSalida)
         {
-
-            if (visitante_Inquilino == null)
+            if (idRegistroSalida == null)
             {
-                return BadRequest(new { mensaje = "Datos vacios." });
+                return BadRequest(new { mensaje = "El id proporcionado no es válido." });
             }
-
-            var inquilinoExistente = _context.visitante_Inquilino.FirstOrDefault(u => u.id_visitante_inquilino == id);
-
-            if (inquilinoExistente == null)
-            {
-                return NotFound(new { mensaje = $"Usuario con ID {id} no encontrado." });
-            }
-
-            var valorOriginal = $"Usuario:{inquilinoExistente.nombre}, Dni:{inquilinoExistente.identificacion},Estado:{inquilinoExistente.estado},Activo:{inquilinoExistente.activo}, Punto Control:{inquilinoExistente.id_punto_control}";
-            var valorNuevo = $"Usuario:{visitante_Inquilino.nombre}, Dni:{visitante_Inquilino.identificacion},Estado:{visitante_Inquilino.estado},Activo:{visitante_Inquilino.activo}, Punto Control:{visitante_Inquilino.id_punto_control}";
-
-            inquilinoExistente.nombre = visitante_Inquilino.nombre;
-            inquilinoExistente.identificacion = visitante_Inquilino.identificacion;
-            inquilinoExistente.telefono = visitante_Inquilino.telefono;
-            inquilinoExistente.estado = visitante_Inquilino.estado;
-            inquilinoExistente.activo = visitante_Inquilino.activo;
-            inquilinoExistente.id_punto_control = visitante_Inquilino.id_punto_control;
 
             try
             {
+                // Buscar el registro con el DNI proporcionado
+                var registro = await _context.registro_Visitas.FirstOrDefaultAsync(v => v.id_registro_visitas == idRegistroSalida);
 
-                var logAud = new log_aud
+                if (registro == null)
                 {
-                    id_usuario = id,
-                    accion = "Actualización de Visita",
-                    hora = DateTime.Now,
-                    valor_original = valorOriginal,
-                    valor_nuevo = valorNuevo,
-                    //tabla = "Usuario",
-                    id_punto_control = visitante_Inquilino.id_punto_control
-                };
-                if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))
-                {
-                    return NotFound(new { mensaje = "Error al generar el log de auditoría. Los valores originales o nuevos están vacíos." });
+                    return NotFound(new { mensaje = "No se encontró un visitante con el DNI proporcionado." });
                 }
+                var dniDelRegistro = registro.identificacion_visita;
 
-                //_appDbContext.log_Aud.Add(logAud);
+                var inquilino = await _context.visitante_Inquilino.FirstOrDefaultAsync(x => x.identificacion == dniDelRegistro);
+
+
+                // Actualizar el campo activo
+                inquilino.activo = 0;
+
                 await _context.SaveChangesAsync();
-                await _auditoria.RegistrarCambio(logAud);
 
-                return Ok(new { mensaje = "Inquilino actualizado con éxito" });
+                return NoContent(); // Respuesta estándar para una actualización exitosa
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException dbEx)
             {
-                return BadRequest(new { mensaje = "Error al guardar los cambios", detalle = ex.Message });
+                return StatusCode(500, new { mensaje = "Error al actualizar la base de datos.", error = dbEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Ocurrió un error inesperado.", error = ex.Message });
             }
         }
+        //asdaas
     }
+
+
+    //[HttpPut("ActualizarInquilino")]
+    //public async Task<IActionResult> ActualizarInquilinos(int id, [FromBody] visitante_inquilino visitante_Inquilino)
+    //{
+
+    //    if (visitante_Inquilino == null)
+    //    {
+    //        return BadRequest(new { mensaje = "Datos vacios." });
+    //    }
+
+    //    var inquilinoExistente = _context.visitante_Inquilino.FirstOrDefault(u => u.id_visitante_inquilino == id);
+
+    //    if (inquilinoExistente == null)
+    //    {
+    //        return NotFound(new { mensaje = $"Inquilino con ID {id} no encontrado." });
+    //    }
+
+    //    var valorOriginal = $"Inquilino:{inquilinoExistente.nombre}, Dni:{inquilinoExistente.identificacion},Estado:{inquilinoExistente.estado},Activo:{inquilinoExistente.activo}, Punto Control:{inquilinoExistente.id_punto_control}";
+    //    var valorNuevo = $"Inquilino:{visitante_Inquilino.nombre}, Dni:{visitante_Inquilino.identificacion},Estado:{visitante_Inquilino.estado},Activo:{visitante_Inquilino.activo}, Punto Control:{visitante_Inquilino.id_punto_control}";
+
+    //    inquilinoExistente.nombre = visitante_Inquilino.nombre;
+    //    inquilinoExistente.identificacion = visitante_Inquilino.identificacion;
+    //    inquilinoExistente.telefono = visitante_Inquilino.telefono;
+    //    inquilinoExistente.estado = visitante_Inquilino.estado;
+    //    inquilinoExistente.activo = visitante_Inquilino.activo;
+    //    inquilinoExistente.id_punto_control = visitante_Inquilino.id_punto_control;
+
+    //    try
+    //    {
+
+    //        var logAud = new log_aud
+    //        {
+    //            id_usuario = id,
+    //            accion = "Actualización de inquilino",
+    //            hora = DateTime.Now,
+    //            valor_original = valorOriginal,
+    //            valor_nuevo = valorNuevo,
+    //            //tabla = "Usuario",
+    //            id_punto_control = visitante_Inquilino.id_punto_control
+    //        };
+    //        if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))
+    //        {
+    //            return NotFound(new { mensaje = "Error al generar el log de auditoría. Los valores originales o nuevos están vacíos." });
+    //        }
+
+    //        //_appDbContext.log_Aud.Add(logAud);
+    //        await _context.SaveChangesAsync();
+    //        await _auditoria.RegistrarCambio(logAud);
+
+    //        return Ok(new { mensaje = "Inquilino actualizado con éxito" });
+    //    }
+    //    catch (DbUpdateException ex)
+    //    {
+    //        return BadRequest(new { mensaje = "Error al guardar los cambios", detalle = ex.Message });
+    //    }
+    //}
+
+
+    //[HttpPut("ActualizarVisita")]
+    //public async Task<IActionResult> ActualizarVisita(int id, [FromBody] visitante_inquilino visitante_Inquilino)
+    //{
+
+    //    if (visitante_Inquilino == null)
+    //    {
+    //        return BadRequest(new { mensaje = "Datos vacios." });
+    //    }
+
+    //    var inquilinoExistente = _context.visitante_Inquilino.FirstOrDefault(u => u.id_visitante_inquilino == id);
+
+    //    if (inquilinoExistente == null)
+    //    {
+    //        return NotFound(new { mensaje = $"Usuario con ID {id} no encontrado." });
+    //    }
+
+    //    var valorOriginal = $"Usuario:{inquilinoExistente.nombre}, Dni:{inquilinoExistente.identificacion},Estado:{inquilinoExistente.estado},Activo:{inquilinoExistente.activo}, Punto Control:{inquilinoExistente.id_punto_control}";
+    //    var valorNuevo = $"Usuario:{visitante_Inquilino.nombre}, Dni:{visitante_Inquilino.identificacion},Estado:{visitante_Inquilino.estado},Activo:{visitante_Inquilino.activo}, Punto Control:{visitante_Inquilino.id_punto_control}";
+
+    //    inquilinoExistente.nombre = visitante_Inquilino.nombre;
+    //    inquilinoExistente.identificacion = visitante_Inquilino.identificacion;
+    //    inquilinoExistente.telefono = visitante_Inquilino.telefono;
+    //    inquilinoExistente.estado = visitante_Inquilino.estado;
+    //    inquilinoExistente.activo = visitante_Inquilino.activo;
+    //    inquilinoExistente.id_punto_control = visitante_Inquilino.id_punto_control;
+
+    //    try
+    //    {
+
+    //        var logAud = new log_aud
+    //        {
+    //            id_usuario = id,
+    //            accion = "Actualización de Visita",
+    //            hora = DateTime.Now,
+    //            valor_original = valorOriginal,
+    //            valor_nuevo = valorNuevo,
+    //            //tabla = "Usuario",
+    //            id_punto_control = visitante_Inquilino.id_punto_control
+    //        };
+    //        if (string.IsNullOrEmpty(logAud.valor_original) || string.IsNullOrEmpty(logAud.valor_nuevo))
+    //        {
+    //            return NotFound(new { mensaje = "Error al generar el log de auditoría. Los valores originales o nuevos están vacíos." });
+    //        }
+
+    //        //_appDbContext.log_Aud.Add(logAud);
+    //        await _context.SaveChangesAsync();
+    //        await _auditoria.RegistrarCambio(logAud);
+
+    //        return Ok(new { mensaje = "Inquilino actualizado con éxito" });
+    //    }
+    //    catch (DbUpdateException ex)
+    //    {
+    //        return BadRequest(new { mensaje = "Error al guardar los cambios", detalle = ex.Message });
+    //    }
+    //}
 }

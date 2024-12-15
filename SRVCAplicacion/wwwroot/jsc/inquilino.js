@@ -63,42 +63,7 @@
 
 }
 
-// fin crear visitante
 
-async function BuscarPorDNIInquilino() {
-    // Obtener el valor del input
-    var dni = document.getElementById('inputDNIingresoI').value;
-
-    // Llamar a la función que utilizará ese valor
-    console.log(dni); // Aquí puedes realizar lo que necesites con el valor
-    try {
-        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const datosPorDNI = await response.json();
-        console.log('Registros recibidos:', datosPorDNI);
-
-
-        if (datosPorDNI.nombre && datosPorDNI.apellido && datosPorDNI.id_visitante_inquilino) {
-            inputIdInquilinoIngresoI.value = datosPorDNI.id_visitante_inquilino; // Asigna el id 
-            inputNombreIngresoI.value = datosPorDNI.nombre; // Asigna el nombre 
-            inputApellidoIngresoI.value = datosPorDNI.apellido; // Asigna el apellido 
-            alert("El inquilono se encuentra en el registro.");
-        }
-
-    } catch (error) {
-        alert("el numero de dni no esta asociado a ningun inquilono registrado.");
-        console.error('Error al mostrar los registros:', error);
-        inputDNIingresoI.value = "";
-        inputIdInquilinoIngresoI.value = "";
-        inputNombreIngresoI.value = "";
-        inputApellidoIngresoI.value = "";
-    }
-}
 
 async function BuscarPorDNIInquilinoFILTRO() {
     // Obtener el valor del input
@@ -142,7 +107,7 @@ async function BuscarPorDNIInquilinoFILTRO() {
     }
 }
 
-async function guardarRegistroInquilino() {
+async function guardarRegistroInquilinoActivar() {
     try {
         // Realizar la llamada al endpoint para obtener los claims
         const responseClaims = await fetch('https://localhost:7285/api/Usuario/obtener-claims');
@@ -213,8 +178,21 @@ async function guardarRegistroInquilino() {
         const result = await response.json();
 
         if (response.ok) {
-            alert("Registro creado exitosamente.");
-            document.getElementById('formCrearVisitante').reset();
+
+            const activarResponse = await fetch(`https://localhost:7285/api/Inquilino/activarActivo/${identificacion_visita}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+
+            if (activarResponse.ok) {
+                alert("Registro creado exitosamente.");
+                //alert("Inquilino activado exitosamente.");
+            } else {
+                const activarError = await activarResponse.json();
+                alert("Error al activar al inquilino: " + (activarError.mensaje || "Error desconocido"));
+            }
         } else {
             // para mostrar si hay errores en el back
             alert("Error: " + result.message || "Error desconocido");
@@ -237,46 +215,9 @@ async function guardarRegistroInquilino() {
     }
 }
 
-async function mostrarRegistrosInquilinos() {
+async function marcarSalidaInquilinoDesactivar(idRegistro) {
     try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const registros = await response.json();
-        console.log('Registros recibidos:', registros);
-
-        const tabla = document.getElementById('tablaRegistrosI');
-
-        registros.filter(registro => registro.estado_actualizacion === 1)
-            .forEach(registro => {
-                const fila = document.createElement('tr');
-                fila.innerHTML = `
-                    <td>${registro.id_registro_visitas}</td>
-                    <td>${registro.motivo}</td>
-                    <td>${registro.depto_visita}</td>
-                    <td>${registro.nombre_visitante_inquilino}</td>
-                    <td>${registro.identificacion_visita}</td>
-                    <td>${registro.hora_ingreso}</td>
-                    <td>${registro.hora_salida}</td>
-                    <td>
-                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaInquilino(${registro.id_registro_visitas})">salida</button>` : ''}
-                    </td>
-                    `;
-                tabla.querySelector('tbody').appendChild(fila);
-            });
-
-    } catch (error) {
-        console.error('Error al mostrar los registros:', error);
-    }
-}
-
-async function marcarSalidaInquilino(idRegistro) {
-
-    try {
+        // Primer endpoint: ActualizarHoraSalida
         const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
             method: 'PUT',
             headers: {
@@ -284,97 +225,43 @@ async function marcarSalidaInquilino(idRegistro) {
             },
         });
 
-        // Verificar si la respuesta es exitosa
         if (!response.ok) {
-            // Si la respuesta no es exitosa, procesamos el error
-            const errorData = await response.json();  // Parsear la respuesta como JSON
-            alert('hubo un error al intentar marcar la salida');
-            console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
-        } else {
-            // Si la respuesta es exitosa, procesamos la respuesta
-            alert('Se marco la salida correctamente');
-            console.log('Se marco la salida correctamente');
+            // Manejo de error del primer endpoint
+            const errorData = await response.json();
+            console.error('Error al marcar salida:', errorData.mensaje);
+            alert('Hubo un error al intentar marcar la salida.');
+            return; // Salir de la función si el primer endpoint falla
         }
+        console.log('Primer fetch completado con éxito');
+
+        // Si el primer endpoint es exitoso, procedemos con el segundo
+        const desactivarResponse = await fetch(`https://localhost:7285/api/Inquilino/desactivarActivoPRUEBA/${idRegistro}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log('Segundo fetch ejecutado');
+        console.log('Estado del segundo fetch:', desactivarResponse.status);
+
+        if (!desactivarResponse.ok) {
+            // Manejo de error del segundo endpoint
+            const activarError = await desactivarResponse.json();
+            console.error('Error al desactivar activo:', activarError.mensaje);
+            alert("Error al desactivar al inquilino: " + (activarError.mensaje || "Error desconocido"));
+            return; // Salir si el segundo endpoint falla
+        }
+
+        // Si ambos endpoints son exitosos
+        alert('Se marcó la salida y se desactivó correctamente.');
+        console.log('Salida marcada y activo desactivado.');
     } catch (error) {
         console.error('Error en la solicitud:', error);
     } finally {
-        // recarga de pagina
+        // Recargar la página
         location.reload();
     }
 }
-
-async function mostrarRegistrosInquilinosActivos() {
-    try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const registros = await response.json();
-        console.log('Registros recibidos:', registros);
-
-        const tabla = document.getElementById('tablaRegistrosI');
-
-        registros.filter(registro => registro.estado_actualizacion === 1)
-            .filter(registro => registro.estado_visita === 1)
-            .forEach(registro => {
-                const fila = document.createElement('tr');
-                fila.innerHTML = `
-                    <td>${registro.id_registro_visitas}</td>
-                    <td>${registro.motivo}</td>
-                    <td>${registro.depto_visita}</td>
-                    <td>${registro.nombre_visitante_inquilino}</td>
-                    <td>${registro.identificacion_visita}</td>
-                    <td>${registro.hora_ingreso}</td>
-                    <td>${registro.hora_salida}</td>
-                    <td>
-                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaInquilino(${registro.id_registro_visitas})">salida</button>` : ''}
-                    </td>
-                    `;
-                tabla.querySelector('tbody').appendChild(fila);
-            });
-
-    } catch (error) {
-        console.error('Error al mostrar los registros:', error);
-    }
-}
-async function mostrarRegistrosInquilinosHistorial() {
-    try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const registros = await response.json();
-        console.log('Registros recibidos:', registros);
-
-        const tabla = document.getElementById('tablaRegistrosHistorialI');
-
-        registros.filter(registro => registro.estado_actualizacion === 1)
-            .filter(registro => registro.estado_visita === 0)
-            .forEach(registro => {
-                const fila = document.createElement('tr');
-                fila.innerHTML = `
-                    <td>${registro.id_registro_visitas}</td>
-                    <td>${registro.motivo}</td>
-                    <td>${registro.depto_visita}</td>
-                    <td>${registro.nombre_visitante_inquilino}</td>
-                    <td>${registro.identificacion_visita}</td>
-                    <td>${registro.hora_ingreso}</td>
-                    <td>${registro.hora_salida}</td>
-                    `;
-                tabla.querySelector('tbody').appendChild(fila);
-            });
-
-    } catch (error) {
-        console.error('Error al mostrar los registros:', error);
-    }
-}
-
 
 async function mostrarRegistrosInquilinosActivosTEXBOX() {
     try {
@@ -404,7 +291,7 @@ async function mostrarRegistrosInquilinosActivosTEXBOX() {
                         <td><input type="text" class="form-control" value="${registro.identificacion_visita}" readonly></td>
                         <td><input type="text" class="form-control" value="${registro.hora_ingreso}" readonly></td>
                         <td>
-                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaInquilino(${registro.id_registro_visitas})">salió</button>` : ''}
+                            ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaInquilinoDesactivar(${registro.id_registro_visitas})">salió</button>` : ''}
                         </td>
                     </tr>
                 `;
