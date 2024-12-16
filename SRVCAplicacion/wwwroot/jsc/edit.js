@@ -87,38 +87,10 @@ async function actualizarDatos() {
     } catch (error) {
         console.error('Error al actualizar los datos:', error);
         alert("Hubo un problema al actualizar los datos.");
-    }
-}
-
-async function crearNuevoUsuario() {
-
-    const usuarioNuevo = {
-        usuario: document.getElementById('usuario').value,
-        contraseña: document.getElementById('contraseña').value,
-        email: document.getElementById('email').value,
-        telefono: document.getElementById('telefono').value,
-        dni: document.getElementById('dni').value,
-        estado: document.getElementById('estado').value,
-        idPuntoControl: document.getElementById('idPuntoControl').value
-    };
-
-    try {
-        const response = await fetch('/api/Usuario/Crear', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(usuarioNuevo)
-        });
-
-        if (response.ok) {
-            alert('El usuario se creo correctamente');
-
-        } else {
-            alert('Error al intentar crear el usuario');
-        }
-
-    } catch (error) {
-        console.error('Error al intentar crear el usuario', error);
+    } finally {
+        document.getElementById('inputIdxEditar').value = '';
+        document.getElementById('inputNombrexEditar').value = '';
+        document.getElementById('inputApellidoxEditar').value = '';
+        document.getElementById('inputTelefonoxEditar').value = '';
     }
 }
