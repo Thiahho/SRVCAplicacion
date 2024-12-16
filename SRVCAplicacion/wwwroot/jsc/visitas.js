@@ -30,7 +30,7 @@
     };
 
     try {
-        const response = await fetch('https://localhost:7285/api/Inquilino/CrearVisitante', {
+        const response = await fetch('https://localhost:5000/api/Inquilino/CrearVisitante', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -68,7 +68,7 @@ async function BuscarPorDNIVisita() {
  
     console.log(dni);
     try {
-        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
+        const response = await fetch(`https://localhost:5000/api/inquilino/obtener/${dni}`);
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -101,7 +101,7 @@ async function BuscarPorDNIVisitaFILTRO() {
 
     console.log(dni); // Log del valor ingresado
     try {
-        const response = await fetch(`https://localhost:7285/api/inquilino/obtener/${dni}`);
+        const response = await fetch(`https://localhost:5000/api/inquilino/obtener/${dni}`);
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -143,7 +143,7 @@ async function BuscarPorDNIVisitaFILTRO() {
 async function guardarRegistroVisitante() {
     try {
         // Realizar la llamada al endpoint para obtener los claims
-        const responseClaims = await fetch('https://localhost:7285/api/Usuario/obtener-claims');
+        const responseClaims = await fetch('https://localhost:5000/api/Usuario/obtener-claims');
         const dataClaims = await responseClaims.json();
 
         // Acceder a los valores de los claims 
@@ -200,7 +200,7 @@ async function guardarRegistroVisitante() {
         console.log('datos:', formData);
 
         // mando los datos al servidor para crear el registro
-        const response = await fetch('https://localhost:7285/api/Busqueda/CrearRegistro', {
+        const response = await fetch('https://localhost:5000/api/Busqueda/CrearRegistro', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -238,7 +238,7 @@ async function guardarRegistroVisitante() {
 
 //async function mostrarRegistrosVisitas() {
 //    try {
-//        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+//        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
 //        console.log('Respuesta del servidor:', response);
 
 //        if (!response.ok) {
@@ -277,7 +277,7 @@ async function guardarRegistroVisitante() {
 async function marcarSalidaVisita(idRegistro) {
 
     try {
-        const response = await fetch(`https://localhost:7285/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
+        const response = await fetch(`https://localhost:5000/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -306,7 +306,7 @@ async function marcarSalidaVisita(idRegistro) {
 
 async function mostrarRegistrosVisitasHistorial() {
     try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -341,7 +341,7 @@ async function mostrarRegistrosVisitasHistorial() {
 
 async function mostrarRegistrosVisitasActivos() {
     try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -381,7 +381,7 @@ async function mostrarRegistrosVisitasActivos() {
 //prueba insertar datos a los texbox del fron para mejorar visual
 async function mostrarRegistrosVisitasActivosTEXBOX() {
     try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -421,7 +421,7 @@ async function mostrarRegistrosVisitasActivosTEXBOX() {
 
 async function mostrarRegistrosVisitantesHistorialTEXBOX() {
     try {
-        const response = await fetch('https://localhost:7285/api/Busqueda/obtener-todos');
+        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {

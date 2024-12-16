@@ -57,7 +57,7 @@ $(document).ready(function () {
 Función para actualizar el contador en tiempo real.*/
 async function ContadorInquilinos() {
     try {
-        const response = await fetch("https://localhost:7285/api/Inquilino/ConteoInquilino"); // Ruta del endpoint
+        const response = await fetch("https://localhost:5000/api/Inquilino/ConteoInquilino"); // Ruta del endpoint
         if (!response.ok) throw new Error("Error al obtener datos");
 
         const data = await response.json();

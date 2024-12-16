@@ -2,7 +2,7 @@
 async function mostrarPuntos() {
 
     try {
-        const response = await fetch('https://localhost:7285/api/Puntos/ObtenerPuntos');
+        const response = await fetch('https://localhost:5000/api/Puntos/ObtenerPuntos');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
