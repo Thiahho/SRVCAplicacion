@@ -161,8 +161,8 @@ namespace SRVCAplicacion.Controllers
         }
 
         
-        [HttpPut("ActualizarHoraSalida")]
-        public async Task<IActionResult> ActualizarHoraSalida([FromQuery] int idRegistro)
+        [HttpPut("ActualizarHoraSalidaInquilino")]
+        public async Task<IActionResult> ActualizarHoraSalidaInquilino([FromQuery] int idRegistro)
         {
 
 
@@ -205,7 +205,24 @@ namespace SRVCAplicacion.Controllers
             //return Ok("Hora de salida actualizada correctamente.");
             var rowsAffected = await _appDbContext.Database.ExecuteSqlInterpolatedAsync(
                 //$"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow} WHERE id_registro_visitas = {idRegistro}");
-                $"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow}, estado_visita = 0 WHERE id_registro_visitas = {idRegistro}");
+                $"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow}, estado_visita = 2, estado_actualizacion = 2 WHERE id_registro_visitas = {idRegistro}");
+            //estado:_visita 1=visita. 2=inquilino
+
+            if (rowsAffected == 0)
+            {
+                return NotFound("No se encontró el registro para actualizar.");
+            }
+
+            return Ok("Hora de salida actualizada correctamente.");
+        }
+        [HttpPut("ActualizarHoraSalidaVisita")]
+        public async Task<IActionResult> ActualizarHoraSalidaVisita([FromQuery] int idRegistro)
+        {
+
+            var rowsAffected = await _appDbContext.Database.ExecuteSqlInterpolatedAsync(
+                //$"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow} WHERE id_registro_visitas = {idRegistro}");
+                $"UPDATE registro_visitas SET hora_salida = {DateTime.UtcNow}, estado_visita = 1, estado_actualizacion = 2 WHERE id_registro_visitas = {idRegistro}");
+            //estado:_visita 1=visita. 2=inquilino
 
             if (rowsAffected == 0)
             {

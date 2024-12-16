@@ -30,7 +30,6 @@ namespace SRCVShared.Models
 
         public int id_punto_control { get; set; } = 0;
 
-        //[Required]
-        //public int estado_actualizacion { get; set; } = 0;
+        public int estado_actualizacion { get; set; } = 0;
     }
 }

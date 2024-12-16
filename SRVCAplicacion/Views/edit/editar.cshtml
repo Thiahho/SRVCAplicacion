@@ -34,7 +34,7 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Editar o Eliminar</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Editar</h1>
                     </div>
 
                     <div class="col-xl-12 col-lg-12">
@@ -43,7 +43,6 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Inquilinos / Visitantes</h6>
                                 <button class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#editIoV">Editar</button>
-                                <button class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#edit2">Eliminar</button>
                             </div>
                             <div class="card-body">
                                 <div class="chart-area">
@@ -69,7 +68,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <form id="formularioCrearRegistro">
+                                    <form id="formularioEditar">
                                         <div class="form-group">
                                             <label for="inputDNIi">Ingrese el DNI</label>
                                             <input type="text" class="form-control" id="inputEditarxDNI" placeholder="">
@@ -101,44 +100,6 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                     <button type="button" onclick="actualizarDatos()" class="btn btn-primary" id="botonGuardarEdicion">Guardar Cambios</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="edit2" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editModalLabel">Ingrese los datos de la nueva visita</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="formCrearVisitante" action="guardar_institucion.php" method="POST">
-                                        <div class="form-group">
-                                            <label for="inputNombre">Nombre</label>
-                                            <input type="text" class="form-control" id="inputNombreNV" name="nombreNV" placeholder="Nombre" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputApellido">Apellido</label>
-                                            <input type="text" class="form-control" id="inputApellidoNV" name="apellidoNV" placeholder="Apellido" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputDNI">DNI</label>
-                                            <input type="text" class="form-control" id="inputDNINV" name="dniNV" placeholder="DNI" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputParentesco">Telefono</label>
-                                            <input type="text" class="form-control" id="inputTelefonoNV" name="telefonoNV" placeholder="Telefono" required>
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" id="crearNuevoVisitante" onclick="CrearVisitante()">Crear</button>
                                 </div>
                             </div>
                         </div>

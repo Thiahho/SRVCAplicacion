@@ -247,6 +247,7 @@ namespace SRVCAplicacion.Controllers
             inquilinoExistente.nombre = visitante_Inquilino.nombre;
             inquilinoExistente.apellido = visitante_Inquilino.apellido;
             inquilinoExistente.telefono = visitante_Inquilino.telefono;
+            inquilinoExistente.estado_actualizacion = 2;
 
             await _context.SaveChangesAsync();
 
@@ -263,7 +264,8 @@ namespace SRVCAplicacion.Controllers
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
                         //tabla = "Usuario",
-                        id_punto_control = 1
+                        id_punto_control = 1,
+                        estado_actualizacion = 2
                     };
                     if (string.IsNullOrEmpty(log.valor_original) || string.IsNullOrEmpty(log.valor_nuevo))
                     {
@@ -293,7 +295,8 @@ namespace SRVCAplicacion.Controllers
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
                         //tabla = "Usuario",
-                        id_punto_control = 1
+                        id_punto_control = 1,
+                        estado_actualizacion = 2
                     };
                     if (string.IsNullOrEmpty(log.valor_original) || string.IsNullOrEmpty(log.valor_nuevo))
                     {

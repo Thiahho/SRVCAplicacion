@@ -11,6 +11,7 @@
     // const estado = parseInt(document.getElementById('estado').value);
     const id_punto_control = 1;
     //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
+    const estado_actualizacion = 1;
 
     // Validar campos 
     if (!nombre || !apellido || !identificacion || !telefono) {
@@ -26,7 +27,8 @@
         telefono: telefono,
         estado: estado,
         activo: activo,
-        id_punto_control: id_punto_control
+        id_punto_control: id_punto_control,
+        estado_actualizacion: estado_actualizacion
     };
 
     try {
@@ -138,7 +140,8 @@ async function guardarRegistroInquilinoActivar() {
         const motivo = document.getElementById('inputMotivoIngresoI').value;
         const motivo_personalizado = document.getElementById('motivoPersonalizadoI').value;
         const depto_visita = document.getElementById('inputSectorDeptoI').value;
-        const estado_visita = 1;
+        //estado_visita 3=visitante, 4=inquilino
+        const estado_visita = 4;
         const nombre_punto_control = document.getElementById('inputNombrePControlI').value;
         const estado_actualizacion = 1;
 
@@ -219,7 +222,7 @@ async function guardarRegistroInquilinoActivar() {
 async function marcarSalidaInquilinoDesactivar(idRegistro) {
     try {
         // Primer endpoint: ActualizarHoraSalida
-        const response = await fetch(`https://localhost:5000/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
+        const response = await fetch(`https://localhost:5000/api/busqueda/ActualizarHoraSalidaInquilino?idRegistro=${idRegistro}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -277,9 +280,9 @@ async function mostrarRegistrosInquilinosActivosTEXBOX() {
         const tbody = document.querySelector('#tablaRegistrosIN tbody');
         tbody.innerHTML = ''; // Limpiar contenido previo
 
-        registros
-            .filter(registro => registro.estado_actualizacion === 1)
-            .filter(registro => registro.estado_visita === 1)
+        //registros.filter(registro => registro.estado_actualizacion === 1)
+        registros //estado_visita 3=visitante, 4=inquilino
+            .filter(registro => registro.estado_visita === 4)
             .forEach(registro => {
                 const fila = `
                     <tr>
@@ -317,8 +320,9 @@ async function mostrarRegistrosInquilinosHistorialTEXBOX() {
         const tbody = document.querySelector('#tablaHistorialRegistrosIN tbody');
         tbody.innerHTML = ''; // Limpiar contenido previo
 
-        registros.filter(registro => registro.estado_actualizacion === 1)
-            .filter(registro => registro.estado_visita === 0)
+        //registros.filter(registro => registro.estado_actualizacion === 1)
+        registros//estado_visita 3=visitante, 4=inquilino
+            .filter(registro => registro.estado_visita === 2)
             .forEach(registro => {
                 const fila = `
                     <tr>

@@ -11,6 +11,7 @@
     // const estado = parseInt(document.getElementById('estado').value);
     const id_punto_control = parseInt("1");
     //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
+    estado_actualizacion = 1;
 
     // Validar campos
     if (!nombre || !apellido || !identificacion || !telefono) {
@@ -26,7 +27,8 @@
         telefono: telefono,
         estado: estado,
         activo: activo,
-        id_punto_control: id_punto_control
+        id_punto_control: id_punto_control,
+        estado_actualizacion: estado_actualizacion
     };
 
     try {
@@ -168,9 +170,10 @@ async function guardarRegistroVisitanteActivar() {
         const motivo = document.getElementById('inputMotivoIngreso').value;
         const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
         const depto_visita = document.getElementById('inputSectorDepto').value;
-        const estado_visita = 1;
+        //3=visita. 4=inquilino
+        const estado_visita = 3;
         const nombre_punto_control = document.getElementById('inputNombrePControl').value;
-        const estado_actualizacion = 2;
+        const estado_actualizacion = 1;
 
         // Valida que los campos esten todos llenos
         if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
@@ -247,42 +250,11 @@ async function guardarRegistroVisitanteActivar() {
 }
 
 
-
-
-async function marcarSalidaVisita(idRegistro) {
-
-    try {
-        const response = await fetch(`https://localhost:5000/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        // Verificar si la respuesta es exitosa
-        if (!response.ok) {
-            // Si la respuesta no es exitosa procesamos el error
-            const errorData = await response.json();  // Parsear la respuesta como JSON
-            alert('hubo un error al intentar marcar la salida');
-            console.error('Error:', errorData.mensaje);  // Mostrar el mensaje de error
-        } else {
-            // Si la respuesta es exitosa, procesamos la respuesta
-            alert('Se marco la salida correctamente');
-            console.log('Se marco la salida correctamente');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud:', error);
-    } finally {
-        // recarga de pagina
-        location.reload();
-    }
-}
-
 //
 async function marcarSalidaVisitaDesactivar(idRegistro) {
 
     try {
-        const response = await fetch(`https://localhost:5000/api/busqueda/ActualizarHoraSalida?idRegistro=${idRegistro}`, {
+        const response = await fetch(`https://localhost:5000/api/busqueda/ActualizarHoraSalidaVisita?idRegistro=${idRegistro}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -325,81 +297,6 @@ async function marcarSalidaVisitaDesactivar(idRegistro) {
 }
 //
 
-
-async function mostrarRegistrosVisitasHistorial() {
-    try {
-        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const registros = await response.json();
-        console.log('Registros recibidos:', registros);
-
-        const tabla = document.getElementById('tablaRegistrosHistorialV');
-
-        registros.filter(registro => registro.estado_actualizacion === 2)
-            .filter(registro => registro.estado_visita === 0)
-            .forEach(registro => {
-                const fila = document.createElement('tr');
-                fila.innerHTML = `
-                    <td>${registro.id_registro_visitas}</td>
-                    <td>${registro.motivo}</td>
-                    <td>${registro.depto_visita}</td>
-                    <td>${registro.nombre_visitante_inquilino}</td>
-                    <td>${registro.identificacion_visita}</td>
-                    <td>${registro.hora_ingreso}</td>
-                    <td>${registro.hora_salida}</td>
-                    `;
-                tabla.querySelector('tbody').appendChild(fila);
-            });
-
-    } catch (error) {
-        console.error('Error al mostrar los registros:', error);
-    }
-}
-
-async function mostrarRegistrosVisitasActivos() {
-    try {
-        const response = await fetch('https://localhost:5000/api/Busqueda/obtener-todos');
-        console.log('Respuesta del servidor:', response);
-
-        if (!response.ok) {
-            throw new Error('Hubo un error al obtener los datos');
-        }
-
-        const registros = await response.json();
-        console.log('Registros recibidos:', registros);
-
-        const tabla = document.getElementById('tablaRegistrosV');
-
-        registros.filter(registro => registro.estado_actualizacion === 2)
-            .filter(registro => registro.estado_visita === 1)
-            .forEach(registro => {
-                const fila = document.createElement('tr');
-                fila.innerHTML = `
-                    <td>${registro.id_registro_visitas}</td>
-                    <td>${registro.motivo}</td>
-                    <td>${registro.depto_visita}</td>
-                    <td>${registro.nombre_visitante_inquilino}</td>
-                    <td>${registro.identificacion_visita}</td>
-                    <td>${registro.hora_ingreso}</td>
-                    <td>${registro.hora_salida}</td>
-                    <td>
-                        ${registro.hora_salida === null ? `<button type="button" id="marcaSalida" onclick="marcarSalidaVisita(${registro.id_registro_visitas})">salida</button>` : ''}
-                    </td>
-                    `;
-                tabla.querySelector('tbody').appendChild(fila);
-            });
-
-    } catch (error) {
-        console.error('Error al mostrar los registros:', error);
-    }
-}
-
-
 //prueba insertar datos a los texbox del fron para mejorar visual
 async function mostrarRegistrosVisitasActivosTEXBOX() {
     try {
@@ -416,9 +313,9 @@ async function mostrarRegistrosVisitasActivosTEXBOX() {
         const tbody = document.querySelector('#tablaRegistrosV tbody');
         tbody.innerHTML = ''; // Limpiar contenido previo
 
-        registros
-            .filter(registro => registro.estado_actualizacion === 2)
-            .filter(registro => registro.estado_visita === 1)
+        //registros.filter(registro => registro.estado_actualizacion === 2)
+        registros//estado_visita 3=visitante, 4=inquilino
+            .filter(registro => registro.estado_visita === 3)
             .forEach(registro => {
                 const fila = `
                     <tr>
@@ -456,8 +353,9 @@ async function mostrarRegistrosVisitantesHistorialTEXBOX() {
         const tbody = document.querySelector('#tablaHistorialRegistrosVI tbody');
         tbody.innerHTML = ''; // Limpiar contenido previo
 
-        registros.filter(registro => registro.estado_actualizacion === 2)
-            .filter(registro => registro.estado_visita === 0)
+        //registros.filter(registro => registro.estado_actualizacion === 2)
+        registros//estado_visita 3=visitante, 4=inquilino
+            .filter(registro => registro.estado_visita === 1)
             .forEach(registro => {
                 const fila = `
                     <tr>
