@@ -270,6 +270,7 @@ namespace SRVCAplicacion.Controllers
                 cambioTurno.egreso = DateTime.UtcNow;
                 cambioTurno.observaciones = $"Usuario {usuarioClaim} cerró sesión.";
                 cambioTurno.activo = 0; // Marca como inactivo si aplica
+                cambioTurno.estado_actualizacion = 2;
 
                 // Usar transacción para asegurar que la operación sea atómica
                 using (var transaction = await _appDbContext.Database.BeginTransactionAsync())

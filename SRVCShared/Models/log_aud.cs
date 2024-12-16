@@ -28,7 +28,7 @@ namespace SRCVShared.Models
 
         //public string? tabla { get; set; } = "";  // ID del punto de control asociado
 
-        public int? estado_actualizacion { get; set; } = 0;
+        public int? estado_actualizacion { get; set; } = 1;
     }
 
 }
