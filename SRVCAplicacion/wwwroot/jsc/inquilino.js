@@ -342,6 +342,7 @@ async function mostrarRegistrosInquilinosHistorialTEXBOX() {
         console.error('Error al mostrar los registros:', error);
     }
 }
+/*
 async function mostrarTotalInquilinosActivos() {
     try {
         console.log('Llamada a mostrarTotalInquilinosActivos');
@@ -361,6 +362,27 @@ async function mostrarTotalInquilinosActivos() {
         document.getElementById('totalInquilinos').textContent = totalInquilinosActivos;
     } catch (error) {
         console.error('Error al mostrar el total de inquilinos activos:', error);
+        document.getElementById('totalInquilinos').textContent = 'Error';
+    }
+}
+*/
+async function mostrarTotalInquiActivos() {
+    try {
+        // Realizar la solicitud al endpoint
+        const response = await fetch('https://localhost:5000/api/Inquilino/contarInquilinosActivos',
+            { method: 'GET' });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+        }
+
+        // Obtener los datos como JSON
+        const totalInquiActivos = await response.json();
+
+        // Actualizar el contenido del elemento con el ID "totalInquilinos"
+        document.getElementById('totalInquilinos').textContent = totalInquiActivos;
+    } catch (error) {
+        console.error('Error al mostrar el total de visitas activos:', error);
         document.getElementById('totalInquilinos').textContent = 'Error';
     }
 }

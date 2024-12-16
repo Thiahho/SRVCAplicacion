@@ -203,15 +203,15 @@
                         <!-- Page level custom scripts -->
                         <script src="~/jsc/demo/chart-area-demo.js"></script>
                         <script src="~/jsc/demo/chart-pie-demo.js"></script>
-            <script src="~/jsc/inquilino.js"></script>
-            <script src="~/jsc/visitas.js"></script>
+            <script src="~/jsc/inquilino.js" asp-src-include="true"></script>
+            <script src="~/jsc/visitas.js" asp-src-include="true"></script>
 
     <script src="~/jsc/puntos.js"></script>
     <script src="~/jsc/reloj.js"></script>
 
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
-                    mostrarTotalInquilinosActivos();
+                    mostrarTotalInquiActivos();
                     mostrarTotalVisitasActivos();
                 });
             </script>
