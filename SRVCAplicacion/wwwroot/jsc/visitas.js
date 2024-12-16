@@ -493,7 +493,7 @@ async function mostrarTotalVisitasActivos() {
         // Actualizar el contenido del elemento con el ID "totalInquilinos"
         document.getElementById('totalVisitantes').textContent = totalVisitantesActivos;
     } catch (error) {
-        console.error('Error al mostrar el total de inquilinos activos:', error);
+        console.error('Error al mostrar el total de visitas activos:', error);
         document.getElementById('totalVisitantes').textContent = 'Error';
     }
 }

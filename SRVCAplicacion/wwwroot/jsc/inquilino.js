@@ -340,6 +340,7 @@ async function mostrarRegistrosInquilinosHistorialTEXBOX() {
 }
 async function mostrarTotalInquilinosActivos() {
     try {
+        console.log('Llamada a mostrarTotalInquilinosActivos');
         // Realizar la solicitud al endpoint
         const response = await fetch('https://localhost:7285/api/Inquilino/contarInquilinosActivos',
             { method: 'GET' });
@@ -350,6 +351,7 @@ async function mostrarTotalInquilinosActivos() {
 
         // Obtener los datos como JSON
         const totalInquilinosActivos = await response.json();
+        console.log('Respuesta obtenida:', totalInquilinosActivos);
 
         // Actualizar el contenido del elemento con el ID "totalInquilinos"
         document.getElementById('totalInquilinos').textContent = totalInquilinosActivos;
