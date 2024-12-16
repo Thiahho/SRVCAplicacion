@@ -2,7 +2,7 @@
 async function mostrarLog() {
 
     try {
-        const response = await fetch('https://localhost:5000/api/LogAud/obtener');
+        const response = await fetch('http://localhost:5000/api/LogAud/obtener');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -38,7 +38,7 @@ async function mostrarLog() {
 //MostrarLOG mejorado
 async function mostrarLogMejorado() {
     try {
-        const response = await fetch('https://localhost:5000/api/LogAud/obtener');
+        const response = await fetch('http://localhost:5000/api/LogAud/obtener');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -79,7 +79,7 @@ async function sincronizar() {
     const statusDiv = document.getElementById("status");
 
     try {
-        const response = await fetch("https://localhost:5000/api/Sincronizacion/GenerarJson", {
+        const response = await fetch("http://localhost:5000/api/Sincronizacion/GenerarJson", {
             method: "POST"
         });
 

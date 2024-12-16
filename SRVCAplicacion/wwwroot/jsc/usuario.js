@@ -2,7 +2,7 @@
 async function mostrarUsuarios() {
 
     try {
-        const response = await fetch('https://localhost:5000/api/Usuario/Obtener');
+        const response = await fetch('http://localhost:5000/api/Usuario/Obtener');
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {

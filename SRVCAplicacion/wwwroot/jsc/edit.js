@@ -5,7 +5,7 @@
     // Llamar a la función que utilizará ese valor
     console.log(dni); // Aquí puedes realizar lo que necesites con el valor
     try {
-        const response = await fetch(`https://localhost:5000/api/inquilino/obtener/${dni}`);
+        const response = await fetch(`http://localhost:5000/api/inquilino/obtener/${dni}`);
         console.log('Respuesta del servidor:', response);
 
         if (!response.ok) {
@@ -57,7 +57,7 @@ async function actualizarDatos() {
     }
 
     try {
-        const response = await fetch(`https://localhost:5000/api/inquilino/ActualizarInquilinoVisita/${idxAct}`, {
+        const response = await fetch(`http://localhost:5000/api/inquilino/ActualizarInquilinoVisita/${idxAct}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

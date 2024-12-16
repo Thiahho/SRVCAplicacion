@@ -66,7 +66,7 @@ async function agregarForm() {
     };
 
     try {
-        const response = await fetch('https://localhost:5000/api/Inquilino/CrearInquilino', {
+        const response = await fetch('http://localhost:5000/api/Inquilino/CrearInquilino', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
