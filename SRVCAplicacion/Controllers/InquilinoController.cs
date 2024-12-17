@@ -20,7 +20,23 @@ namespace SRVCAplicacion.Controllers
             _auditoria = logAudService;
 
         }
+        [HttpGet("obtenerPunto")]
+        public async Task<ActionResult<IEnumerable<int>>> obtenerPunto()
+        {
+            try
+            {
+                var idsPuntosControl = await _context.Puntos_de_controles
+                    .Select(p => p.id_punto_control)
+                    .ToListAsync();
 
+                return idsPuntosControl;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al obtener los puntos de control: {ex.Message}");
+                return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
+            }
+        }
         //[HttpGet("Inquilinos")]
         //public IActionResult Visitas()//Inquilinos
         //{
@@ -98,22 +114,18 @@ namespace SRVCAplicacion.Controllers
         {
             try
             {
-                // Busca el visitante por el numero de dni
                 var visitante = await _context.visitante_Inquilino
                     .FirstOrDefaultAsync(v => v.identificacion == identificacionB);
 
-                // Si no se encuentra el visitante, devuelve un error 404
                 if (visitante == null)
                 {
                     return NotFound(new { message = "Visitante no encontrado" });
                 }
 
-                // Si se encuentra, devuelve el visitante
                 return Ok(visitante);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve un error 400 con el mensaje de la excepción
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -125,7 +137,6 @@ namespace SRVCAplicacion.Controllers
         {
             var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
 
-            //    //Parsea el valor de la claim a int, las claim solo guardan string.
                int idUsarioLog = int.Parse(idUsuarioClaim.Value);
 
           
@@ -172,10 +183,8 @@ namespace SRVCAplicacion.Controllers
         [HttpPost("CrearInquilino")]
         public async Task<IActionResult> PostInquilino([FromBody] visitante_inquilino inquilino)
         {
-            // Obtener el valor del claim "id_usuario".
             var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
 
-            //Parsea el valor de la claim a int, las claim solo guardan string.
             int idUsarioLog = int.Parse(idUsuarioClaim.Value);
 
             if (!ModelState.IsValid)

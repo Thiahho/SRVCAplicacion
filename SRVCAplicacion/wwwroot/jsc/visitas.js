@@ -1,37 +1,48 @@
 ﻿async function CrearVisitante() {
-
-    const nombre = document.getElementById('inputNombreNV').value;
-    const apellido = document.getElementById('inputApellidoNV').value;
-    const identificacion = document.getElementById('inputDNINV').value;
-    const telefono = document.getElementById('inputTelefonoNV').value;
-    //1 ingreso, 0 salio
-    const activo = 0;
-    //1 inquilino, 2 visitante
-    const estado = 2;
-    // const estado = parseInt(document.getElementById('estado').value);
-    const id_punto_control = parseInt("1");
-    //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
-    estado_actualizacion = 1;
-
-    // Validar campos
-    if (!nombre || !apellido || !identificacion || !telefono) {
-        alert("Todos los campos son obligatorios.");
-        document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
-        return;
-    }
-
-    const formData = {
-        nombre: nombre,
-        apellido: apellido,
-        identificacion: identificacion,
-        telefono: telefono,
-        estado: estado,
-        activo: activo,
-        id_punto_control: id_punto_control,
-        estado_actualizacion: estado_actualizacion
-    };
-
     try {
+        const responseID = await fetch('http://localhost:5000/api/Inquilino/obtenerPunto', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        });
+
+        if (!responseID.ok) {
+            throw new Error('Error al obtener el ID del punto de control');
+        }
+
+        const resultadoIdPuntoControl = await responseID.json();
+
+        if (!resultadoIdPuntoControl || resultadoIdPuntoControl.length === 0) {
+            throw new Error('No se obtuvo un ID válido para el punto de control');
+        }
+
+        const id_punto_control = resultadoIdPuntoControl[0];
+
+        const nombre = document.getElementById('inputNombreNV').value.trim();
+        const apellido = document.getElementById('inputApellidoNV').value.trim();
+        const identificacion = document.getElementById('inputDNINV').value.trim();
+        const telefono = document.getElementById('inputTelefonoNV').value.trim();
+        const activo = 0; 
+        const estado = 2; 
+        const estado_actualizacion = 1; 
+
+        if (!nombre || !apellido || !identificacion || !telefono) {
+            alert("Todos los campos son obligatorios.");
+            return;
+        }
+
+        const formData = {
+            nombre: nombre,
+            apellido: apellido,
+            identificacion: identificacion,
+            telefono: telefono,
+            estado: estado,
+            activo: activo,
+            id_punto_control: id_punto_control,
+            estado_actualizacion: estado_actualizacion
+        };
+
         const response = await fetch('http://localhost:5000/api/Inquilino/CrearVisitante', {
             method: 'POST',
             headers: {
@@ -44,28 +55,25 @@
 
         if (response.ok) {
             alert("Visitante creado exitosamente.");
-            document.getElementById('formCrearVisitante').reset();  // Limpiar formulario
+            document.getElementById('formCrearVisitante').reset(); // Limpiar formulario
         } else {
-            // Si hay un error en el backend, mostrarlo
-            alert("Error: " + result.message || "el numero de dni ya esta registrado en la base de datos");
+            alert("Error: " + (result.message || "El número de DNI ya está registrado en la base de datos."));
         }
     } catch (error) {
-        console.error('Error al enviar el formulario', error);
-        alert("Error al enviar el formulario.");
+        console.error('Error al procesar la solicitud', error);
+        alert("Ocurrió un error: " + error.message);
     } finally {
-        //limpia los campos
         document.getElementById('inputNombreNV').value = '';
         document.getElementById('inputApellidoNV').value = '';
         document.getElementById('inputDNINV').value = '';
         document.getElementById('inputTelefonoNV').value = '';
     }
-
 }
 
 
 
+
 async function BuscarPorDNIVisita() {
-    // Obtener el valor del input
     var dni = document.getElementById('inputDNIingreso').value;
  
     console.log(dni);
@@ -83,8 +91,8 @@ async function BuscarPorDNIVisita() {
 
         if (datosPorDNI.nombre && datosPorDNI.apellido && datosPorDNI.id_visitante_inquilino) {
             inputIdInquilinoIngreso.value = datosPorDNI.id_visitante_inquilino; 
-            inputNombreIngreso.value = datosPorDNI.nombre; // Asigna el nombre 
-            inputApellidoIngreso.value = datosPorDNI.apellido; // Asigna el apellido 
+            inputNombreIngreso.value = datosPorDNI.nombre; 
+            inputApellidoIngreso.value = datosPorDNI.apellido;
             alert("El inquilono se encuentra en el registro.");
         }
 
@@ -98,10 +106,9 @@ async function BuscarPorDNIVisita() {
 }
 
 async function BuscarPorDNIVisitaFILTRO() {
-    // Obtener el valor del input
     var dni = document.getElementById('inputDNIingreso').value;
 
-    console.log(dni); // Log del valor ingresado
+    console.log(dni); 
     try {
         const response = await fetch(`http://localhost:5000/api/inquilino/obtener/${dni}`);
         console.log('Respuesta del servidor:', response);
@@ -113,7 +120,7 @@ async function BuscarPorDNIVisitaFILTRO() {
         const datosPorDNI = await response.json();
         console.log('Registros recibidos:', datosPorDNI);
 
-        // filtro para ver si no es una visita
+       
         if (datosPorDNI.estado === 1) {
             alert("Este DNI pertenece a un inquilino, no a un visitante.");
             inputIdInquilinoIngreso.value = "";
@@ -142,16 +149,13 @@ async function BuscarPorDNIVisitaFILTRO() {
 
 async function guardarRegistroVisitanteActivar() {
     try {
-        // Realizar la llamada al endpoint para obtener los claims
         const responseClaims = await fetch('http://localhost:5000/api/Usuario/obtener-claims');
         const dataClaims = await responseClaims.json();
 
-        // Acceder a los valores de los claims 
         var id_usuario = dataClaims.idUsarioLog;
         var nombre_encargado = dataClaims.nombre_encargadoLog;
         var id_punto_control = dataClaims.id_punto_controlLog;
 
-        // prueba para ver por consola si trae los valores correctos
         console.log('ID Usuario:', id_usuario);
         console.log('Nombre Encargado:', nombre_encargado);
         console.log('ID Punto Control:', id_punto_control);
@@ -170,19 +174,16 @@ async function guardarRegistroVisitanteActivar() {
         const motivo = document.getElementById('inputMotivoIngreso').value;
         const motivo_personalizado = document.getElementById('motivoPersonalizado').value;
         const depto_visita = document.getElementById('inputSectorDepto').value;
-        //3=visita. 4=inquilino
         const estado_visita = 3;
         const nombre_punto_control = document.getElementById('inputNombrePControl').value;
         const estado_actualizacion = 1;
 
-        // Valida que los campos esten todos llenos
         if (!nombre || !apellido || !identificacion_visita || !motivo || !motivo_personalizado || !depto_visita || !nombre_punto_control) {
             alert("Todos los campos son obligatorios.");
             document.getElementById('crearNuevoVisitante').disabled = false;
             return;
         }
 
-        // crea una nueva const con los datos ingresados
         const formData = {
             id_usuario: id_usuario,
             nombre_encargado: nombre_encargado,
@@ -200,7 +201,6 @@ async function guardarRegistroVisitanteActivar() {
         };
         console.log('datos:', formData);
 
-        // mando los datos al servidor para crear el registro
         const response = await fetch('http://localhost:5000/api/Busqueda/CrearRegistro', {
             method: 'POST',
             headers: {
@@ -222,13 +222,11 @@ async function guardarRegistroVisitanteActivar() {
 
             if (activarResponse.ok) {
                 alert("Registro creado exitosamente.");
-                //alert("Inquilino activado exitosamente.");
             } else {
                 const activarError = await activarResponse.json();
                 alert("Error al activar al visitante: " + (activarError.mensaje || "Error desconocido"));
             }
         } else {
-            // para mostrar si hay errores en el back
             alert("Error: " + result.message || "Error desconocido");
         }
 
@@ -265,11 +263,10 @@ async function marcarSalidaVisitaDesactivar(idRegistro) {
             const errorData = await response.json();
             console.error('Error al marcar salida:', errorData.mensaje);
             alert('Hubo un error al intentar marcar la salida.');
-            return; // Salir de la función si el primer endpoint falla
+            return;
         }
         console.log('Primer fetch completado con éxito');
 
-        // Si el primer endpoint es exitoso, seguimos con el segundo
         const desactivarResponse = await fetch(`http://localhost:5000/api/Inquilino/desactivarActivoPRUEBA/${idRegistro}`, {
             method: 'PUT',
             headers: {
@@ -278,26 +275,22 @@ async function marcarSalidaVisitaDesactivar(idRegistro) {
         });
 
         if (!desactivarResponse.ok) {
-            // Manejo de error del segundo endpoint
             const activarError = await desactivarResponse.json();
             console.error('Error al desactivar activo:', activarError.mensaje);
             alert("Error al desactivar al inquilino: " + (activarError.mensaje || "Error desconocido"));
-            return; // Salir si el segundo endpoint falla
+            return; 
         }
 
-        // Si ambos endpoints son exitosos
         alert('Se marcó la salida y se desactivó correctamente.');
         console.log('Salida marcada y activo desactivado.');
     } catch (error) {
         console.error('Error en la solicitud:', error);
     } finally {
-        // recarga de pagina
         location.reload();
     }
 }
 //
 
-//prueba insertar datos a los texbox del fron para mejorar visual
 async function mostrarRegistrosVisitasActivosTEXBOX() {
     try {
         const response = await fetch('http://localhost:5000/api/Busqueda/obtener-todos');
@@ -311,7 +304,7 @@ async function mostrarRegistrosVisitasActivosTEXBOX() {
         console.log('Registros recibidos:', registros);
 
         const tbody = document.querySelector('#tablaRegistrosV tbody');
-        tbody.innerHTML = ''; // Limpiar contenido previo
+        tbody.innerHTML = '';
 
         //registros.filter(registro => registro.estado_actualizacion === 2)
         registros//estado_visita 3=visitante, 4=inquilino
@@ -351,7 +344,7 @@ async function mostrarRegistrosVisitantesHistorialTEXBOX() {
         console.log('Registros recibidos:', registros);
 
         const tbody = document.querySelector('#tablaHistorialRegistrosVI tbody');
-        tbody.innerHTML = ''; // Limpiar contenido previo
+        tbody.innerHTML = ''; 
 
         //registros.filter(registro => registro.estado_actualizacion === 2)
         registros//estado_visita 3=visitante, 4=inquilino
@@ -377,7 +370,6 @@ async function mostrarRegistrosVisitantesHistorialTEXBOX() {
 }
 async function mostrarTotalVisitasActivos() {
     try {
-        // Realizar la solicitud al endpoint
         const response = await fetch('http://localhost:5000/api/Inquilino/contarVisitantesActivos',
             { method: 'GET' });
 
@@ -385,10 +377,8 @@ async function mostrarTotalVisitasActivos() {
             throw new Error('Error al obtener los datos');
         }
 
-        // Obtener los datos como JSON
         const totalVisitantesActivos = await response.json();
 
-        // Actualizar el contenido del elemento con el ID "totalInquilinos"
         document.getElementById('totalVisitantes').textContent = totalVisitantesActivos;
     } catch (error) {
         console.error('Error al mostrar el total de visitas activos:', error);

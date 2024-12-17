@@ -1,37 +1,46 @@
 ﻿async function CrearInquilino() {
-
-    const nombre = document.getElementById('inputNombreNI').value;
-    const apellido = document.getElementById('inputApellidoNI').value;
-    const identificacion = document.getElementById('inputDNINI').value;
-    const telefono = document.getElementById('inputTelefonoNI').value;
-    //1 ingreso, 0 salio
-    const activo = 0;
-    //1 inquilino, 2 visitante
-    const estado = 1;
-    // const estado = parseInt(document.getElementById('estado').value);
-    const id_punto_control = 1;
-    //const id_punto_control = parseInt(document.getElementById('id_punto_control').value);
-    const estado_actualizacion = 1;
-
-    // Validar campos 
-    if (!nombre || !apellido || !identificacion || !telefono) {
-        alert("Todos los campos son obligatorios.");
-        document.getElementById('crearNuevoVisitante').disabled = false; // Rehabilitar el botón
-        return;
-    }
-
-    const formData = {
-        nombre: nombre,
-        apellido: apellido,
-        identificacion: identificacion,
-        telefono: telefono,
-        estado: estado,
-        activo: activo,
-        id_punto_control: id_punto_control,
-        estado_actualizacion: estado_actualizacion
-    };
-
     try {
+        // Obtener el ID del punto de control
+        const responseID = await fetch('http://localhost:5000/api/Inquilino/obtenerPunto', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        });
+
+        if (!responseID.ok) {
+            throw new Error('Error al obtener el ID del punto de control');
+        }
+
+        const resultadoIdPuntoControl = await responseID.json();
+
+        if (!resultadoIdPuntoControl || resultadoIdPuntoControl.length === 0) {
+            throw new Error('No se obtuvo un ID válido para el punto de control');
+        }
+
+        const id_punto_control = resultadoIdPuntoControl[0];
+
+        const nombre = document.getElementById('inputNombreNI').value.trim();
+        const apellido = document.getElementById('inputApellidoNI').value.trim();
+        const identificacion = document.getElementById('inputDNINI').value.trim();
+        const telefono = document.getElementById('inputTelefonoNI').value.trim();
+
+        if (!nombre || !apellido || !identificacion || !telefono) {
+            alert("Todos los campos son obligatorios.");
+            return;
+        }
+
+        const formData = {
+            nombre: nombre,
+            apellido: apellido,
+            identificacion: identificacion,
+            telefono: telefono,
+            estado: 1, // Inquilino
+            activo: 0, // Salida por defecto
+            id_punto_control: id_punto_control,
+            estado_actualizacion: 1
+        };
+
         const response = await fetch('http://localhost:5000/api/Inquilino/CrearInquilino', {
             method: 'POST',
             headers: {
@@ -43,33 +52,23 @@
         const result = await response.json();
 
         if (response.ok) {
-            // Mostrar un mensaje de éxito
             alert("Inquilino creado correctamente.");
-            //var toast = document.getElementById("mensajessad");
-            //toast.innerHTML = "Inquilino creado correctamente.";
-            //toast.className = "show";
-            //setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         } else {
-            // Si hay un error en el backend, mostrarlo
-            alert("Error: " + result.message || "el numero de dni ya esta registrado en la base de datos");
+            alert("Error: " + (result.message || "El número de DNI ya está registrado en la base de datos."));
         }
     } catch (error) {
-        console.error('Error al enviar el formulario', error);
-        alert("Error al enviar el formulario.");
+        console.error('Error al procesar la solicitud', error);
+        alert("Ocurrió un error: " + error.message);
     } finally {
-        //limpia los campos
         document.getElementById('inputNombreNI').value = '';
         document.getElementById('inputApellidoNI').value = '';
         document.getElementById('inputDNINI').value = '';
         document.getElementById('inputTelefonoNI').value = '';
     }
-
 }
 
 
-
 async function BuscarPorDNIInquilinoFILTRO() {
-    // Obtener el valor del input
     var dni = document.getElementById('inputDNIingresoI').value;
 
     console.log(dni); // Log del valor ingresado
@@ -84,7 +83,6 @@ async function BuscarPorDNIInquilinoFILTRO() {
         const datosPorDNI = await response.json();
         console.log('Registros recibidos:', datosPorDNI);
 
-        // filtro para ver si no es una visita
         if (datosPorDNI.estado === 2) {
             alert("Este DNI pertenece a un visitante, no a un inquilino.");
             inputIdInquilinoIngresoI.value = "";
@@ -112,16 +110,13 @@ async function BuscarPorDNIInquilinoFILTRO() {
 
 async function guardarRegistroInquilinoActivar() {
     try {
-        // Realizar la llamada al endpoint para obtener los claims
         const responseClaims = await fetch('http://localhost:5000/api/Usuario/obtener-claims');
         const dataClaims = await responseClaims.json();
 
-        // Acceder a los valores de los claims 
         var id_usuario = dataClaims.idUsarioLog;
         var nombre_encargado = dataClaims.nombre_encargadoLog;
         var id_punto_control = dataClaims.id_punto_controlLog;
 
-        // prueba para ver por consola si trae los valores correctos
         console.log('ID Usuario:', id_usuario);
         console.log('Nombre Encargado:', nombre_encargado);
         console.log('ID Punto Control:', id_punto_control);

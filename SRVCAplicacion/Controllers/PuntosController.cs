@@ -6,7 +6,7 @@ using SRCVShared.Data;
 
 namespace SRVCAplicacion.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PuntosController : Controller
@@ -36,6 +36,8 @@ namespace SRVCAplicacion.Controllers
         {
             return await _appDbContext.Puntos_de_controles.ToListAsync();
         }
+
+       
 
         [HttpPost("CrearPunto")]
         public async Task<IActionResult> PostVisitanteInquilino(Puntos_de_controles puntos)
@@ -93,6 +95,7 @@ namespace SRVCAplicacion.Controllers
         {
             return _appDbContext.Puntos_de_controles.Any(e => e.id_punto_control == id);
         }
+       
 
 
     }
