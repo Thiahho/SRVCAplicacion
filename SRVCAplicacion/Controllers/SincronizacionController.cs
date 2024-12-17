@@ -69,7 +69,7 @@ namespace SRVCAplicacion.Controllers
                 //    log_aud = logaud,
                 //    cambio_turno = turnos,
                 //};
-                var usuarios = await _dbContext.Usuario.ToListAsync();
+                //var usuarios = await _dbContext.Usuario.ToListAsync();
                 var registros = await _dbContext.registro_Visitas.ToListAsync();
                 var inquilino = await _dbContext.visitante_Inquilino.ToListAsync();
                 var logaud = await _dbContext.log_Aud.ToListAsync();
@@ -77,9 +77,9 @@ namespace SRVCAplicacion.Controllers
 
                 var data = new Dictionary<string, object>
                 {
-                    {
-                        "Usuarios", usuarios
-                    },
+                    //{
+                    //    "Usuarios", usuarios
+                    //},
                     {
                         "registro_visitas", registros
                     },
