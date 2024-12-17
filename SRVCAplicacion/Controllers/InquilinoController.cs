@@ -232,9 +232,11 @@ namespace SRVCAplicacion.Controllers
         {
             // Obtener el valor del claim "id_usuario".
             var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == "id_usuario");
+            var idPuntoClaim = User.Claims.FirstOrDefault(c => c.Type == "id_punto_control");
 
             //Parsea el valor de la claim a int, las claim solo guardan string.
             int idUsarioLog = int.Parse(idUsuarioClaim.Value);
+            int idPuntoLog = int.Parse(idPuntoClaim.Value);
 
 
 
@@ -273,7 +275,7 @@ namespace SRVCAplicacion.Controllers
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
                         //tabla = "Usuario",
-                        id_punto_control = 1,
+                        id_punto_control = idPuntoLog,
                         estado_actualizacion = 2
                     };
                     if (string.IsNullOrEmpty(log.valor_original) || string.IsNullOrEmpty(log.valor_nuevo))
@@ -304,7 +306,7 @@ namespace SRVCAplicacion.Controllers
                         valor_original = valorOriginal,
                         valor_nuevo = valorNuevo,
                         //tabla = "Usuario",
-                        id_punto_control = 1,
+                        id_punto_control = idPuntoLog,
                         estado_actualizacion = 2
                     };
                     if (string.IsNullOrEmpty(log.valor_original) || string.IsNullOrEmpty(log.valor_nuevo))
